@@ -19,5 +19,6 @@ export default () => (
     <Route path='/transactions' component={FetchTransactionsData} />
     <Route path='/leaderboard' component={FetchUsersData} />
     <Route path='/rewards' component={FetchGiftsData} />
+    <Route path='/admin' component={FetchUsersData} />
   </Layout>
 );

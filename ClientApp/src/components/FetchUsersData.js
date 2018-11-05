@@ -19,8 +19,13 @@ class FetchUsersData extends Component {
     )
   }
 }
+function sortUsers(props) {
 
+}
 function renderLeaderboardTable(props) {
+  if(props.users.length>0){
+    props.sortUsersByPoints();
+  }
   return (
     <table className='table'>
       <thead>
@@ -32,9 +37,9 @@ function renderLeaderboardTable(props) {
         </tr>
       </thead>
       <tbody>
-        {props.users.map(user =>
+        {props.users.map((user, index) =>
         <tr key={user.id}>
-          <td>{user.id + 1}</td>
+          <td>{index + 1}</td>
           <td>{user.name}</td>
           <td>{user.location}</td>
           <td>{user.lifetimePoints}</td>

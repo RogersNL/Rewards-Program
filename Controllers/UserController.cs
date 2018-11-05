@@ -15,7 +15,7 @@ namespace Rewards.Solutions.Controllers
       {
           List<string> nameList = new List<string>{"Person A", "Person B", "Person C", "Person D", "Person E", "Person F", "Person G", "Person H"};
           List<string> locationList = new List<string>{"Bothell", "Virginia", "Atlanta", "Houston", "Atlanta", "Bothell", "Los Angeles", "Chennai"};
-          List<int> lifetimePointList = new List<int>{3000, 2940, 2500, 2400, 2100, 1800, 1750, 1700};
+          List<int> lifetimePointList = new List<int>{1000, 3940, 2400, 2400, 300, 1200, 1750, 1700};
           List<int> currentPointList = new List<int>{500, 1500, 425, 100, 1000, 900, 900, 1100};
 
           return Enumerable.Range(0, 8).Select(index => new User

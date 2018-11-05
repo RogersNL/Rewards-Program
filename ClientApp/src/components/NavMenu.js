@@ -39,6 +39,11 @@ export default props => (
             <Glyphicon glyph='piggy-bank' /> Earn
           </NavItem>
         </LinkContainer>
+        <LinkContainer to={'/admin'}>
+          <NavItem>
+            <Glyphicon glyph='user' /> Admin
+          </NavItem>
+        </LinkContainer>
       </Nav>
     </Navbar.Collapse>
   </Navbar>
