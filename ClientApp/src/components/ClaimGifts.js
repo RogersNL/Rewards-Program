@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { actionCreators } from '../store/Gifts';
 
-class FetchGiftsData extends Component {
+class ClaimGifts extends Component {
   componentWillMount() {
     this.props.requestGifts();
   }
@@ -44,4 +44,4 @@ function renderGiftsTable(props) {
 export default connect(
   state => state.gifts,
   dispatch => bindActionCreators(actionCreators, dispatch)
-)(FetchGiftsData);
+)(ClaimGifts);

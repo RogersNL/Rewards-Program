@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { actionCreators } from '../store/Transactions';
 
-class FetchTransactionsData extends Component {
+class Transactions extends Component {
   componentWillMount() {
     this.props.requestTransactions();
   }
@@ -46,4 +46,4 @@ function renderTransactionsTable(props) {
 export default connect(
   state => state.transactions,
   dispatch => bindActionCreators(actionCreators, dispatch)
-)(FetchTransactionsData);
+)(Transactions);

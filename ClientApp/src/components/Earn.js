@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { actionCreators } from '../store/Posts';
 
-class FetchPostsData extends Component {
+class Earn extends Component {
   componentWillMount() {
     this.props.requestPosts();
   }
@@ -46,4 +46,4 @@ function renderPostsTable(props) {
 export default connect(
   state => state.posts,
   dispatch => bindActionCreators(actionCreators, dispatch)
-)(FetchPostsData);
+)(Earn);

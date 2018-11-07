@@ -12,8 +12,6 @@ export const actionCreators = {
     const users = await response.json();
 
     dispatch({ type: receiveUsersType, users });
-  },
-  sortUsersByPoints: () => async (dispatch, getState) => {
     dispatch({ type: sortUsersByPointsType });
   }
 };
@@ -37,12 +35,13 @@ export const reducer = (state, action) => {
   }
 
   if (action.type === sortUsersByPointsType) {
-    const sortedUsers = state.users.sort(function(a,b){
+    const userList = state.users.slice();
+    const sortedUsers = userList.sort(function(a,b){
       return b.lifetimePoints - a.lifetimePoints;
     })
     return {
       ...state,
-      users: sortedUsers
+      sortedUsers: sortedUsers
     }
   }
 
