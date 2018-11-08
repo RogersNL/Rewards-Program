@@ -1,26 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Leaderboard(props) {
-  function renderLeaderboardTable(props) {
+function ManageUsers(props) {
+  function renderUsersTable(props) {
     if(props.userList){
       return (
         <table className='table'>
           <thead>
             <tr>
-              <th></th>
               <th>Name</th>
               <th>Location</th>
+              <th>Current Points</th>
               <th>Lifetime Points</th>
+              <th>Is Admin</th>
             </tr>
           </thead>
           <tbody>
             {props.userList.map((user, index) =>
               <tr key={user.id}>
-                <td>{index + 1}</td>
                 <td>{user.name}</td>
                 <td>{user.location}</td>
+                <td>{user.currentPoints}</td>
                 <td>{user.lifetimePoints}</td>
+                <td>{user.isAdmin}</td>
+                <td><button className='btn btn-warning'>Edit</button></td>
               </tr>)}
             </tbody>
           </table>
@@ -33,15 +36,15 @@ function Leaderboard(props) {
     }
   return (
     <div>
-      <h1>Leaderboard</h1>
-      <p>Top earners in iLink.</p>
-      {renderLeaderboardTable(props)}
+      <h1>Manage Users</h1>
+      <p>Manage iLink Rewards Accounts</p>
+      {renderUsersTable(props)}
     </div>
   )
 }
 
-Leaderboard.propTypes = {
+ManageUsers.propTypes = {
   userList: PropTypes.array
 };
 
-export default Leaderboard;
+export default ManageUsers;

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Earn(props) {
+function ManagePosts(props) {
   function renderPostsTable(props) {
-    if(props.postList) {
+    if(props.posts) {
     return (
       <table className='table'>
         <thead>
@@ -15,7 +15,7 @@ function Earn(props) {
           </tr>
         </thead>
         <tbody>
-          {props.postList.map(post =>
+          {props.posts.posts.map(post =>
             <tr key={post.id}>
               <td>{post.name}</td>
               <td>{post.description}</td>
@@ -33,15 +33,15 @@ function Earn(props) {
   }
   return (
     <div>
-      <h1>Earn</h1>
-      <p>Here are some ways you can earn more points!</p>
+      <h1>Manage Posts</h1>
+      <p>Create/Edit Posts</p>
       {renderPostsTable(props)}
     </div>
   )
 }
 
-Earn.propTypes = {
-  postList: PropTypes.array
+ManagePosts.propTypes = {
+  posts: PropTypes.object
 };
 
-export default Earn;
+export default ManagePosts;

@@ -2,7 +2,7 @@ const requestGiftsType = 'REQUEST_GIFTS';
 const receiveGiftsType = 'RECEIVE_GIFTS';
 const initialState = { gifts: [], isLoading: false};
 
-export const actionCreators = {
+export const giftActionCreators = {
   requestGifts: id => async (dispatch, getState) => {
     dispatch({ type: requestGiftsType});
 

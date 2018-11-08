@@ -2,7 +2,7 @@ const requestTransactionsType = 'REQUEST_TRANSACTIONS';
 const receiveTransactionsType = 'RECEIVE_TRANSACTIONS';
 const initialState = { transactions: [], isLoading: false};
 
-export const actionCreators = {
+export const transactionActionCreators = {
   requestTransactions: id => async (dispatch, getState) => {
     dispatch({ type: requestTransactionsType});
 

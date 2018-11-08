@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function ClaimGifts(props) {
+function ManageGifts(props) {
   function renderGiftsTable(props) {
     if(props.giftList){
       return (
@@ -31,15 +31,15 @@ function ClaimGifts(props) {
     }
   return (
     <div>
-      <h1>Claim Gifts</h1>
-      <p>Email ____ to claim your gift!</p>
+      <h1>Manage Gifts</h1>
+      <p>Add/Modify Gifts</p>
       {renderGiftsTable(props)}
     </div>
   )
 }
 
-ClaimGifts.propTypes = {
+ManageGifts.propTypes = {
   giftList: PropTypes.array
 };
 
-export default ClaimGifts;
+export default ManageGifts;

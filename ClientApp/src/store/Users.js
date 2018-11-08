@@ -3,7 +3,7 @@ const receiveUsersType = 'RECEIVE_USERS';
 const sortUsersByPointsType = 'SORT_USERS_BY_POINTS';
 const initialState = { users: [], isLoading: false};
 
-export const actionCreators = {
+export const userActionCreators = {
   requestUsers: id => async (dispatch, getState) => {
     dispatch({ type: requestUsersType });
 

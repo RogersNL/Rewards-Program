@@ -14,11 +14,21 @@ import Leaderboard from './components/Leaderboard';
 import ClaimGifts from './components/ClaimGifts';
 import Admin from './components/Admin';
 import Analytics from './components/Analytics';
-import { actionCreators } from './store/Users';
+import ManageUsers from './components/ManageUsers';
+import ManagePosts from './components/ManagePosts';
+import ManageGifts from './components/ManageGifts';
+import { userActionCreators } from './store/Users';
+import { giftActionCreators } from './store/Gifts';
+import { transactionActionCreators } from './store/Transactions';
+import { postActionCreators } from './store/Posts';
+
 
 class App extends Component {
   componentWillMount() {
     this.props.actions.requestUsers();
+    this.props.actions.requestGifts();
+    this.props.actions.requestTransactions();
+    this.props.actions.requestPosts();
   }
   render(){
     return(
@@ -28,14 +38,14 @@ class App extends Component {
             <Route exact path='/' component={Home} />
             <Route path='/counter' component={Counter} />
             <Route path='/fetchdata/:startDateIndex?' component={FetchData} />
-            <Route path='/earn' component={Earn} />
-            <Route path='/transactions' component={Transactions} />
+            <Route path='/earn' render={()=><Earn postList={this.props.appState.posts.currentPosts} />} />
+            <Route path='/transactions' render={()=><Transactions transactionList={this.props.appState.transactions.transactions} />} />
             <Route path='/leaderboard' render={()=><Leaderboard userList={this.props.appState.users.sortedUsers} />} />
-            <Route path='/rewards' component={ClaimGifts} />
+            <Route path='/rewards' render={()=><ClaimGifts giftList={this.props.appState.gifts.gifts} />} />
             <Route path='/admin' component={Admin} />
-            <Route path='/manage-users' component={Leaderboard} />
-            <Route path='/manage-posts' component={Earn} />
-            <Route path='/manage-gifts' component={ClaimGifts} />
+            <Route path='/manage-users' render={()=><ManageUsers userList={this.props.appState.users.users} />} />
+            <Route path='/manage-posts' render={()=><ManagePosts posts={this.props.appState.posts} />} />
+            <Route path='/manage-gifts' render={()=><ManageGifts giftList={this.props.appState.gifts.gifts} />} />
             <Route path='/analytics' component={Analytics} />
           </Switch>
         </Layout>
@@ -50,7 +60,7 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    actions: bindActionCreators(actionCreators, dispatch)
+    actions: bindActionCreators(Object.assign({}, userActionCreators, giftActionCreators, transactionActionCreators, postActionCreators), dispatch)
   };
 };
 App.propTypes = {

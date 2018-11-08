@@ -1,10 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Col, Grid, Row, Panel, Glyphicon } from 'react-bootstrap';
 import './Home.css';
 
-const Home = props => (
+const Admin = props => (
   <div>
     <h1>Admin</h1>
     <Grid fluid>
@@ -48,4 +47,4 @@ const Home = props => (
   </div>
 );
 
-export default connect()(Home);
+export default Admin;

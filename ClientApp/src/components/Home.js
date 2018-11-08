@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Col, Grid, Row, Panel, Glyphicon } from 'react-bootstrap';
 import './Home.css';
@@ -48,4 +47,4 @@ const Home = props => (
   </div>
 );
 
-export default connect()(Home);
+export default Home;
