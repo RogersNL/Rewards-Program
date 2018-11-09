@@ -1,6 +1,7 @@
 const requestPostsType = 'REQUEST_POSTS';
 const receivePostsType = 'RECEIVE_POSTS';
 const filterCurrentPostsType = 'FILTER_CURRENT_POSTS';
+const filterPostsByLocationType = 'FILTER_POSTS_BY_LOCATION';
 const initialState = { posts: [], isLoading: false};
 
 export const postActionCreators = {
@@ -13,6 +14,9 @@ export const postActionCreators = {
 
     dispatch({ type: receivePostsType, posts});
     dispatch({ type: filterCurrentPostsType });
+  },
+  filterPostsByLocation: location => async (dispatch, getState) => {
+    dispatch({ type: filterPostsByLocationType, location });
   }
 };
 
@@ -43,5 +47,13 @@ export const reducer = (state, action) => {
     }
   }
 
+  if (action.type === filterPostsByLocationType) {
+    const shownPosts = state.currentPosts.slice();
+    const filteredPosts = shownPosts.filter(post => post.location === action.location);
+    return {
+      ...state,
+      filteredPosts: filteredPosts
+    }
+  }
   return state;
 };

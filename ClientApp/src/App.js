@@ -17,6 +17,7 @@ import Analytics from './components/Analytics';
 import ManageUsers from './components/ManageUsers';
 import ManagePosts from './components/ManagePosts';
 import ManageGifts from './components/ManageGifts';
+import NewPostForm from './components/NewPostForm';
 import { userActionCreators } from './store/Users';
 import { giftActionCreators } from './store/Gifts';
 import { transactionActionCreators } from './store/Transactions';
@@ -44,8 +45,9 @@ class App extends Component {
             <Route path='/rewards' render={()=><ClaimGifts giftList={this.props.appState.gifts.gifts} />} />
             <Route path='/admin' component={Admin} />
             <Route path='/manage-users' render={()=><ManageUsers userList={this.props.appState.users.users} />} />
-            <Route path='/manage-posts' render={()=><ManagePosts posts={this.props.appState.posts} />} />
+            <Route path='/manage-posts' render={()=><ManagePosts posts={this.props.appState.posts} filterByLocation={this.props.actions.filterPostsByLocation} />} />
             <Route path='/manage-gifts' render={()=><ManageGifts giftList={this.props.appState.gifts.gifts} />} />
+            <Route path='/new-post' component={NewPostForm} />
             <Route path='/analytics' component={Analytics} />
           </Switch>
         </Layout>
