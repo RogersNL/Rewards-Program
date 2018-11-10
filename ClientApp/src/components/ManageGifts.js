@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 function ManageGifts(props) {
   function renderGiftsTable(props) {
@@ -31,9 +33,16 @@ function ManageGifts(props) {
     }
   return (
     <div>
+      <Link to='/new-gift' ><Button className="newGiftButton" bsStyle="primary">Add New Gift</Button></Link>
       <h1>Manage Gifts</h1>
       <p>Add/Modify Gifts</p>
       {renderGiftsTable(props)}
+      <style jsx>{`
+        .newGiftButton {
+          float:right;
+          margin-right: 40px;
+        }
+      `}</style>
     </div>
   )
 }

@@ -6,59 +6,101 @@ class NewPostForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: ''
+      _name: '',
+      _description: '',
+      _location: '',
+      _pointValue: '',
+      _dateClosed: ''
     };
-    this.handleChange = this.handleChange.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+    this.handleLocationChange = this.handleLocationChange.bind(this);
+    this.handlePointValueChange = this.handlePointValueChange.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
+    this.handleNewPostFormSubmit = this.handleNewPostFormSubmit.bind(this);
   }
 
-  handleChange(date) {
+  handleNameChange(event) {
     this.setState({
-      startDate: date
+      _name: event.target.value
+    });
+  }
+  handleDescriptionChange(event) {
+    this.setState({
+      _description: event.target.value
+    });
+  }
+  handleLocationChange(event) {
+    this.setState({
+      _location: event.target.value
+    });
+  }
+  handlePointValueChange(event) {
+    this.setState({
+      _pointValue: event.target.value
+    });
+  }
+  handleDateChange(date) {
+    this.setState({
+      _dateClosed: date
     });
   }
 
+  handleNewPostFormSubmit(event) {
+    event.preventDefault();
+    console.log(this.state)
+    this.setState({
+      _name: '',
+      _description: '',
+      _location: '',
+      _pointValue: '',
+      _dateClosed: ''
+    })
+    // addPost(this.state._name, this.state._description, _location, _pointValue, _dateClosed);
+  }
   render(){
     return (
       <div>
         <h1>New Post</h1>
-        <form>
+        <form onSubmit={this.handleNewPostFormSubmit}>
           <FormGroup>
             <ControlLabel>Name of Event or Opportunity</ControlLabel>
-            <FormControl type="text" placeholder="Event or Opportunity"></FormControl>
+            <FormControl value={this.state._name} onChange={this.handleNameChange} type="text" placeholder="Event or Opportunity"></FormControl>
           </FormGroup>
           <FormGroup controlId="formControlsTextarea">
             <ControlLabel>Description of Event or Opportunity</ControlLabel>
-            <FormControl componentClass="textarea" placeholder="Description" />
+            <FormControl value={this.state._description} onChange={this.handleDescriptionChange} componentClass="textarea" placeholder="Description" />
           </FormGroup>
           <FormGroup controlId="formControlsSelect">
             <ControlLabel>Relevant Locations</ControlLabel>
-            <FormControl componentClass="select" placeholder="select">
-              <option value="1">All Locations</option>
-              <option value="2">Bothell</option>
-              <option value="3">Virginia</option>
-              <option value="4">Atlanta</option>
-              <option value="5">Houston</option>
-              <option value="6">Los Angeles</option>
-              <option value="7">Chennai</option>
-              <option value="8">Pune</option>
-              <option value="9">Trichy</option>
-              <option value="10">Malaysia</option>
-              <option value="11">U.A.E</option>
+            <FormControl value={this.state._location} onChange={this.handleLocationChange} componentClass="select" placeholder="select">
+              <option value="All Locations">All Locations</option>
+              <option value="Bothell">Bothell</option>
+              <option value="Virginia">Virginia</option>
+              <option value="Atlanta">Atlanta</option>
+              <option value="Houston">Houston</option>
+              <option value="Los Angeles">Los Angeles</option>
+              <option value="Chennai">Chennai</option>
+              <option value="Pune">Pune</option>
+              <option value="Trichy">Trichy</option>
+              <option value="Malaysia">Malaysia</option>
+              <option value="U.A.E">U.A.E</option>
             </FormControl>
           </FormGroup>
           <FormGroup>
             <ControlLabel>Point Value of Event or Opportunity</ControlLabel>
-            <FormControl type="text" placeholder="Point Value"></FormControl>
+            <FormControl value={this.state._pointValue} onChange={this.handlePointValueChange} type="text" placeholder="Point Value"></FormControl>
           </FormGroup>
           <ControlLabel>Offer Expires Date</ControlLabel>
           <FormGroup>
             <DatePicker
+              value={this.state._dateClosed}
               placeholderText='MM/DD/YYYY'
               className='form-control'
-              selected={this.state.startDate}
-              onChange={this.handleChange}/>
+              selected={this.state._dateClosed}
+              onChange={this.handleDateChange}/>
           </FormGroup>
-          <Button bsStyle="success">Add Post</Button>
+          <Button type="submit" bsStyle="success">Add Post</Button>
         </form>
         <style jsx>{`
             DatePicker {

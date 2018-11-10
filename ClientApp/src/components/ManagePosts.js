@@ -6,9 +6,12 @@ import { ButtonGroup, Button, DropdownButton, MenuItem } from 'react-bootstrap';
 function ManagePosts(props) {
   function handleFilteringPostsByLocation(location){
     props.filterByLocation(location);
-    console.log(location);
+  }
+  function handleFilteringPostsByDate(value){
+    props.filterByDate(value);
     console.log(props)
   }
+
   function renderPostsTable(props) {
     if(props.posts.filteredPosts){
       return (
@@ -17,6 +20,7 @@ function ManagePosts(props) {
             <tr>
               <th>Name</th>
               <th>Description</th>
+              <th>Location</th>
               <th>Point Value</th>
               <th>Offer Expires</th>
             </tr>
@@ -26,6 +30,7 @@ function ManagePosts(props) {
               <tr key={post.id}>
                 <td>{post.name}</td>
                 <td>{post.description}</td>
+                <td>{post.location}</td>
                 <td>{post.pointValue}</td>
                 <td>{post.dateClosed}</td>
               </tr>)}
@@ -40,6 +45,7 @@ function ManagePosts(props) {
           <tr>
             <th>Name</th>
             <th>Description</th>
+            <th>Location</th>
             <th>Point Value</th>
             <th>Offer Expires</th>
           </tr>
@@ -49,6 +55,7 @@ function ManagePosts(props) {
             <tr key={post.id}>
               <td>{post.name}</td>
               <td>{post.description}</td>
+              <td>{post.location}</td>
               <td>{post.pointValue}</td>
               <td>{post.dateClosed}</td>
             </tr>)}
@@ -68,7 +75,11 @@ function ManagePosts(props) {
       <p>Create/Edit Posts</p>
         <ButtonGroup>
           <Button>1</Button>
-          <Button>2</Button>
+          <DropdownButton title="Sort By Date" id="bg-nested-dropdown">
+            <MenuItem eventKey="1" onSelect={handleFilteringPostsByDate}>Newest To Oldest</MenuItem>
+            <MenuItem eventKey="2" onSelect={handleFilteringPostsByDate}>Oldest To Newest</MenuItem>
+
+          </DropdownButton>
           <DropdownButton title="Sort By Location" id="bg-nested-dropdown">
             <MenuItem eventKey="Bothell" onSelect={handleFilteringPostsByLocation}>Bothell</MenuItem>
             <MenuItem eventKey="Virginia" onSelect={handleFilteringPostsByLocation}>Virginia</MenuItem>
@@ -95,7 +106,8 @@ function ManagePosts(props) {
 
 ManagePosts.propTypes = {
   posts: PropTypes.object,
-  filterByLocation: PropTypes.func
+  filterByLocation: PropTypes.func,
+  filterByDate: PropTypes.func
 };
 
 export default ManagePosts;

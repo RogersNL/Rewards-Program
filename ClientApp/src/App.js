@@ -18,18 +18,21 @@ import ManageUsers from './components/ManageUsers';
 import ManagePosts from './components/ManagePosts';
 import ManageGifts from './components/ManageGifts';
 import NewPostForm from './components/NewPostForm';
+import NewGiftForm from './components/NewGiftForm';
 import { userActionCreators } from './store/Users';
 import { giftActionCreators } from './store/Gifts';
 import { transactionActionCreators } from './store/Transactions';
 import { postActionCreators } from './store/Posts';
+import { weatherActionCreators} from './store/WeatherForecasts';
 
 
 class App extends Component {
   componentWillMount() {
-    this.props.actions.requestUsers();
-    this.props.actions.requestGifts();
-    this.props.actions.requestTransactions();
-    this.props.actions.requestPosts();
+    // this.props.actions.requestUsers();
+    // this.props.actions.requestGifts();
+    // this.props.actions.requestTransactions();
+    // this.props.actions.requestPosts();
+    this.props.actions.requestWeatherForecasts();
   }
   render(){
     return(
@@ -45,9 +48,10 @@ class App extends Component {
             <Route path='/rewards' render={()=><ClaimGifts giftList={this.props.appState.gifts.gifts} />} />
             <Route path='/admin' component={Admin} />
             <Route path='/manage-users' render={()=><ManageUsers userList={this.props.appState.users.users} />} />
-            <Route path='/manage-posts' render={()=><ManagePosts posts={this.props.appState.posts} filterByLocation={this.props.actions.filterPostsByLocation} />} />
+            <Route path='/manage-posts' render={()=><ManagePosts posts={this.props.appState.posts} filterByLocation={this.props.actions.filterPostsByLocation} filterByDate={this.props.actions.filterPostsByDate} />} />
             <Route path='/manage-gifts' render={()=><ManageGifts giftList={this.props.appState.gifts.gifts} />} />
             <Route path='/new-post' component={NewPostForm} />
+            <Route path='/new-gift' component={NewGiftForm} />
             <Route path='/analytics' component={Analytics} />
           </Switch>
         </Layout>
@@ -62,7 +66,7 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    actions: bindActionCreators(Object.assign({}, userActionCreators, giftActionCreators, transactionActionCreators, postActionCreators), dispatch)
+    actions: bindActionCreators(Object.assign({}, userActionCreators, giftActionCreators, transactionActionCreators, postActionCreators, weatherActionCreators), dispatch)
   };
 };
 App.propTypes = {

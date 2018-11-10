@@ -2,6 +2,7 @@ const requestPostsType = 'REQUEST_POSTS';
 const receivePostsType = 'RECEIVE_POSTS';
 const filterCurrentPostsType = 'FILTER_CURRENT_POSTS';
 const filterPostsByLocationType = 'FILTER_POSTS_BY_LOCATION';
+const filterPostsByDateType = 'FILTER_POSTS_BY_DATE';
 const initialState = { posts: [], isLoading: false};
 
 export const postActionCreators = {
@@ -17,6 +18,9 @@ export const postActionCreators = {
   },
   filterPostsByLocation: location => async (dispatch, getState) => {
     dispatch({ type: filterPostsByLocationType, location });
+  },
+  filterPostsByDate: value => async (dispatch, getState) => {
+    dispatch({ type: filterPostsByDateType, value});
   }
 };
 
@@ -55,5 +59,21 @@ export const reducer = (state, action) => {
       filteredPosts: filteredPosts
     }
   }
+
+  if (action.type === filterPostsByDateType) {
+    const shownPosts = state.posts.slice();
+    const sortedPosts = shownPosts.sort(function(a,b){
+      if(action.value === "1"){
+        return Date.parse(b.dateClosed) - Date.parse(a.dateClosed);
+      } else {
+        return Date.parse(a.dateClosed) - Date.parse(b.dateClosed);
+      }
+    });
+    return {
+      ...state,
+      filteredPosts: sortedPosts
+    }
+  }
+
   return state;
 };
