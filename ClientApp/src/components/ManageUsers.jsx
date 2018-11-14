@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, FormControl, FormGroup } from 'react-bootstrap'
+import { Button, FormControl, FormGroup } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 class ManageUsers extends Component {
   constructor(props) {
@@ -10,7 +11,6 @@ class ManageUsers extends Component {
       users: []
     };
     this.handleRenderUsersTable = this.handleRenderUsersTable.bind(this);
-    this.handleSearchUsersFormSubmit = this.handleSearchUsersFormSubmit.bind(this);
     this.handleSearchValueChange = this.handleSearchValueChange.bind(this);
     this.handleUpdatingUserList = this.handleUpdatingUserList.bind(this);
   }
@@ -21,12 +21,12 @@ class ManageUsers extends Component {
     })
   }
   handleUpdatingUserList(searchValue) {
-    const propsList = this.props.userList.slice();
-    return propsList.filter(user => user.name.toLowerCase().includes(searchValue.toLowerCase()));
-  }
-  handleSearchUsersFormSubmit(event) {
-    event.preventDefault()
-    console.log(this.state)
+    if(searchValue === '') {
+      return [];
+    } else {
+      const propsList = this.props.userList.slice();
+      return propsList.filter(user => user.name.toLowerCase().includes(searchValue.toLowerCase()));
+    }
   }
   handleRenderUsersTable(props) {
     if(props.userList){
@@ -38,7 +38,6 @@ class ManageUsers extends Component {
               <th>Location</th>
               <th>Current Points</th>
               <th>Lifetime Points</th>
-              <th>Is Admin</th>
             </tr>
           </thead>
           <tbody>
@@ -48,8 +47,7 @@ class ManageUsers extends Component {
                 <td>{user.location}</td>
                 <td>{user.currentPoints}</td>
                 <td>{user.lifetimePoints}</td>
-                <td>{user.isAdmin}</td>
-                <td><Button bsStyle='warning'>Add/Deduct Points</Button></td>
+                <td><Link to={{pathname: `/user/${user.id}`}}><Button bsStyle='warning'>Add/Deduct Points</Button></Link></td>
               </tr>)}
             </tbody>
           </table>
@@ -66,10 +64,10 @@ class ManageUsers extends Component {
         <h1>Manage Users</h1>
         <p>Manage iLink Rewards Accounts</p>
         <div>
-          <form onSubmit={this.handleSearchUsersFormSubmit}>
+          <form>
             <FormGroup>
               <FormControl
-                placeholder="Search"
+                placeholder="Search User By Name"
                 type="text"
                 onChange={this.handleSearchValueChange}
                 ></FormControl>

@@ -19,6 +19,7 @@ import ManagePosts from './components/ManagePosts';
 import ManageGifts from './components/ManageGifts';
 import NewPostForm from './components/NewPostForm';
 import NewGiftForm from './components/NewGiftForm';
+import UserPointsForm from './components/UserPointsForm';
 import { userActionCreators } from './store/Users';
 import { giftActionCreators } from './store/Gifts';
 import { transactionActionCreators } from './store/Transactions';
@@ -51,6 +52,7 @@ class App extends Component {
             <Route path='/new-post' component={NewPostForm} />
             <Route path='/new-gift' component={NewGiftForm} />
             <Route path='/analytics' component={Analytics} />
+            <Route path='/user/:id' render={()=><UserPointsForm userList={this.props.appState.users.users} location={this.props.location.pathname} />} />
           </Switch>
         </Layout>
       </div>
