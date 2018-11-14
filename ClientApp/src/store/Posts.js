@@ -7,20 +7,20 @@ const initialState = { posts: [], isLoading: false};
 
 export const postActionCreators = {
   requestPosts: id => async (dispatch, getState) => {
-    dispatch({ type: requestPostsType});
+    dispatch({ type: requestPostsType });
 
     const url = `api/Post/Posts`;
     const response = await fetch(url);
     const posts = await response.json();
 
-    dispatch({ type: receivePostsType, posts});
+    dispatch({ type: receivePostsType, posts });
     dispatch({ type: filterCurrentPostsType });
   },
   filterPostsByLocation: location => async (dispatch, getState) => {
     dispatch({ type: filterPostsByLocationType, location });
   },
   filterPostsByDate: value => async (dispatch, getState) => {
-    dispatch({ type: filterPostsByDateType, value});
+    dispatch({ type: filterPostsByDateType, value });
   }
 };
 

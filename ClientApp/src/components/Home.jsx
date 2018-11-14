@@ -43,7 +43,7 @@ const Home = props => (
         </Col>
       </Row>
     </Grid>
-    <style jsx>{`
+    <style>{`
       a {
         color: #333;
         text-decoration: none;

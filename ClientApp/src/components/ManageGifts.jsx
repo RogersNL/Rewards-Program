@@ -37,7 +37,7 @@ function ManageGifts(props) {
       <h1>Manage Gifts</h1>
       <p>Add/Modify Gifts</p>
       {renderGiftsTable(props)}
-      <style jsx>{`
+      <style>{`
         .newGiftButton {
           float:right;
           margin-right: 40px;

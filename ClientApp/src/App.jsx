@@ -28,10 +28,10 @@ import { weatherActionCreators} from './store/WeatherForecasts';
 
 class App extends Component {
   componentWillMount() {
-    // this.props.actions.requestUsers();
-    // this.props.actions.requestGifts();
-    // this.props.actions.requestTransactions();
-    // this.props.actions.requestPosts();
+    this.props.actions.requestUsers();
+    this.props.actions.requestGifts();
+    this.props.actions.requestTransactions();
+    this.props.actions.requestPosts();
     this.props.actions.requestWeatherForecasts();
   }
   render(){
@@ -40,8 +40,6 @@ class App extends Component {
         <Layout>
           <Switch>
             <Route exact path='/' component={Home} />
-            <Route path='/counter' component={Counter} />
-            <Route path='/fetchdata/:startDateIndex?' component={FetchData} />
             <Route path='/earn' render={()=><Earn postList={this.props.appState.posts.currentPosts} />} />
             <Route path='/transactions' render={()=><Transactions transactionList={this.props.appState.transactions.transactions} />} />
             <Route path='/leaderboard' render={()=><Leaderboard userList={this.props.appState.users.sortedUsers} />} />

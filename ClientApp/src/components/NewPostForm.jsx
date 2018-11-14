@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
+import moment from 'moment';
 
 class NewPostForm extends Component {
   constructor(props) {
@@ -8,9 +9,9 @@ class NewPostForm extends Component {
     this.state = {
       _name: '',
       _description: '',
-      _location: '',
+      _location: 'All Locations',
       _pointValue: '',
-      _dateClosed: ''
+      _dateClosed: moment()
     };
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
@@ -48,15 +49,35 @@ class NewPostForm extends Component {
 
   handleNewPostFormSubmit(event) {
     event.preventDefault();
-    console.log(this.state)
+    console.log(this.state);
+    // this.addPost(this.state._name, this.state._description, this.state._location, this.state._pointValue, this.state._dateClosed);
     this.setState({
       _name: '',
       _description: '',
       _location: '',
       _pointValue: '',
-      _dateClosed: ''
+      _dateClosed: moment()
     })
-    // addPost(this.state._name, this.state._description, _location, _pointValue, _dateClosed);
+
+  }
+  addPost(name, description, location, pointValue, dateClosed){
+    const url = `https://localhost:5001/test`;
+    const data = {
+      name,
+      description,
+      location,
+      pointValue,
+      dateClosed
+    }
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json())
+    .then(response => console.log('Success;', JSON.stringify(response)))
+    .catch(error => console.error('Error', error));
   }
   render(){
     return (
@@ -94,7 +115,6 @@ class NewPostForm extends Component {
           <ControlLabel>Offer Expires Date</ControlLabel>
           <FormGroup>
             <DatePicker
-              value={this.state._dateClosed}
               placeholderText='MM/DD/YYYY'
               className='form-control'
               selected={this.state._dateClosed}
@@ -102,7 +122,7 @@ class NewPostForm extends Component {
           </FormGroup>
           <Button type="submit" bsStyle="success">Add Post</Button>
         </form>
-        <style jsx>{`
+        <style>{`
             DatePicker {
 
             }

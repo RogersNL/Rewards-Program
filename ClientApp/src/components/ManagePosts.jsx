@@ -80,7 +80,7 @@ function ManagePosts(props) {
             <MenuItem eventKey="2" onSelect={handleFilteringPostsByDate}>Oldest To Newest</MenuItem>
 
           </DropdownButton>
-          <DropdownButton title="Sort By Location" id="bg-nested-dropdown">
+          <DropdownButton title="Filter By Location" id="bg-nested-dropdown">
             <MenuItem eventKey="Bothell" onSelect={handleFilteringPostsByLocation}>Bothell</MenuItem>
             <MenuItem eventKey="Virginia" onSelect={handleFilteringPostsByLocation}>Virginia</MenuItem>
             <MenuItem eventKey="Atlanta" onSelect={handleFilteringPostsByLocation}>Atlanta</MenuItem>
@@ -94,7 +94,7 @@ function ManagePosts(props) {
           </DropdownButton>
         </ButtonGroup>
       {renderPostsTable(props)}
-      <style jsx>{`
+      <style>{`
         .newPostButton {
           float:right;
           margin-right: 40px;

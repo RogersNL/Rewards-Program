@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
+import moment from 'moment';
 
 class NewGiftForm extends Component {
   constructor(props) {
@@ -9,7 +10,7 @@ class NewGiftForm extends Component {
       _name: '',
       _description: '',
       _pointValue: '',
-      _dateClosed: ''
+      _dateClosed: moment()
     };
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
@@ -46,7 +47,7 @@ class NewGiftForm extends Component {
       _name: '',
       _description: '',
       _pointValue: '',
-      _dateClosed: ''
+      _dateClosed: moment()
     })
   }
   render(){
@@ -69,7 +70,6 @@ class NewGiftForm extends Component {
           <ControlLabel>Offer Expires Date</ControlLabel>
           <FormGroup>
             <DatePicker
-              value={this.state._dateClosed}
               placeholderText='MM/DD/YYYY'
               className='form-control'
               selected={this.state._dateClosed}
@@ -77,7 +77,7 @@ class NewGiftForm extends Component {
           </FormGroup>
           <Button bsStyle="success" type="submit">Add Gift</Button>
         </form>
-        <style jsx>{`
+        <style>{`
             DatePicker {
 
             }
