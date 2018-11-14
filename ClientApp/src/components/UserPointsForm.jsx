@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-
+import { Link } from 'react-router-dom';
 class UserPointsForm extends Component {
   constructor(props) {
     super(props);
@@ -14,6 +14,7 @@ class UserPointsForm extends Component {
     this.handleUserPointsFormSubmit = this.handleUserPointsFormSubmit.bind(this);
     this.handleNumberChange = this.handleNumberChange.bind(this);
     this.handleReasonChange = this.handleReasonChange.bind(this);
+    this.handleRenderUserTransactions = this.handleRenderUserTransactions.bind(this);
   }
   componentDidMount(){
     this.handleFindingCurrentUser();
@@ -47,11 +48,28 @@ class UserPointsForm extends Component {
       user: currentUser
     })
   }
+  handleRenderUserTransactions() {
+    return(
+      <table className='table'>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Points</th>
+            <th>Balance</th>
+          </tr>
+        </thead>
+        <tbody>
 
+          </tbody>
+        </table>
+    )
+  }
   render(){
     if(this.state.user) {
       return (
       <div>
+        <Link to="/manage-users"><Button className="backButton" bsStyle="primary">Back To List</Button></Link>
         <h1>{this.state.user.name}</h1>
         <p>Current Points: {this.state.user.currentPoints}</p>
         <p>Lifetime Points: {this.state.user.lifetimePoints}</p>
@@ -68,9 +86,13 @@ class UserPointsForm extends Component {
           <Button type="submit" bsStyle="success">Submit</Button>
         </form>
         <hr/>
-
+        <h3>Transactions</h3>
+        {this.handleRenderUserTransactions()}
         <style>{`
-
+          .backButton {
+            float: right;
+            margin-right: 30px;
+          }
         `}</style>
         </div>
       );

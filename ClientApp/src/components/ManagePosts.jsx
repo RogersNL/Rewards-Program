@@ -9,9 +9,29 @@ function ManagePosts(props) {
   }
   function handleFilteringPostsByDate(value){
     props.filterByDate(value);
-    console.log(props)
   }
-
+  function renderFilterButtons() {
+    return(
+      <ButtonGroup>
+        <DropdownButton title="Sort By Date" id="bg-nested-dropdown">
+          <MenuItem eventKey="1" onSelect={handleFilteringPostsByDate}>Newest To Oldest</MenuItem>
+          <MenuItem eventKey="2" onSelect={handleFilteringPostsByDate}>Oldest To Newest</MenuItem>
+        </DropdownButton>
+        <DropdownButton title="Filter By Location" id="bg-nested-dropdown">
+          <MenuItem eventKey="Bothell" onSelect={handleFilteringPostsByLocation}>Bothell</MenuItem>
+          <MenuItem eventKey="Virginia" onSelect={handleFilteringPostsByLocation}>Virginia</MenuItem>
+          <MenuItem eventKey="Atlanta" onSelect={handleFilteringPostsByLocation}>Atlanta</MenuItem>
+          <MenuItem eventKey="Houston" onSelect={handleFilteringPostsByLocation}>Houston</MenuItem>
+          <MenuItem eventKey="Los Angeles" onSelect={handleFilteringPostsByLocation}>Los Angeles</MenuItem>
+          <MenuItem eventKey="Chennai" onSelect={handleFilteringPostsByLocation}>Chennai</MenuItem>
+          <MenuItem eventKey="Pune" onSelect={handleFilteringPostsByLocation}>Pune</MenuItem>
+          <MenuItem eventKey="Trichy" onSelect={handleFilteringPostsByLocation}>Trichy</MenuItem>
+          <MenuItem eventKey="Malaysia" onSelect={handleFilteringPostsByLocation}>Malaysia</MenuItem>
+          <MenuItem eventKey="U.A.E" onSelect={handleFilteringPostsByLocation}>U.A.E</MenuItem>
+        </DropdownButton>
+      </ButtonGroup>
+    )
+  }
   function renderPostsTable(props) {
     if(props.posts.filteredPosts){
       return (
@@ -37,8 +57,7 @@ function ManagePosts(props) {
             </tbody>
           </table>
         );
-    }
-    if(props.posts) {
+    } else if(props.posts) {
     return (
       <table className='table'>
         <thead>
@@ -73,26 +92,7 @@ function ManagePosts(props) {
       <Link to='/new-post'><Button className="newPostButton" bsStyle="primary">Create New Post</Button></Link>
       <h1>Manage Posts</h1>
       <p>Create/Edit Posts</p>
-        <ButtonGroup>
-          <Button>1</Button>
-          <DropdownButton title="Sort By Date" id="bg-nested-dropdown">
-            <MenuItem eventKey="1" onSelect={handleFilteringPostsByDate}>Newest To Oldest</MenuItem>
-            <MenuItem eventKey="2" onSelect={handleFilteringPostsByDate}>Oldest To Newest</MenuItem>
-
-          </DropdownButton>
-          <DropdownButton title="Filter By Location" id="bg-nested-dropdown">
-            <MenuItem eventKey="Bothell" onSelect={handleFilteringPostsByLocation}>Bothell</MenuItem>
-            <MenuItem eventKey="Virginia" onSelect={handleFilteringPostsByLocation}>Virginia</MenuItem>
-            <MenuItem eventKey="Atlanta" onSelect={handleFilteringPostsByLocation}>Atlanta</MenuItem>
-            <MenuItem eventKey="Houston" onSelect={handleFilteringPostsByLocation}>Houston</MenuItem>
-            <MenuItem eventKey="Los Angeles" onSelect={handleFilteringPostsByLocation}>Los Angeles</MenuItem>
-            <MenuItem eventKey="Chennai" onSelect={handleFilteringPostsByLocation}>Chennai</MenuItem>
-            <MenuItem eventKey="Pune" onSelect={handleFilteringPostsByLocation}>Pune</MenuItem>
-            <MenuItem eventKey="Trichy" onSelect={handleFilteringPostsByLocation}>Trichy</MenuItem>
-            <MenuItem eventKey="Malaysia" onSelect={handleFilteringPostsByLocation}>Malaysia</MenuItem>
-            <MenuItem eventKey="U.A.E" onSelect={handleFilteringPostsByLocation}>U.A.E</MenuItem>
-          </DropdownButton>
-        </ButtonGroup>
+      {renderFilterButtons()}
       {renderPostsTable(props)}
       <style>{`
         .newPostButton {

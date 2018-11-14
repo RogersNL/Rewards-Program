@@ -34,6 +34,7 @@ class App extends Component {
     this.props.actions.requestTransactions();
     this.props.actions.requestPosts();
     this.props.actions.requestWeatherForecasts();
+    console.log(this.props.actions)
   }
   render(){
     return(
@@ -41,13 +42,13 @@ class App extends Component {
         <Layout>
           <Switch>
             <Route exact path='/' component={Home} />
-            <Route path='/earn' render={()=><Earn postList={this.props.appState.posts.currentPosts} />} />
+            <Route path='/earn' render={()=><Earn posts={this.props.appState.posts} filterByLocation={this.props.actions.filterCurrentPostsByLocation} filterByDate={this.props.actions.filterCurrentPostsByDate} />} />
             <Route path='/transactions' render={()=><Transactions transactionList={this.props.appState.transactions.transactions} />} />
             <Route path='/leaderboard' render={()=><Leaderboard userList={this.props.appState.users.sortedUsers} />} />
             <Route path='/rewards' render={()=><ClaimGifts giftList={this.props.appState.gifts.gifts} />} />
             <Route path='/admin' component={Admin} />
             <Route path='/manage-users' render={()=><ManageUsers userList={this.props.appState.users.users} />} />
-            <Route path='/manage-posts' render={()=><ManagePosts posts={this.props.appState.posts} filterByLocation={this.props.actions.filterPostsByLocation} filterByDate={this.props.actions.filterPostsByDate} />} />
+            <Route path='/manage-posts' render={()=><ManagePosts posts={this.props.appState.posts} filterByLocation={this.props.actions.filterAllPostsByLocation} filterByDate={this.props.actions.filterAllPostsByDate} />} />
             <Route path='/manage-gifts' render={()=><ManageGifts giftList={this.props.appState.gifts.gifts} />} />
             <Route path='/new-post' component={NewPostForm} />
             <Route path='/new-gift' component={NewGiftForm} />

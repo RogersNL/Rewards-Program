@@ -15,12 +15,18 @@ class Leaderboard extends Component {
     this.handleNextPagination = this.handleNextPagination.bind(this);
     this.handlePreviousPagination = this.handlePreviousPagination.bind(this);
   }
+  //Lifecycle Methods
+    //Render when routed to it
   componentDidMount(){
     this.handleSettingShownUsers(this.state.tableIndex);
   }
+    //Render if page is refreshed or if url manually entered
   componentWillReceiveProps(){
     this.handleSettingShownUsers(this.state.tableIndex);
   }
+
+  //Pagination
+    //Determine shown users based on pagination
   handleSettingShownUsers(index){
     if(this.props.userList){
       const users = this.props.userList.slice(index*10, (index + 1)*10);

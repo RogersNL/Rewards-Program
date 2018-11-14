@@ -17,13 +17,14 @@ namespace Rewards.Solutions.Controllers
           List<string> locationList = new List<string>{"Bothell", "Virginia", "Atlanta", "Houston", "Atlanta", "Bothell", "Los Angeles", "Chennai"};
           List<int> lifetimePointList = new List<int>{1000, 3940, 2400, 2400, 300, 1200, 1750, 1700};
           List<int> currentPointList = new List<int>{500, 1500, 425, 100, 1000, 900, 900, 1100};
+          var rng = new Random();
 
-          return Enumerable.Range(0, 600).Select(index => new User
+          return Enumerable.Range(0, 595).Select(index => new User
           {
             Name = "Test Name " + index.ToString(),
             Location = "Test Location " + index.ToString(),
             CurrentPoints = 100,
-            LifetimePoints = 1000,
+            LifetimePoints = rng.Next(0, 10000),
             Id = index
             // Name = nameList[index],
             // Location = locationList[index],

@@ -1,8 +1,11 @@
 const requestPostsType = 'REQUEST_POSTS';
 const receivePostsType = 'RECEIVE_POSTS';
 const filterCurrentPostsType = 'FILTER_CURRENT_POSTS';
-const filterPostsByLocationType = 'FILTER_POSTS_BY_LOCATION';
-const filterPostsByDateType = 'FILTER_POSTS_BY_DATE';
+const filterAllPostsByLocationType = 'FILTER_ALL_POSTS_BY_LOCATION';
+const filterAllPostsByDateType = 'FILTER_ALL_POSTS_BY_DATE';
+const filterCurrentPostsByDateType = 'FILTER_CURRENT_POSTS_BY_DATE';
+const filterCurrentPostsByLocationType = 'FILTER_CURRENT_POSTS_BY_LOCATION';
+
 const initialState = { posts: [], isLoading: false};
 
 export const postActionCreators = {
@@ -16,11 +19,17 @@ export const postActionCreators = {
     dispatch({ type: receivePostsType, posts });
     dispatch({ type: filterCurrentPostsType });
   },
-  filterPostsByLocation: location => async (dispatch, getState) => {
-    dispatch({ type: filterPostsByLocationType, location });
+  filterAllPostsByLocation: location => async (dispatch, getState) => {
+    dispatch({ type: filterAllPostsByLocationType, location });
   },
-  filterPostsByDate: value => async (dispatch, getState) => {
-    dispatch({ type: filterPostsByDateType, value });
+  filterAllPostsByDate: value => async (dispatch, getState) => {
+    dispatch({ type: filterAllPostsByDateType, value });
+  },
+  filterCurrentPostsByLocation: location => async (dispatch, getState) => {
+    dispatch({ type: filterCurrentPostsByLocationType, location });
+  },
+  filterCurrentPostsByDate: value => async (dispatch, getState) => {
+    dispatch({ type: filterCurrentPostsByDateType, value });
   }
 };
 
@@ -51,8 +60,8 @@ export const reducer = (state, action) => {
     }
   }
 
-  if (action.type === filterPostsByLocationType) {
-    const shownPosts = state.currentPosts.slice();
+  if (action.type === filterAllPostsByLocationType) {
+    const shownPosts = state.posts.slice();
     const filteredPosts = shownPosts.filter(post => post.location === action.location);
     return {
       ...state,
@@ -60,7 +69,7 @@ export const reducer = (state, action) => {
     }
   }
 
-  if (action.type === filterPostsByDateType) {
+  if (action.type === filterAllPostsByDateType) {
     const shownPosts = state.posts.slice();
     const sortedPosts = shownPosts.sort(function(a,b){
       if(action.value === "1"){
@@ -75,5 +84,28 @@ export const reducer = (state, action) => {
     }
   }
 
+  if (action.type === filterCurrentPostsByLocationType) {
+    const shownPosts = state.currentPosts.slice();
+    const filteredPosts = shownPosts.filter(post => post.location === action.location);
+    return {
+      ...state,
+      filteredPosts: filteredPosts
+    }
+  }
+
+  if (action.type === filterCurrentPostsByDateType) {
+    const shownPosts = state.currentPosts.slice();
+    const sortedPosts = shownPosts.sort(function(a,b){
+      if(action.value === "1"){
+        return Date.parse(b.dateClosed) - Date.parse(a.dateClosed);
+      } else {
+        return Date.parse(a.dateClosed) - Date.parse(b.dateClosed);
+      }
+    });
+    return {
+      ...state,
+      filteredPosts: sortedPosts
+    }
+  }
   return state;
 };
