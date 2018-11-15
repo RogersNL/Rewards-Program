@@ -10,7 +10,7 @@ const Home = props => (
         <Col sm={6}>
           <Link to='/transactions'>
             <Panel>
-              <h2>Transaction History</h2>
+              <h2>Profile</h2>
               <p>Track your points here!</p>
             </Panel>
           </Link>

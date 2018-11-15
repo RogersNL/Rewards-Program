@@ -33,8 +33,11 @@ function Transactions(props) {
   }
   return (
     <div>
-      <h1>Transaction History</h1>
-      <p>Here's where you're earning points.</p>
+      <h1>Username</h1>
+      <p>Current Points: </p>
+      <p>Lifetime Points: </p>
+      <hr />
+      <h2>History</h2>
       {renderTransactionsTable(props)}
     </div>
   )

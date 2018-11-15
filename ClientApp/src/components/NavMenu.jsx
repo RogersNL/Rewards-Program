@@ -22,7 +22,7 @@ function NavMenu(){
           </LinkContainer>
           <LinkContainer to={'/transactions'}>
             <NavItem>
-              <Glyphicon glyph='th-list' /> Transaction History
+              <Glyphicon glyph='user' /> Profile
             </NavItem>
           </LinkContainer>
           <LinkContainer to={'/leaderboard'}>
@@ -42,7 +42,7 @@ function NavMenu(){
           </LinkContainer>
           <LinkContainer to={'/admin'}>
             <NavItem>
-              <Glyphicon glyph='user' /> Admin
+              <Glyphicon glyph='wrench' /> Admin
             </NavItem>
           </LinkContainer>
         </Nav>
