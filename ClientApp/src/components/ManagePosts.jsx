@@ -4,12 +4,14 @@ import { Link } from 'react-router-dom';
 import { ButtonGroup, Button, DropdownButton, MenuItem } from 'react-bootstrap';
 
 function ManagePosts(props) {
+  //Filtering and Sorting Action Creators
   function handleFilteringPostsByLocation(location){
     props.filterByLocation(location);
   }
   function handleFilteringPostsByDate(value){
     props.filterByDate(value);
   }
+  //Filter Buttons
   function renderFilterButtons() {
     return(
       <ButtonGroup>
@@ -18,6 +20,7 @@ function ManagePosts(props) {
           <MenuItem eventKey="2" onSelect={handleFilteringPostsByDate}>Oldest To Newest</MenuItem>
         </DropdownButton>
         <DropdownButton title="Filter By Location" id="bg-nested-dropdown">
+          <MenuItem eventKey="All" onSelect={handleFilteringPostsByLocation}>All Locations</MenuItem>
           <MenuItem eventKey="Bothell" onSelect={handleFilteringPostsByLocation}>Bothell</MenuItem>
           <MenuItem eventKey="Virginia" onSelect={handleFilteringPostsByLocation}>Virginia</MenuItem>
           <MenuItem eventKey="Atlanta" onSelect={handleFilteringPostsByLocation}>Atlanta</MenuItem>
@@ -32,6 +35,7 @@ function ManagePosts(props) {
       </ButtonGroup>
     )
   }
+  //Choose which table to render
   function renderPostsTable(props) {
     if(props.posts.filteredPosts){
       return (

@@ -19,6 +19,7 @@ class NewPostForm extends Component {
     this.handlePointValueChange = this.handlePointValueChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleNewPostFormSubmit = this.handleNewPostFormSubmit.bind(this);
+    this.handleRenderGiftForm = this.handleRenderGiftForm.bind(this);
   }
 
   handleNameChange(event) {
@@ -61,7 +62,7 @@ class NewPostForm extends Component {
 
   }
   addPost(name, description, location, pointValue, dateClosed){
-    const url = `https://localhost:5001/test`;
+    const url = `https://localhost:5001/api/`;
     const data = {
       name,
       description,
@@ -79,53 +80,55 @@ class NewPostForm extends Component {
     .then(response => console.log('Success;', JSON.stringify(response)))
     .catch(error => console.error('Error', error));
   }
+  handleRenderPostForm(){
+    return(
+      <form onSubmit={this.handleNewPostFormSubmit}>
+        <FormGroup>
+          <ControlLabel>Name of Event or Opportunity</ControlLabel>
+          <FormControl value={this.state._name} onChange={this.handleNameChange} type="text" placeholder="Event or Opportunity"></FormControl>
+        </FormGroup>
+        <FormGroup controlId="formControlsTextarea">
+          <ControlLabel>Description of Event or Opportunity</ControlLabel>
+          <FormControl value={this.state._description} onChange={this.handleDescriptionChange} componentClass="textarea" placeholder="Description" />
+        </FormGroup>
+        <FormGroup controlId="formControlsSelect">
+          <ControlLabel>Relevant Locations</ControlLabel>
+          <FormControl value={this.state._location} onChange={this.handleLocationChange} componentClass="select" placeholder="select">
+            <option value="All Locations">All Locations</option>
+            <option value="Bothell">Bothell</option>
+            <option value="Virginia">Virginia</option>
+            <option value="Atlanta">Atlanta</option>
+            <option value="Houston">Houston</option>
+            <option value="Los Angeles">Los Angeles</option>
+            <option value="Chennai">Chennai</option>
+            <option value="Pune">Pune</option>
+            <option value="Trichy">Trichy</option>
+            <option value="Malaysia">Malaysia</option>
+            <option value="U.A.E">U.A.E</option>
+          </FormControl>
+        </FormGroup>
+        <FormGroup>
+          <ControlLabel>Point Value of Event or Opportunity</ControlLabel>
+          <FormControl value={this.state._pointValue} onChange={this.handlePointValueChange} type="text" placeholder="Point Value"></FormControl>
+        </FormGroup>
+        <ControlLabel>Offer Expires Date</ControlLabel>
+        <FormGroup>
+          <DatePicker
+            placeholderText='MM/DD/YYYY'
+            className='form-control'
+            selected={this.state._dateClosed}
+            onChange={this.handleDateChange}/>
+        </FormGroup>
+        <Button type="submit" bsStyle="success">Add Post</Button>
+      </form>
+    )
+  }
   render(){
     return (
       <div>
         <h1>New Post</h1>
-        <form onSubmit={this.handleNewPostFormSubmit}>
-          <FormGroup>
-            <ControlLabel>Name of Event or Opportunity</ControlLabel>
-            <FormControl value={this.state._name} onChange={this.handleNameChange} type="text" placeholder="Event or Opportunity"></FormControl>
-          </FormGroup>
-          <FormGroup controlId="formControlsTextarea">
-            <ControlLabel>Description of Event or Opportunity</ControlLabel>
-            <FormControl value={this.state._description} onChange={this.handleDescriptionChange} componentClass="textarea" placeholder="Description" />
-          </FormGroup>
-          <FormGroup controlId="formControlsSelect">
-            <ControlLabel>Relevant Locations</ControlLabel>
-            <FormControl value={this.state._location} onChange={this.handleLocationChange} componentClass="select" placeholder="select">
-              <option value="All Locations">All Locations</option>
-              <option value="Bothell">Bothell</option>
-              <option value="Virginia">Virginia</option>
-              <option value="Atlanta">Atlanta</option>
-              <option value="Houston">Houston</option>
-              <option value="Los Angeles">Los Angeles</option>
-              <option value="Chennai">Chennai</option>
-              <option value="Pune">Pune</option>
-              <option value="Trichy">Trichy</option>
-              <option value="Malaysia">Malaysia</option>
-              <option value="U.A.E">U.A.E</option>
-            </FormControl>
-          </FormGroup>
-          <FormGroup>
-            <ControlLabel>Point Value of Event or Opportunity</ControlLabel>
-            <FormControl value={this.state._pointValue} onChange={this.handlePointValueChange} type="text" placeholder="Point Value"></FormControl>
-          </FormGroup>
-          <ControlLabel>Offer Expires Date</ControlLabel>
-          <FormGroup>
-            <DatePicker
-              placeholderText='MM/DD/YYYY'
-              className='form-control'
-              selected={this.state._dateClosed}
-              onChange={this.handleDateChange}/>
-          </FormGroup>
-          <Button type="submit" bsStyle="success">Add Post</Button>
-        </form>
+        {this.handleRenderPostForm()}
         <style>{`
-            DatePicker {
-
-            }
         `}</style>
       </div>
     );

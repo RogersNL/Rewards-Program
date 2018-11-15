@@ -61,11 +61,18 @@ export const reducer = (state, action) => {
   }
 
   if (action.type === filterAllPostsByLocationType) {
-    const shownPosts = state.posts.slice();
-    const filteredPosts = shownPosts.filter(post => post.location === action.location);
-    return {
-      ...state,
-      filteredPosts: filteredPosts
+    if(action.location === "All") {
+      return {
+        ...state,
+        filteredPosts: state.posts.slice()
+      }
+    } else {
+      const shownPosts = state.posts.slice();
+      const filteredPosts = shownPosts.filter(post => post.location === action.location);
+      return {
+        ...state,
+        filteredPosts: filteredPosts
+      }
     }
   }
 
@@ -85,11 +92,18 @@ export const reducer = (state, action) => {
   }
 
   if (action.type === filterCurrentPostsByLocationType) {
-    const shownPosts = state.currentPosts.slice();
-    const filteredPosts = shownPosts.filter(post => post.location === action.location);
-    return {
-      ...state,
-      filteredPosts: filteredPosts
+    if(action.location === "All") {
+      return {
+        ...state,
+        filteredPosts: state.currentPosts.slice()
+      }
+    } else {
+      const shownPosts = state.currentPosts.slice();
+      const filteredPosts = shownPosts.filter(post => post.location === action.location);
+      return {
+        ...state,
+        filteredPosts: filteredPosts
+      }
     }
   }
 

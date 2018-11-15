@@ -15,6 +15,7 @@ class UserPointsForm extends Component {
     this.handleNumberChange = this.handleNumberChange.bind(this);
     this.handleReasonChange = this.handleReasonChange.bind(this);
     this.handleRenderUserTransactions = this.handleRenderUserTransactions.bind(this);
+    this.handleRenderPointsForm = this.handleRenderPointsForm.bind(this);
   }
   componentDidMount(){
     this.handleFindingCurrentUser();
@@ -65,6 +66,21 @@ class UserPointsForm extends Component {
         </table>
     )
   }
+  handleRenderPointsForm(){
+    return(
+      <form onSubmit={this.handleUserPointsFormSubmit}>
+        <FormGroup>
+          <ControlLabel>Add/Remove Points</ControlLabel>
+          <FormControl value={this.state.number} onChange={this.handleNumberChange} type="number" placeholder="Add/Remove Points"></FormControl>
+        </FormGroup>
+        <FormGroup>
+          <ControlLabel>Reason</ControlLabel>
+          <FormControl value={this.state.reason} onChange={this.handleReasonChange} type="text" placeholder="Reason"></FormControl>
+        </FormGroup>
+        <Button type="submit" bsStyle="success">Submit</Button>
+      </form>
+    )
+  }
   render(){
     if(this.state.user) {
       return (
@@ -74,17 +90,7 @@ class UserPointsForm extends Component {
         <p>Current Points: {this.state.user.currentPoints}</p>
         <p>Lifetime Points: {this.state.user.lifetimePoints}</p>
         <hr/>
-        <form onSubmit={this.handleUserPointsFormSubmit}>
-          <FormGroup>
-            <ControlLabel>Add/Remove Points</ControlLabel>
-            <FormControl value={this.state.number} onChange={this.handleNumberChange} type="number" placeholder="Add/Remove Points"></FormControl>
-          </FormGroup>
-          <FormGroup>
-            <ControlLabel>Reason</ControlLabel>
-            <FormControl value={this.state.reason} onChange={this.handleReasonChange} type="text" placeholder="Reason"></FormControl>
-          </FormGroup>
-          <Button type="submit" bsStyle="success">Submit</Button>
-        </form>
+        {this.handleRenderPointsForm()}
         <hr/>
         <h3>Transactions</h3>
         {this.handleRenderUserTransactions()}

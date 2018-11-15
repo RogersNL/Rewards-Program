@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import { ButtonGroup, Button, DropdownButton, MenuItem } from 'react-bootstrap';
 
 function Earn(props) {
+  //Action Creators from Props
   function handleFilteringPostsByLocation(location){
     props.filterByLocation(location);
   }
   function handleFilteringPostsByDate(value){
     props.filterByDate(value);
   }
+  //Choose which table to render
   function renderPostsTable(props) {
     if(props.posts.filteredPosts) {
     return (
@@ -72,6 +74,7 @@ function Earn(props) {
           <MenuItem eventKey="2" onSelect={handleFilteringPostsByDate}>Oldest To Newest</MenuItem>
         </DropdownButton>
         <DropdownButton title="Filter By Location" id="bg-nested-dropdown">
+          <MenuItem eventKey="All" onSelect={handleFilteringPostsByLocation}>All Locations</MenuItem>          
           <MenuItem eventKey="Bothell" onSelect={handleFilteringPostsByLocation}>Bothell</MenuItem>
           <MenuItem eventKey="Virginia" onSelect={handleFilteringPostsByLocation}>Virginia</MenuItem>
           <MenuItem eventKey="Atlanta" onSelect={handleFilteringPostsByLocation}>Atlanta</MenuItem>

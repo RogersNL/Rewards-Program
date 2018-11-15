@@ -3,6 +3,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+//Components
 import Layout from './components/Layout';
 import Home from './components/Home';
 import Counter from './components/Counter';
@@ -20,6 +21,7 @@ import ManageGifts from './components/ManageGifts';
 import NewPostForm from './components/NewPostForm';
 import NewGiftForm from './components/NewGiftForm';
 import UserPointsForm from './components/UserPointsForm';
+//Action Creators
 import { userActionCreators } from './store/Users';
 import { giftActionCreators } from './store/Gifts';
 import { transactionActionCreators } from './store/Transactions';
@@ -29,12 +31,12 @@ import { weatherActionCreators} from './store/WeatherForecasts';
 
 class App extends Component {
   componentWillMount() {
+    //Load API data before component mounts
     this.props.actions.requestUsers();
     this.props.actions.requestGifts();
     this.props.actions.requestTransactions();
     this.props.actions.requestPosts();
     this.props.actions.requestWeatherForecasts();
-    console.log(this.props.actions)
   }
   render(){
     return(
@@ -54,6 +56,7 @@ class App extends Component {
             <Route path='/new-gift' component={NewGiftForm} />
             <Route path='/analytics' component={Analytics} />
             <Route path='/user/:id' render={()=><UserPointsForm userList={this.props.appState.users.users} location={this.props.location.pathname} />} />
+            <Route component={Error404} />
           </Switch>
         </Layout>
       </div>

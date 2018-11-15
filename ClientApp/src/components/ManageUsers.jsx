@@ -14,12 +14,14 @@ class ManageUsers extends Component {
     this.handleSearchValueChange = this.handleSearchValueChange.bind(this);
     this.handleUpdatingUserList = this.handleUpdatingUserList.bind(this);
   }
+  //Set value in form to state
   handleSearchValueChange(event) {
     this.setState({
       search: event.target.value,
       users: this.handleUpdatingUserList(event.target.value)
     })
   }
+  //Change the shown users while searching in real time
   handleUpdatingUserList(searchValue) {
     if(searchValue === '') {
       return [];
@@ -28,6 +30,7 @@ class ManageUsers extends Component {
       return propsList.filter(user => user.name.toLowerCase().includes(searchValue.toLowerCase()));
     }
   }
+  //Show table
   handleRenderUsersTable(props) {
     if(props.userList){
       return (

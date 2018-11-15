@@ -42,6 +42,16 @@ const Home = props => (
           </Link>
         </Col>
       </Row>
+      <Row>
+        <Col sm={6}>
+          <Link to='/admin'>
+            <Panel>
+              <h2>Admin</h2>
+              <p>Manage Users, Posts, and Gifts</p>
+            </Panel>
+          </Link>
+        </Col>
+      </Row>
     </Grid>
     <style>{`
       a {
