@@ -2,9 +2,22 @@
 import { Link } from 'react-router-dom';
 import { Glyphicon, Nav, Navbar, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-// import './NavMenu.css';
+import PropTypes from 'prop-types';
 
-function NavMenu(){
+function NavMenu(props){
+  function handleShowAdminRoute(){
+    if(props.loggedInUser){
+      if(props.loggedInUser.isAdmin){
+        return(
+          <LinkContainer to={'/admin'}>
+            <NavItem>
+              <Glyphicon glyph='wrench' /> Admin
+            </NavItem>
+          </LinkContainer>
+        )
+      }
+    }
+  }
   return(
     <Navbar inverse fixedTop fluid collapseOnSelect>
       <Navbar.Header>
@@ -20,7 +33,7 @@ function NavMenu(){
               <Glyphicon glyph='home' /> Home
             </NavItem>
           </LinkContainer>
-          <LinkContainer to={'/transactions'}>
+          <LinkContainer to={'/profile'}>
             <NavItem>
               <Glyphicon glyph='user' /> Profile
             </NavItem>
@@ -40,11 +53,7 @@ function NavMenu(){
               <Glyphicon glyph='piggy-bank' /> Earn
             </NavItem>
           </LinkContainer>
-          <LinkContainer to={'/admin'}>
-            <NavItem>
-              <Glyphicon glyph='wrench' /> Admin
-            </NavItem>
-          </LinkContainer>
+          {handleShowAdminRoute()}
         </Nav>
       </Navbar.Collapse>
       <style>{`
@@ -111,5 +120,7 @@ function NavMenu(){
     </Navbar>
   );
 }
-
+NavMenu.propTypes = {
+  loggedInUser: PropTypes.object
+}
 export default NavMenu;

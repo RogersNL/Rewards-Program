@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Transactions(props) {
+function Profile(props) {
   function renderTransactionsTable(props) {
     if(props.transactionList){
       return (
         <table className='table'>
           <thead>
             <tr>
-              <th>Name</th>
+              <th>Description</th>
               <th>Date</th>
               <th>Points</th>
               <th>Balance</th>
@@ -20,7 +20,7 @@ function Transactions(props) {
                 <td>{transaction.name}</td>
                 <td>{transaction.date}</td>
                 <td>{transaction.points}</td>
-                <td>temp</td>
+                <td>{transaction.balance}</td>
               </tr>)}
             </tbody>
           </table>
@@ -31,11 +31,20 @@ function Transactions(props) {
       )
     }
   }
+  function handleRenderUserInfo(props){
+    if(props.loggedInUser){
+      return(
+        <div>
+          <h1>{props.loggedInUser.name}</h1>
+          <p>Current Points: {props.loggedInUser.currentPoints}</p>
+          <p>Lifetime Points: {props.loggedInUser.lifetimePoints}</p>
+        </div>
+      )
+    }
+  }
   return (
     <div>
-      <h1>Username</h1>
-      <p>Current Points: </p>
-      <p>Lifetime Points: </p>
+      {handleRenderUserInfo(props)}
       <hr />
       <h2>History</h2>
       {renderTransactionsTable(props)}
@@ -43,8 +52,9 @@ function Transactions(props) {
   )
 }
 
-Transactions.propTypes = {
-  transactionList: PropTypes.array
+Profile.propTypes = {
+  transactionList: PropTypes.array,
+  loggedInUser: PropTypes.object
 };
 
-export default Transactions;
+export default Profile;

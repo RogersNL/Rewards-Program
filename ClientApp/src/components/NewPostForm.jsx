@@ -19,7 +19,6 @@ class NewPostForm extends Component {
     this.handlePointValueChange = this.handlePointValueChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleNewPostFormSubmit = this.handleNewPostFormSubmit.bind(this);
-    this.handleRenderGiftForm = this.handleRenderGiftForm.bind(this);
   }
 
   handleNameChange(event) {

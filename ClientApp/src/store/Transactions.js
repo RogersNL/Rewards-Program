@@ -1,5 +1,6 @@
 const requestTransactionsType = 'REQUEST_TRANSACTIONS';
 const receiveTransactionsType = 'RECEIVE_TRANSACTIONS';
+const findUsersTransactionsType = 'FIND_USERS_TRANSACTIONS';
 const initialState = { transactions: [], isLoading: false};
 
 export const transactionActionCreators = {
@@ -11,6 +12,9 @@ export const transactionActionCreators = {
     const transactions = await response.json();
 
     dispatch({ type: receiveTransactionsType, transactions});
+  },
+  findUsersTransactions: id => async (dispatch, getState) => {
+    dispatch({ type: findUsersTransactionsType, id })
   }
 };
 
@@ -31,6 +35,23 @@ export const reducer = (state, action) => {
       isLoading: false
     };
   }
-
+  if (action.type === findUsersTransactionsType) {
+    let balance = 0;
+    const transactionList = state.transactions.slice();
+    const userTransactions = transactionList.filter(transaction => transaction.userId == action.id)
+      .sort(function(a,b){
+        return Date.parse(a.date) - Date.parse(b.date);
+      })
+      .map(function(a) {
+      let o = Object.assign({}, a);
+      o.balance = balance + o.points;
+      balance = o.balance;
+      return o;
+    }).reverse();
+    return {
+      ...state,
+      userTransactions: userTransactions
+    }
+  }
   return state;
 };

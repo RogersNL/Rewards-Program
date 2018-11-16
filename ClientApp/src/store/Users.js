@@ -1,6 +1,7 @@
 const requestUsersType = 'REQUEST_USERS';
 const receiveUsersType = 'RECEIVE_USERS';
 const sortUsersByPointsType = 'SORT_USERS_BY_POINTS';
+const setLoggedInUserType = 'SET_LOGGED_IN_USER';
 const initialState = { users: [], isLoading: false};
 
 export const userActionCreators = {
@@ -13,6 +14,9 @@ export const userActionCreators = {
 
     dispatch({ type: receiveUsersType, users });
     dispatch({ type: sortUsersByPointsType });
+  },
+  setLoggedInUser: id => async (dispatch, getState) => {
+    dispatch({ type: setLoggedInUserType, id })
   }
 };
 
@@ -45,5 +49,13 @@ export const reducer = (state, action) => {
     }
   }
 
+  if (action.type === setLoggedInUserType) {
+    const userList = state.users.slice();
+    const loggedInUser = userList.find(user => user.id == action.id);
+    return {
+      ...state,
+      loggedInUser: loggedInUser
+    }
+  }
   return state;
 };

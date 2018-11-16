@@ -6,7 +6,7 @@ namespace Rewards.Models
     public string Location { get; set; }
     public int CurrentPoints { get; set; }
     public int LifetimePoints { get; set; }
-    public bool isAdmin { get; set; }
+    public bool IsAdmin { get; set; }
     public int Id { get; set; }
   }
 }

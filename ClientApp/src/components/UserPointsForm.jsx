@@ -7,6 +7,7 @@ class UserPointsForm extends Component {
     super(props);
     this.state = {
       user: null,
+      transactions: null,
       number: '',
       reason: ''
     };
@@ -19,9 +20,11 @@ class UserPointsForm extends Component {
   }
   componentDidMount(){
     this.handleFindingCurrentUser();
+    this.handleFindingUsersTransactions();
   }
   componentWillReceiveProps(){
     this.handleFindingCurrentUser();
+    this.handleFindingUsersTransactions();
   }
 
   handleUserPointsFormSubmit(event) {
@@ -49,21 +52,44 @@ class UserPointsForm extends Component {
       user: currentUser
     })
   }
+  handleFindingUsersTransactions() {
+    let balance = 0;
+    const userId = this.props.location.split('/')[2];
+    const userTransactions = this.props.transactionList.filter(transaction => transaction.userId == userId)
+      .sort(function(a,b){
+        return Date.parse(a.date) - Date.parse(b.date);
+      })
+      .map(function(a) {
+      let o = Object.assign({}, a);
+      o.balance = balance + o.points;
+      balance = o.balance;
+      return o;
+    }).reverse();
+    this.setState({
+      transactions: userTransactions
+    })
+  }
   handleRenderUserTransactions() {
     return(
       <table className='table'>
         <thead>
           <tr>
-            <th>Name</th>
+            <th>Description</th>
             <th>Date</th>
             <th>Points</th>
             <th>Balance</th>
           </tr>
         </thead>
         <tbody>
-
-          </tbody>
-        </table>
+          {this.state.transactions.map(transaction =>
+            <tr key={transaction.id}>
+              <td>{transaction.name}</td>
+              <td>{transaction.date}</td>
+              <td>{transaction.points}</td>
+              <td>{transaction.balance}</td>
+            </tr>)}
+        </tbody>
+      </table>
     )
   }
   handleRenderPointsForm(){
@@ -111,6 +137,8 @@ class UserPointsForm extends Component {
 }
 UserPointsForm.propTypes = {
   userList: PropTypes.array,
-  location: PropTypes.string
+  transactionList: PropTypes.array,
+  location: PropTypes.string,
+  findUsersTransactions: PropTypes.func
 }
 export default UserPointsForm;

@@ -48,33 +48,37 @@ class Leaderboard extends Component {
     })
   }
   handleRenderPagination(){
-    if(this.state.tableIndex === 0){
-      return(
-        <Pager>
-          <Pager.Item next onClick={this.handleNextPagination}>
-            Next
-          </Pager.Item>
-        </Pager>
-      )
-    } else if (this.state.tableIndex >= this.props.userList.length/10 - 1) {
-      return(
-        <Pager>
-          <Pager.Item previous onClick={this.handlePreviousPagination}>
-            Previous
-          </Pager.Item>
-        </Pager>
-      )
-    } else {
-      return (
-        <Pager>
-          <Pager.Item previous onClick={this.handlePreviousPagination}>
-            Previous
-          </Pager.Item>
-          <Pager.Item next onClick={this.handleNextPagination}>
-            Next
-          </Pager.Item>
-        </Pager>
-      )
+    if(this.props.userList) {        
+      if(this.props.userList.length > 10){
+        if(this.state.tableIndex === 0){
+          return(
+            <Pager>
+              <Pager.Item next onClick={this.handleNextPagination}>
+                Next
+              </Pager.Item>
+            </Pager>
+          )
+        } else if (this.state.tableIndex >= this.props.userList.length/10 - 1) {
+          return(
+            <Pager>
+              <Pager.Item previous onClick={this.handlePreviousPagination}>
+                Previous
+              </Pager.Item>
+            </Pager>
+          )
+        } else {
+          return (
+            <Pager>
+              <Pager.Item previous onClick={this.handlePreviousPagination}>
+                Previous
+              </Pager.Item>
+              <Pager.Item next onClick={this.handleNextPagination}>
+                Next
+              </Pager.Item>
+            </Pager>
+          )
+        }
+      }
     }
   }
   handleRenderLeaderboardTable(props) {

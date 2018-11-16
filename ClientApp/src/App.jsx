@@ -4,28 +4,28 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 //Components
-import Layout from './components/Layout';
-import Home from './components/Home';
-import Counter from './components/Counter';
-import FetchData from './components/FetchData';
-import Earn from './components/Earn';
-import Error404 from './components/Error404';
-import Transactions from './components/Transactions';
-import Leaderboard from './components/Leaderboard';
-import ClaimGifts from './components/ClaimGifts';
 import Admin from './components/Admin';
 import Analytics from './components/Analytics';
-import ManageUsers from './components/ManageUsers';
-import ManagePosts from './components/ManagePosts';
+import ClaimGifts from './components/ClaimGifts';
+import Earn from './components/Earn';
+import Error404 from './components/Error404';
+import FetchData from './components/FetchData';
+import Home from './components/Home';
+import Layout from './components/Layout';
+import Leaderboard from './components/Leaderboard';
+import LogIn from './components/LogIn';
 import ManageGifts from './components/ManageGifts';
-import NewPostForm from './components/NewPostForm';
+import ManagePosts from './components/ManagePosts';
+import ManageUsers from './components/ManageUsers';
 import NewGiftForm from './components/NewGiftForm';
+import NewPostForm from './components/NewPostForm';
+import Profile from './components/Profile';
 import UserPointsForm from './components/UserPointsForm';
 //Action Creators
-import { userActionCreators } from './store/Users';
 import { giftActionCreators } from './store/Gifts';
-import { transactionActionCreators } from './store/Transactions';
 import { postActionCreators } from './store/Posts';
+import { transactionActionCreators } from './store/Transactions';
+import { userActionCreators } from './store/Users';
 import { weatherActionCreators} from './store/WeatherForecasts';
 
 
@@ -36,16 +36,16 @@ class App extends Component {
     this.props.actions.requestGifts();
     this.props.actions.requestTransactions();
     this.props.actions.requestPosts();
-    this.props.actions.requestWeatherForecasts();
   }
+
   render(){
     return(
       <div>
-        <Layout>
+        <Layout loggedInUser={this.props.appState.users.loggedInUser}>
           <Switch>
-            <Route exact path='/' component={Home} />
+            <Route exact path='/' render={()=><Home loggedInUser={this.props.appState.users.loggedInUser} />} />
             <Route path='/earn' render={()=><Earn posts={this.props.appState.posts} filterByLocation={this.props.actions.filterCurrentPostsByLocation} filterByDate={this.props.actions.filterCurrentPostsByDate} />} />
-            <Route path='/transactions' render={()=><Transactions transactionList={this.props.appState.transactions.transactions} />} />
+            <Route path='/profile' render={()=><Profile loggedInUser={this.props.appState.users.loggedInUser} transactionList={this.props.appState.transactions.userTransactions} />} />
             <Route path='/leaderboard' render={()=><Leaderboard userList={this.props.appState.users.sortedUsers} />} />
             <Route path='/rewards' render={()=><ClaimGifts giftList={this.props.appState.gifts.gifts} />} />
             <Route path='/admin' component={Admin} />
@@ -55,7 +55,8 @@ class App extends Component {
             <Route path='/new-post' component={NewPostForm} />
             <Route path='/new-gift' component={NewGiftForm} />
             <Route path='/analytics' component={Analytics} />
-            <Route path='/user/:id' render={()=><UserPointsForm userList={this.props.appState.users.users} location={this.props.location.pathname} />} />
+            <Route path='/user/:id' render={()=><UserPointsForm userList={this.props.appState.users.users} transactionList={this.props.appState.transactions.transactions} location={this.props.location.pathname} findUsersTransactions={this.props.actions.findUsersTransactions} />} />
+            <Route path='/login' render={()=><LogIn logInUser={this.props.actions.setLoggedInUser} findUsersTransactions={this.props.actions.findUsersTransactions} />} />
             <Route component={Error404} />
           </Switch>
         </Layout>
