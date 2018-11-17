@@ -3,6 +3,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { getToken } from './adalConfig';
 //Components
 import Admin from './components/Admin';
 import Analytics from './components/Analytics';
@@ -36,6 +37,8 @@ class App extends Component {
     this.props.actions.requestGifts();
     this.props.actions.requestTransactions();
     this.props.actions.requestPosts();
+    this.props.actions.requestWeatherForecasts(getToken())
+    console.log(getToken());
   }
 
   render(){

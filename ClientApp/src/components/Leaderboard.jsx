@@ -48,7 +48,7 @@ class Leaderboard extends Component {
     })
   }
   handleRenderPagination(){
-    if(this.props.userList) {        
+    if(this.props.userList) {
       if(this.props.userList.length > 10){
         if(this.state.tableIndex === 0){
           return(

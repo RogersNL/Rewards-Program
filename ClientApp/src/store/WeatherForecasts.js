@@ -3,10 +3,10 @@ const receiveWeatherForecastsType = 'RECEIVE_WEATHER_FORECASTS';
 const initialState = { forecasts: [], isLoading: false };
 
 export const weatherActionCreators = {
-  requestWeatherForecasts: () => async (dispatch, getState) => {
+  requestWeatherForecasts: token => async (dispatch, getState) => {
     dispatch({ type: requestWeatherForecastsType });
-
-    const url = `https://api.pokemontcg.io/v1/cards`;
+    const headers = { 'Authorization': 'Bearer ' + token };
+    const url = `https://graph.microsoft.com/v1.0/me/`;
     const response = await fetch(url);
     const forecasts = await response.json();
     console.log(forecasts);

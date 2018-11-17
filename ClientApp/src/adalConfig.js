@@ -1,10 +1,10 @@
 import { AuthenticationContext, adalFetch, withAdalLogin } from 'react-adal';
 
 export const adalConfig = {
-  tenant: '14d71d65-f596-4eae-be30-27f079bf8d4b',
-  clientId: '14d71d65-f596-4eae-be30-27f079bf8d4b',
+  tenant: 'iLinkRewards.onmicrosoft.com',
+  clientId: '91c3a52c-01b6-4f88-97a9-a3fda7b8772b',
   endpoints: {
-    api: '14d71d65-f596-4eae-be30-27f079bf8d4b',
+    api: 'https://ilinkrewards.onmicrosoft.com/iLinkRewardsApp',
   },
   cacheLocation: 'localStorage',
 };
@@ -15,4 +15,7 @@ export const adalApiFetch = (fetch, url, options) =>
   adalFetch(authContext, adalConfig.endpoints.api, fetch, url, options);
 
 export const withAdalLoginApi = withAdalLogin(authContext, adalConfig.endpoints.api);
- 
+
+export const getToken = () => {
+ return authContext.getCachedToken(authContext.config.clientId);
+};
