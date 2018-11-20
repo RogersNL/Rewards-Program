@@ -35,6 +35,10 @@ function ManagePosts(props) {
       </ButtonGroup>
     )
   }
+  //Send id to set post to edit
+  function handleSettingPostToEdit(id) {
+    props.setPost(id);
+  }
   //Choose which table to render
   function renderPostsTable(props) {
     if(props.posts.filteredPosts){
@@ -57,6 +61,7 @@ function ManagePosts(props) {
                 <td>{post.location}</td>
                 <td>{post.pointValue}</td>
                 <td>{post.dateClosed}</td>
+                <td><Link to="/edit-post"><Button onClick={()=>handleSettingPostToEdit(post.id)} className="editButton" bsStyle="warning">Edit</Button></Link></td>
               </tr>)}
             </tbody>
           </table>
@@ -81,6 +86,7 @@ function ManagePosts(props) {
               <td>{post.location}</td>
               <td>{post.pointValue}</td>
               <td>{post.dateClosed}</td>
+              <td><Link to="/edit-post"><Button onClick={()=>handleSettingPostToEdit(post.id)} className="editButton" bsStyle="warning">Edit</Button></Link></td>
             </tr>)}
           </tbody>
         </table>
@@ -111,7 +117,8 @@ function ManagePosts(props) {
 ManagePosts.propTypes = {
   posts: PropTypes.object,
   filterByLocation: PropTypes.func,
-  filterByDate: PropTypes.func
+  filterByDate: PropTypes.func,
+  setPost: PropTypes.func
 };
 
 export default ManagePosts;

@@ -22,10 +22,11 @@ function Home(props) {
       }
     }
   }
+
+  // <Link to='/login'><Button className="login" bsStyle="primary">Log In</Button></Link>
+  // <Button className="login" onClick={logOut} bsStyle="danger">Log Out</Button>
   return(
     <div>
-      <Link to='/login'><Button className="login" bsStyle="primary">Log In</Button></Link>
-      <a href='https://login.microsoftonline.com/iLinkRewards.onmicrosoft.com/oauth2/logout?post_logout_redirect_uri=https://localhost:5001'><Button className="login" bsStyle="danger">Log Out</Button></a>
       <h1>iLink Rewards</h1>
       <Grid fluid>
         <Row>

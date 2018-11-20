@@ -1,8 +1,9 @@
 ﻿import React from 'react';
 import { Link } from 'react-router-dom';
-import { Glyphicon, Nav, Navbar, NavItem } from 'react-bootstrap';
+import { Glyphicon, Nav, Navbar, NavItem, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import PropTypes from 'prop-types';
+import { authContext } from '../adalConfig.js'
 
 function NavMenu(props){
   function handleShowAdminRoute(){
@@ -17,6 +18,9 @@ function NavMenu(props){
         )
       }
     }
+  }
+  function logOut(){
+    authContext.logOut();
   }
   return(
     <Navbar inverse fixedTop fluid collapseOnSelect>
@@ -55,8 +59,14 @@ function NavMenu(props){
           </LinkContainer>
           {handleShowAdminRoute()}
         </Nav>
+        <Button onClick={logOut} className="logout">Log Out</Button>
       </Navbar.Collapse>
       <style>{`
+        .logout {
+          margin-left: 0px;
+          margin-top: 10px;
+          margin-bottom: 20px;
+        }
         .navbar li .glyphicon {
             margin-right: 10px;
         }
@@ -113,6 +123,9 @@ function NavMenu(props){
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
+            }
+            .logout {
+              margin-left: 20px;
             }
         }
 

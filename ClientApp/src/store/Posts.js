@@ -5,6 +5,7 @@ const filterAllPostsByLocationType = 'FILTER_ALL_POSTS_BY_LOCATION';
 const filterAllPostsByDateType = 'FILTER_ALL_POSTS_BY_DATE';
 const filterCurrentPostsByDateType = 'FILTER_CURRENT_POSTS_BY_DATE';
 const filterCurrentPostsByLocationType = 'FILTER_CURRENT_POSTS_BY_LOCATION';
+const setPostToEditType = 'SET_POST_TO_EDIT';
 
 const initialState = { posts: [], isLoading: false};
 
@@ -30,6 +31,9 @@ export const postActionCreators = {
   },
   filterCurrentPostsByDate: value => async (dispatch, getState) => {
     dispatch({ type: filterCurrentPostsByDateType, value });
+  },
+  setPostToEdit: id => async (dispatch, getState) => {
+    dispatch({ type: setPostToEditType, id });
   }
 };
 
@@ -115,11 +119,22 @@ export const reducer = (state, action) => {
       } else {
         return Date.parse(a.dateClosed) - Date.parse(b.dateClosed);
       }
+      return {
+        ...state,
+        filteredPosts: sortedPosts
+      }
     });
+  }
+
+  if (action.type === setPostToEditType) {
+    const allPosts = state.posts.slice();
+    const postToEdit = allPosts.find(post => post.id == action.id);
+    console.log(postToEdit);
     return {
       ...state,
-      filteredPosts: sortedPosts
+      postToEdit: postToEdit
     }
   }
+  
   return state;
 };

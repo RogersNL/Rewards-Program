@@ -9,6 +9,8 @@ import Admin from './components/Admin';
 import Analytics from './components/Analytics';
 import ClaimGifts from './components/ClaimGifts';
 import Earn from './components/Earn';
+import EditGift from './components/EditGift';
+import EditPost from './components/EditPost';
 import Error404 from './components/Error404';
 import FetchData from './components/FetchData';
 import Home from './components/Home';
@@ -37,8 +39,6 @@ class App extends Component {
     this.props.actions.requestGifts();
     this.props.actions.requestTransactions();
     this.props.actions.requestPosts();
-    this.props.actions.requestWeatherForecasts(getToken())
-    console.log(getToken());
   }
 
   render(){
@@ -53,10 +53,12 @@ class App extends Component {
             <Route path='/rewards' render={()=><ClaimGifts giftList={this.props.appState.gifts.gifts} />} />
             <Route path='/admin' component={Admin} />
             <Route path='/manage-users' render={()=><ManageUsers userList={this.props.appState.users.users} />} />
-            <Route path='/manage-posts' render={()=><ManagePosts posts={this.props.appState.posts} filterByLocation={this.props.actions.filterAllPostsByLocation} filterByDate={this.props.actions.filterAllPostsByDate} />} />
-            <Route path='/manage-gifts' render={()=><ManageGifts giftList={this.props.appState.gifts.gifts} />} />
+            <Route path='/manage-posts' render={()=><ManagePosts posts={this.props.appState.posts} setPost={this.props.actions.setPostToEdit} filterByLocation={this.props.actions.filterAllPostsByLocation} filterByDate={this.props.actions.filterAllPostsByDate} />} />
+            <Route path='/manage-gifts' render={()=><ManageGifts giftList={this.props.appState.gifts.gifts} setGift={this.props.actions.setGiftToEdit} />} />
             <Route path='/new-post' component={NewPostForm} />
             <Route path='/new-gift' component={NewGiftForm} />
+            <Route path='/edit-post' render={()=><EditPost postToEdit={this.props.appState.posts.postToEdit} />} />
+            <Route path='/edit-gift' render={()=><EditGift giftToEdit={this.props.appState.gifts.giftToEdit} />} />
             <Route path='/analytics' component={Analytics} />
             <Route path='/user/:id' render={()=><UserPointsForm userList={this.props.appState.users.users} transactionList={this.props.appState.transactions.transactions} location={this.props.location.pathname} findUsersTransactions={this.props.actions.findUsersTransactions} />} />
             <Route path='/login' render={()=><LogIn logInUser={this.props.actions.setLoggedInUser} findUsersTransactions={this.props.actions.findUsersTransactions} />} />

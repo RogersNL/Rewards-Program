@@ -4,6 +4,9 @@ import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 function ManageGifts(props) {
+  function handleSettingGiftToEdit(id){
+    props.setGift(id);
+  }
   function renderGiftsTable(props) {
     if(props.giftList){
       return (
@@ -21,14 +24,15 @@ function ManageGifts(props) {
                 <td>{gift.name}</td>
                 <td>{gift.description}</td>
                 <td>{gift.pointValue}</td>
+                <td><Link to="/edit-gift"><Button bsStyle="warning" onClick={()=>handleSettingGiftToEdit(gift.id)}>Edit</Button></Link></td>
               </tr>)}
             </tbody>
           </table>
         );
       } else {
-      return (
-        <div>Loading...</div>
-      )
+        return (
+          <div>Loading...</div>
+        )
       }
     }
   return (
@@ -48,7 +52,8 @@ function ManageGifts(props) {
 }
 
 ManageGifts.propTypes = {
-  giftList: PropTypes.array
+  giftList: PropTypes.array,
+  setGift: PropTypes.func
 };
 
 export default ManageGifts;

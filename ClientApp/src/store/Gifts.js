@@ -1,5 +1,6 @@
 const requestGiftsType = 'REQUEST_GIFTS';
 const receiveGiftsType = 'RECEIVE_GIFTS';
+const setGiftToEditType = 'SET_GIFT_TO_EDIT';
 const initialState = { gifts: [], isLoading: false};
 
 export const giftActionCreators = {
@@ -11,6 +12,9 @@ export const giftActionCreators = {
     const gifts = await response.json();
 
     dispatch({ type: receiveGiftsType, gifts});
+  },
+  setGiftToEdit: id => async (dispatch, getState) => {
+    dispatch({ type: setGiftToEditType, id });
   }
 };
 
@@ -30,6 +34,16 @@ export const reducer = (state, action) => {
       gifts: action.gifts,
       isLoading: false
     };
+  }
+
+  if (action.type === setGiftToEditType) {
+    const allGifts = state.gifts.slice();
+    const giftToEdit = allGifts.find(gift => gift.id == action.id);
+    console.log(action.id);
+    return {
+      ...state,
+      giftToEdit: giftToEdit
+    }
   }
 
   return state;
