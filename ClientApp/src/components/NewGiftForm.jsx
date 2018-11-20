@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 
 class NewGiftForm extends Component {
   constructor(props) {
@@ -43,7 +44,7 @@ class NewGiftForm extends Component {
 
   handleNewGiftFormSubmit(event) {
     event.preventDefault();
-    console.log(this.state);
+    this.props.createGift(this.state._name, this.state._description, this.state._pointValue);
     this.setState({
       _name: '',
       _description: '',
@@ -91,5 +92,7 @@ class NewGiftForm extends Component {
     );
   }
 }
-
+NewGiftForm.propTypes = {
+  createGift: PropTypes.func
+}
 export default NewGiftForm;

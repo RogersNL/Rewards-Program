@@ -23,7 +23,7 @@ function ManageGifts(props) {
               <tr key={gift.id}>
                 <td>{gift.name}</td>
                 <td>{gift.description}</td>
-                <td>{gift.pointValue}</td>
+                <td>{gift.cost}</td>
                 <td><Link to="/edit-gift"><Button bsStyle="warning" onClick={()=>handleSettingGiftToEdit(gift.id)}>Edit</Button></Link></td>
               </tr>)}
             </tbody>

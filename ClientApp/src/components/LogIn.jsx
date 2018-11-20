@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import { getToken } from '../adalConfig'
 
 class LogIn extends Component {
   constructor(props){
@@ -14,7 +15,9 @@ class LogIn extends Component {
   }
   handleLogInFormSubmit(event){
     event.preventDefault();
-    this.props.logInUser(this.state._admin);
+    console.log(typeof(getToken()));
+    this.props.logInUser(getToken());
+    // this.props.logInUser(this.state._admin);
     this.props.findUsersTransactions(this.state._admin);
   }
   handleMenuChange(event){

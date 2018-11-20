@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Rewards.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Rewards.Solutions
 {
@@ -27,6 +29,11 @@ namespace Rewards.Solutions
             {
                 configuration.RootPath = "ClientApp/build";
             });
+            services.AddDbContext<EmployeeContext>(options => options.UseInMemoryDatabase("foo"));
+            services.AddDbContext<LocationContext>(options => options.UseInMemoryDatabase("foo"));
+            services.AddDbContext<PostContext>(options => options.UseInMemoryDatabase("foo"));
+            services.AddDbContext<RewardContext>(options => options.UseInMemoryDatabase("foo"));
+            services.AddDbContext<TransactionContext>(options => options.UseInMemoryDatabase("foo"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

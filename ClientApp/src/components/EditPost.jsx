@@ -8,13 +8,13 @@ class EditPost extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      _name: '',
+      _title: '',
       _description: '',
-      _location: 'All Locations',
+      _locationId: 'All Locations',
       _pointValue: '',
       _dateClosed: moment()
     };
-    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.handleLocationChange = this.handleLocationChange.bind(this);
     this.handlePointValueChange = this.handlePointValueChange.bind(this);
@@ -32,17 +32,17 @@ class EditPost extends Component {
   handleAddingPostToState(){
     if(this.props.postToEdit){
       this.setState({
-        _name: this.props.postToEdit.name,
+        _title: this.props.postToEdit.name,
         _description: this.props.postToEdit.description,
-        _location: this.props.postToEdit.location,
+        _locationId: this.props.postToEdit.locationId,
         _pointValue: this.props.postToEdit.pointValue,
         _dateClosed: this.props.dateClosed
       })
     }
   }
-  handleNameChange(event) {
+  handleTitleChange(event) {
     this.setState({
-      _name: event.target.value
+      _title: event.target.value
     });
   }
   handleDescriptionChange(event) {
@@ -52,7 +52,7 @@ class EditPost extends Component {
   }
   handleLocationChange(event) {
     this.setState({
-      _location: event.target.value
+      _locationId: event.target.value
     });
   }
   handlePointValueChange(event) {
@@ -69,22 +69,22 @@ class EditPost extends Component {
   handleEditPostSubmit(event) {
     event.preventDefault();
     console.log(this.state);
-    // this.addPost(this.state._name, this.state._description, this.state._location, this.state._pointValue, this.state._dateClosed);
+    this.props.editPost(this.state._title, this.state._description, this.state._pointValue, this.state._dateClosed, this.state._locationId, this.props.postToEdit.id);
     this.setState({
-      _name: '',
+      _title: '',
       _description: '',
-      _location: '',
+      _locationId: '',
       _pointValue: '',
       _dateClosed: moment()
     })
 
   }
-  addPost(name, description, location, pointValue, dateClosed){
+  addPost(title, description, locationId, pointValue, dateClosed){
     const url = `https://localhost:5001/api/`;
     const data = {
-      name,
+      title,
       description,
-      location,
+      locationId,
       pointValue,
       dateClosed
     }
@@ -103,8 +103,8 @@ class EditPost extends Component {
       return(
         <form onSubmit={this.handleEditPostSubmit}>
           <FormGroup>
-            <ControlLabel>Name of Event or Opportunity</ControlLabel>
-            <FormControl value={this.state._name} onChange={this.handleNameChange} type="text" placeholder="Event or Opportunity"></FormControl>
+            <ControlLabel>Title of Event or Opportunity</ControlLabel>
+            <FormControl value={this.state._title} onChange={this.handleTitleChange} type="text" placeholder="Event or Opportunity" />
           </FormGroup>
           <FormGroup controlId="formControlsTextarea">
             <ControlLabel>Description of Event or Opportunity</ControlLabel>
@@ -112,7 +112,7 @@ class EditPost extends Component {
           </FormGroup>
           <FormGroup controlId="formControlsSelect">
             <ControlLabel>Relevant Locations</ControlLabel>
-            <FormControl value={this.state._location} onChange={this.handleLocationChange} componentClass="select" placeholder="select">
+            <FormControl value={this.state._locationId} onChange={this.handleLocationChange} componentClass="select" placeholder="select">
               <option value="All Locations">All Locations</option>
               <option value="Bothell">Bothell</option>
               <option value="Virginia">Virginia</option>
@@ -134,7 +134,7 @@ class EditPost extends Component {
           <FormGroup>
             <DatePicker
               placeholderText='MM/DD/YYYY'
-              className='form-control'
+              classTitle='form-control'
               selected={this.state._dateClosed}
               onChange={this.handleDateChange}/>
           </FormGroup>
@@ -159,6 +159,7 @@ class EditPost extends Component {
   }
 }
 EditPost.propTypes = {
-  postToEdit: PropTypes.object
+  postToEdit: PropTypes.object,
+  editPost: PropTypes.func
 }
 export default EditPost;

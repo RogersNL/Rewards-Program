@@ -13,7 +13,7 @@ export const postActionCreators = {
   requestPosts: id => async (dispatch, getState) => {
     dispatch({ type: requestPostsType });
 
-    const url = `api/Post/Posts`;
+    const url = `api/Posts`;
     const response = await fetch(url);
     const posts = await response.json();
 
@@ -34,6 +34,47 @@ export const postActionCreators = {
   },
   setPostToEdit: id => async (dispatch, getState) => {
     dispatch({ type: setPostToEditType, id });
+  },
+  createNewPost: (title, description, pointValue, dateClosed, locationId) => async (dispatch, getState) => {
+    const url = `api/Posts`
+    const data = {
+      title: title,
+      description: description,
+      pointValue: pointValue,
+      dateClosed: dateClosed,
+      locationId: locationId
+    }
+    console.log(JSON.stringify(data));
+    const response = await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers:{
+      'Content-Type': 'application/json'
+    }
+    }).then(res => res.json())
+    .then(response => console.log('Success', JSON.strigify(response)))
+    .catch(error => console.error('Error', error));
+  },
+  editPost: (title, description, pointValue, dateClosed, locationId, postId) => async (dispatch, getState) => {
+    const url = `api/Posts`
+    const data = {
+      title: title,
+      description: description,
+      pointValue: pointValue,
+      dateClosed: dateClosed,
+      locationId: locationId,
+      postId: postId
+    }
+    console.log(JSON.stringify(data));
+    const response = await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers:{
+      'Content-Type': 'application/json'
+    }
+    }).then(res => res.json())
+    .then(response => console.log('Success', JSON.strigify(response)))
+    .catch(error => console.error('Error', error));
   }
 };
 
@@ -135,6 +176,6 @@ export const reducer = (state, action) => {
       postToEdit: postToEdit
     }
   }
-  
+
   return state;
 };

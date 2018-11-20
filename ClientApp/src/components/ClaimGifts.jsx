@@ -18,7 +18,7 @@ function ClaimGifts(props) {
               <tr key={gift.id}>
                 <td>{gift.name}</td>
                 <td>{gift.description}</td>
-                <td>{gift.pointValue}</td>
+                <td>{gift.cost}</td>
               </tr>)}
             </tbody>
           </table>

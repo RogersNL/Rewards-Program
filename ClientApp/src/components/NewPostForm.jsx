@@ -2,16 +2,17 @@ import React, { Component } from 'react';
 import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 
 class NewPostForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      _name: '',
+      _title: '',
       _description: '',
-      _location: 'All Locations',
       _pointValue: '',
-      _dateClosed: moment()
+      _dateClosed: moment(),
+      _locationId: 'All Locations'
     };
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
@@ -23,7 +24,7 @@ class NewPostForm extends Component {
 
   handleNameChange(event) {
     this.setState({
-      _name: event.target.value
+      _title: event.target.value
     });
   }
   handleDescriptionChange(event) {
@@ -33,7 +34,7 @@ class NewPostForm extends Component {
   }
   handleLocationChange(event) {
     this.setState({
-      _location: event.target.value
+      _locationId: event.target.value
     });
   }
   handlePointValueChange(event) {
@@ -49,42 +50,42 @@ class NewPostForm extends Component {
 
   handleNewPostFormSubmit(event) {
     event.preventDefault();
-    console.log(this.state);
-    // this.addPost(this.state._name, this.state._description, this.state._location, this.state._pointValue, this.state._dateClosed);
+    // console.log(this.state);
+    this.props.createPost(this.state._title, this.state._description, this.state._location, this.state._pointValue, this.state._dateClosed);
     this.setState({
-      _name: '',
+      _title: '',
       _description: '',
-      _location: '',
+      _locationId: '',
       _pointValue: '',
       _dateClosed: moment()
     })
 
   }
-  addPost(name, description, location, pointValue, dateClosed){
-    const url = `https://localhost:5001/api/`;
-    const data = {
-      name,
-      description,
-      location,
-      pointValue,
-      dateClosed
-    }
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(res => res.json())
-    .then(response => console.log('Success;', JSON.stringify(response)))
-    .catch(error => console.error('Error', error));
-  }
+  // addPost(title, description, location, pointValue, dateClosed){
+  //   const url = `https://localhost:5001/api/`;
+  //   const data = {
+  //     title,
+  //     description,
+  //     location,
+  //     pointValue,
+  //     dateClosed
+  //   }
+  //   fetch(url, {
+  //     method: 'POST',
+  //     body: JSON.stringify(data),
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   }).then(res => res.json())
+  //   .then(response => console.log('Success;', JSON.stringify(response)))
+  //   .catch(error => console.error('Error', error));
+  // }
   handleRenderPostForm(){
     return(
       <form onSubmit={this.handleNewPostFormSubmit}>
         <FormGroup>
           <ControlLabel>Name of Event or Opportunity</ControlLabel>
-          <FormControl value={this.state._name} onChange={this.handleNameChange} type="text" placeholder="Event or Opportunity"></FormControl>
+          <FormControl value={this.state._title} onChange={this.handleNameChange} type="text" placeholder="Event or Opportunity"></FormControl>
         </FormGroup>
         <FormGroup controlId="formControlsTextarea">
           <ControlLabel>Description of Event or Opportunity</ControlLabel>
@@ -133,5 +134,7 @@ class NewPostForm extends Component {
     );
   }
 }
-
+NewPostForm.propTypes = {
+  createPost: PropTypes.func
+}
 export default NewPostForm;

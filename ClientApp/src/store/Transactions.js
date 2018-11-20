@@ -7,7 +7,7 @@ export const transactionActionCreators = {
   requestTransactions: id => async (dispatch, getState) => {
     dispatch({ type: requestTransactionsType});
 
-    const url = `api/Transaction/Transactions`;
+    const url = `api/Transactions`;
     const response = await fetch(url);
     const transactions = await response.json();
 
@@ -15,6 +15,24 @@ export const transactionActionCreators = {
   },
   findUsersTransactions: id => async (dispatch, getState) => {
     dispatch({ type: findUsersTransactionsType, id })
+  },
+  createTransaction: (userId, number, reason) => async (dispatch, getState) => {
+    const url = `/api/Transactions`
+    const data = {
+      userId: userId,
+      number: number,
+      reason: reason
+    }
+    console.log(JSON.stringify(data));
+    const response = await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers:{
+      'Content-Type': 'application/json'
+    }
+    }).then(res => res.json())
+    .then(response => console.log('Success', JSON.strigify(response)))
+    .catch(error => console.error('Error', error));
   }
 };
 

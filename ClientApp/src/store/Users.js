@@ -15,8 +15,16 @@ export const userActionCreators = {
     dispatch({ type: receiveUsersType, users });
     dispatch({ type: sortUsersByPointsType });
   },
-  setLoggedInUser: id => async (dispatch, getState) => {
-    dispatch({ type: setLoggedInUserType, id })
+  setLoggedInUser: token => async (dispatch, getState) => {
+    const url = `https://graph.microsoft.com/v1.0/me/`
+    const response = await fetch(url, {
+      headers: {
+        "Authorization": "Bearer" + token
+      }
+    });
+    const user = await response.json();
+    console.log(user);
+    // dispatch({ type: setLoggedInUserType, id })
   }
 };
 

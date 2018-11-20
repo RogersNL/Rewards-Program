@@ -62,12 +62,11 @@ class EditGift extends Component {
 
   handleEditGiftSubmit(event) {
     event.preventDefault();
-    console.log(this.state);
+    this.props.editGift(this.state._name, this.state._description, this.state._pointValue, this.props.giftToEdit.id)
     this.setState({
       _name: '',
       _description: '',
-      _pointValue: '',
-      _dateClosed: moment()
+      _pointValue: ''
     })
   }
   //Render Gift Form
@@ -102,7 +101,6 @@ class EditGift extends Component {
     return (
       <div>
         <h1>Edit Gift</h1>
-        {console.log(this.props)}
         {this.handleRenderGiftForm()}
         <style>{`
 
@@ -112,6 +110,7 @@ class EditGift extends Component {
   }
 }
 EditGift.propTypes = {
-  giftToEdit: PropTypes.object
+  giftToEdit: PropTypes.object,
+  editGift: PropTypes.func
 }
 export default EditGift;

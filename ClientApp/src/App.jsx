@@ -3,7 +3,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getToken } from './adalConfig';
+import { getToken, adalApiFetch } from './adalConfig';
 //Components
 import Admin from './components/Admin';
 import Analytics from './components/Analytics';
@@ -33,6 +33,7 @@ import { weatherActionCreators} from './store/WeatherForecasts';
 
 
 class App extends Component {
+
   componentWillMount() {
     //Load API data before component mounts
     this.props.actions.requestUsers();
@@ -55,12 +56,12 @@ class App extends Component {
             <Route path='/manage-users' render={()=><ManageUsers userList={this.props.appState.users.users} />} />
             <Route path='/manage-posts' render={()=><ManagePosts posts={this.props.appState.posts} setPost={this.props.actions.setPostToEdit} filterByLocation={this.props.actions.filterAllPostsByLocation} filterByDate={this.props.actions.filterAllPostsByDate} />} />
             <Route path='/manage-gifts' render={()=><ManageGifts giftList={this.props.appState.gifts.gifts} setGift={this.props.actions.setGiftToEdit} />} />
-            <Route path='/new-post' component={NewPostForm} />
-            <Route path='/new-gift' component={NewGiftForm} />
-            <Route path='/edit-post' render={()=><EditPost postToEdit={this.props.appState.posts.postToEdit} />} />
-            <Route path='/edit-gift' render={()=><EditGift giftToEdit={this.props.appState.gifts.giftToEdit} />} />
+            <Route path='/new-post' render={()=><NewPostForm createPost={this.props.actions.createNewPost} />} />
+            <Route path='/new-gift' render={()=><NewGiftForm createGift={this.props.actions.createNewGift} />} />
+            <Route path='/edit-post' render={()=><EditPost postToEdit={this.props.appState.posts.postToEdit} editPost={this.props.actions.editPost} />} />
+            <Route path='/edit-gift' render={()=><EditGift giftToEdit={this.props.appState.gifts.giftToEdit} editGift={this.props.actions.editGift} />} />
             <Route path='/analytics' component={Analytics} />
-            <Route path='/user/:id' render={()=><UserPointsForm userList={this.props.appState.users.users} transactionList={this.props.appState.transactions.transactions} location={this.props.location.pathname} findUsersTransactions={this.props.actions.findUsersTransactions} />} />
+            <Route path='/user/:id' render={()=><UserPointsForm userList={this.props.appState.users.users} transactionList={this.props.appState.transactions.transactions} location={this.props.location.pathname} findUsersTransactions={this.props.actions.findUsersTransactions} createTransaction={this.props.actions.createTransaction} />} />
             <Route path='/login' render={()=><LogIn logInUser={this.props.actions.setLoggedInUser} findUsersTransactions={this.props.actions.findUsersTransactions} />} />
             <Route component={Error404} />
           </Switch>

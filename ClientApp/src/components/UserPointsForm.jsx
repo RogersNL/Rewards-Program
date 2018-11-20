@@ -29,7 +29,7 @@ class UserPointsForm extends Component {
 
   handleUserPointsFormSubmit(event) {
     event.preventDefault();
-    console.log(this.state);
+    this.props.createTransaction(this.state.user.id, this.state.number, this.state.reason)
     this.setState({
       number: '',
       reason: ''
@@ -139,6 +139,7 @@ UserPointsForm.propTypes = {
   userList: PropTypes.array,
   transactionList: PropTypes.array,
   location: PropTypes.string,
-  findUsersTransactions: PropTypes.func
+  findUsersTransactions: PropTypes.func,
+  createTransaction: PropTypes.func
 }
 export default UserPointsForm;
