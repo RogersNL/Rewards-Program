@@ -14,6 +14,9 @@ function Layout(props) {
           {props.children}
         </Col>
       </Row>
+      <style>{`
+
+      `}</style>
     </Grid>
   );
 }

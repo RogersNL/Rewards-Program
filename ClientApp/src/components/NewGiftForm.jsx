@@ -68,14 +68,6 @@ class NewGiftForm extends Component {
           <ControlLabel>Point Value of Gift</ControlLabel>
           <FormControl value={this.state._pointValue} onChange={this.handlePointValueChange} type="text" placeholder="Point Value"></FormControl>
         </FormGroup>
-        <ControlLabel>Offer Expires Date</ControlLabel>
-        <FormGroup>
-          <DatePicker
-            placeholderText='MM/DD/YYYY'
-            className='form-control'
-            selected={this.state._dateClosed}
-            onChange={this.handleDateChange} />
-        </FormGroup>
         <Button bsStyle="success" type="submit">Add Gift</Button>
       </form>
     )

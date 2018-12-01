@@ -1,8 +1,6 @@
 ﻿import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { routerReducer, routerMiddleware } from 'react-router-redux';
-import * as Counter from './Counter';
-import * as WeatherForecasts from './WeatherForecasts';
 import * as Posts from './Posts';
 import * as Gifts from './Gifts';
 import * as Transactions from './Transactions';
@@ -14,8 +12,6 @@ export default function configureStore(history, initialState) {
     transactions: Transactions.reducer,
     posts: Posts.reducer,
     gifts: Gifts.reducer,
-    counter: Counter.reducer,
-    weatherForecasts: WeatherForecasts.reducer
   };
 
   const middleware = [

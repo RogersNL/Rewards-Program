@@ -1,3 +1,5 @@
+import { adalApiFetch } from '../adalConfig';
+
 const requestUsersType = 'REQUEST_USERS';
 const receiveUsersType = 'RECEIVE_USERS';
 const sortUsersByPointsType = 'SORT_USERS_BY_POINTS';
@@ -8,23 +10,22 @@ export const userActionCreators = {
   requestUsers: id => async (dispatch, getState) => {
     dispatch({ type: requestUsersType });
 
-    const url = `api/User/Users`;
-    const response = await fetch(url);
-    const users = await response.json();
+    adalApiFetch(fetch, 'https://graph.microsoft.com/v1.0/users', {})
+      .then((response) => {
+        response.json()
+          .then((responseJson) => {
+            const users = responseJson;
+            dispatch({ type: receiveUsersType, users });
+          });
+      })
+      .catch((error) => {
+        console.error(error);
+      })
 
-    dispatch({ type: receiveUsersType, users });
-    dispatch({ type: sortUsersByPointsType });
+    // dispatch({ type: sortUsersByPointsType });
   },
-  setLoggedInUser: token => async (dispatch, getState) => {
-    const url = `https://graph.microsoft.com/v1.0/me/`
-    const response = await fetch(url, {
-      headers: {
-        "Authorization": "Bearer" + token
-      }
-    });
-    const user = await response.json();
-    console.log(user);
-    // dispatch({ type: setLoggedInUserType, id })
+  setLoggedInUser: id => async (dispatch, getState) => {
+    dispatch({ type: setLoggedInUserType, id })
   }
 };
 

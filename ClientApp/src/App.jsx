@@ -29,7 +29,6 @@ import { giftActionCreators } from './store/Gifts';
 import { postActionCreators } from './store/Posts';
 import { transactionActionCreators } from './store/Transactions';
 import { userActionCreators } from './store/Users';
-import { weatherActionCreators} from './store/WeatherForecasts';
 
 
 class App extends Component {
@@ -41,6 +40,19 @@ class App extends Component {
     this.props.actions.requestTransactions();
     this.props.actions.requestPosts();
   }
+  componentDidMount() {
+  //   adalApiFetch(fetch, 'https://graph.microsoft.com/v1.0/users', {})
+  //       .then((response) => {
+  //         response.json()
+  //           .then((responseJson) => {
+  //             console.log(JSON.stringify(responseJson, null, 2))
+  //             // this.setState( { apiResponse: JSON.stringify(responseJson, null, 2) })
+  //           });
+  //       })
+  //       .catch((error) => {
+  //         console.error(error);
+  //       })
+    }
 
   render(){
     return(
@@ -49,10 +61,10 @@ class App extends Component {
           <Switch>
             <Route exact path='/' render={()=><Home loggedInUser={this.props.appState.users.loggedInUser} />} />
             <Route path='/earn' render={()=><Earn posts={this.props.appState.posts} filterByLocation={this.props.actions.filterCurrentPostsByLocation} filterByDate={this.props.actions.filterCurrentPostsByDate} />} />
-            <Route path='/profile' render={()=><Profile loggedInUser={this.props.appState.users.loggedInUser} transactionList={this.props.appState.transactions.userTransactions} />} />
+            <Route path='/profile' render={()=><Profile appState={this.props.appState} loggedInUser={this.props.appState.users.loggedInUser} transactionList={this.props.appState.transactions.userTransactions} />} />
             <Route path='/leaderboard' render={()=><Leaderboard userList={this.props.appState.users.sortedUsers} />} />
             <Route path='/rewards' render={()=><ClaimGifts giftList={this.props.appState.gifts.gifts} />} />
-            <Route path='/admin' component={Admin} />
+             {true ? <Route path='/admin' component={Admin} /> : null}
             <Route path='/manage-users' render={()=><ManageUsers userList={this.props.appState.users.users} />} />
             <Route path='/manage-posts' render={()=><ManagePosts posts={this.props.appState.posts} setPost={this.props.actions.setPostToEdit} filterByLocation={this.props.actions.filterAllPostsByLocation} filterByDate={this.props.actions.filterAllPostsByDate} />} />
             <Route path='/manage-gifts' render={()=><ManageGifts giftList={this.props.appState.gifts.gifts} setGift={this.props.actions.setGiftToEdit} />} />
@@ -77,7 +89,7 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    actions: bindActionCreators(Object.assign({}, userActionCreators, giftActionCreators, transactionActionCreators, postActionCreators, weatherActionCreators), dispatch)
+    actions: bindActionCreators(Object.assign({}, userActionCreators, giftActionCreators, transactionActionCreators, postActionCreators), dispatch)
   };
 };
 App.propTypes = {

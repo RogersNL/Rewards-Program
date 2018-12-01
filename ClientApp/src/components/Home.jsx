@@ -23,10 +23,10 @@ function Home(props) {
     }
   }
 
-  // <Link to='/login'><Button className="login" bsStyle="primary">Log In</Button></Link>
   // <Button className="login" onClick={logOut} bsStyle="danger">Log Out</Button>
   return(
     <div>
+      <Link to='/login'><Button className="login" bsStyle="primary">Log In</Button></Link>
       <h1>iLink Rewards</h1>
       <Grid fluid>
         <Row>
@@ -78,7 +78,7 @@ function Home(props) {
         }
         .panel {
           min-height: 180px;
-          background-color: #e1e1e1;
+          background-color: #9EA1A4;
         }
 
         .panel {
@@ -90,7 +90,7 @@ function Home(props) {
           transition-duration: 0.3s;
           -webkit-transition-property: background;
           transition-property: background;
-          box-shadow: inset 0 0 0 4px #e1e1e1, 0 0 1px rgba(0, 0, 0, 0);
+          box-shadow: inset 0 0 0 4px #9EA1A4, 0 0 1px rgba(0, 0, 0, 0);
           /* Hack to improve aliasing on mobile/tablet devices */
         }
         .panel:hover, .panel:focus, .panel:active {

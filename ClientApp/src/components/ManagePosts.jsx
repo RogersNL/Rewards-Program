@@ -56,7 +56,7 @@ function ManagePosts(props) {
           <tbody>
             {props.posts.filteredPosts.map(post =>
               <tr key={post.id}>
-                <td>{post.name}</td>
+                <td>{post.title}</td>
                 <td>{post.description}</td>
                 <td>{post.location}</td>
                 <td>{post.pointValue}</td>
@@ -81,7 +81,7 @@ function ManagePosts(props) {
         <tbody>
           {props.posts.posts.map(post =>
             <tr key={post.id}>
-              <td>{post.name}</td>
+              <td>{post.title}</td>
               <td>{post.description}</td>
               <td>{post.location}</td>
               <td>{post.pointValue}</td>

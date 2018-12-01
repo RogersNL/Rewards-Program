@@ -15,9 +15,7 @@ class LogIn extends Component {
   }
   handleLogInFormSubmit(event){
     event.preventDefault();
-    console.log(typeof(getToken()));
-    this.props.logInUser(getToken());
-    // this.props.logInUser(this.state._admin);
+    this.props.logInUser(this.state._admin);
     this.props.findUsersTransactions(this.state._admin);
   }
   handleMenuChange(event){

@@ -76,7 +76,7 @@ function NavMenu(props){
         .navbar .navbar-nav .active a:hover,
         .navbar .navbar-nav .active a:focus {
             background-image: none;
-            background-color: #4189C7;
+            background-color: #C14F3A;
             color: white;
         }
 

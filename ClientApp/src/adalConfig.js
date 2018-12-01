@@ -4,7 +4,7 @@ export const adalConfig = {
   tenant: 'iLinkRewards.onmicrosoft.com',
   clientId: '91c3a52c-01b6-4f88-97a9-a3fda7b8772b',
   endpoints: {
-    api: 'https://ilinkrewards.onmicrosoft.com/iLinkRewardsApp',
+    api: 'https://graph.microsoft.com/',
   },
   cacheLocation: 'localStorage',
 };

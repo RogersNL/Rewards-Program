@@ -17,7 +17,7 @@ namespace Rewards.Solutions.Controllers
           List<string> locationList = new List<string>{"Bothell", "Virginia", "Los Angeles", "Atlanta", "Houston", "Chennai", "Pune", "Trichy", "Malaysia", "U.A.E"};
           List<int> lifetimePointList = new List<int>{1000, 3940, 2400, 2400, 300, 1200, 1750, 1700};
           List<int> currentPointList = new List<int>{500, 1500, 425, 100, 1000, 900, 900, 1100};
-          List<bool> adminList = new List<bool>{false, true};
+          List<bool> adminList = new List<bool>{true, true};
           var rng = new Random();
 
           return Enumerable.Range(0, 87).Select(index => new User
@@ -32,7 +32,7 @@ namespace Rewards.Solutions.Controllers
             Location = locationList[rng.Next(0,10)],
             CurrentPoints = rng.Next(0,10000),
             LifetimePoints = rng.Next(0,10000),
-            IsAdmin = adminList[rng.Next(0,2)],
+            IsAdmin = true,
             Id = index
             });
       }

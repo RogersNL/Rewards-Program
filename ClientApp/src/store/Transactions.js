@@ -7,7 +7,7 @@ export const transactionActionCreators = {
   requestTransactions: id => async (dispatch, getState) => {
     dispatch({ type: requestTransactionsType});
 
-    const url = `api/Transactions`;
+    const url = `api/Transaction/Transactions`;
     const response = await fetch(url);
     const transactions = await response.json();
 

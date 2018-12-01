@@ -48,13 +48,15 @@ function Profile(props) {
       <hr />
       <h2>History</h2>
       {renderTransactionsTable(props)}
+      {console.log(props.appState.users.users.value)}
     </div>
   )
 }
 
 Profile.propTypes = {
   transactionList: PropTypes.array,
-  loggedInUser: PropTypes.object
+  loggedInUser: PropTypes.object,
+  appState: PropTypes.object
 };
 
 export default Profile;
