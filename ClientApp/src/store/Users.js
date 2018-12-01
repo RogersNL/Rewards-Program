@@ -25,7 +25,17 @@ export const userActionCreators = {
     // dispatch({ type: sortUsersByPointsType });
   },
   setLoggedInUser: id => async (dispatch, getState) => {
-    dispatch({ type: setLoggedInUserType, id })
+    adalApiFetch(fetch, 'https://graph.microsoft.com/v1.0/me', {})
+      .then((response) => {
+        response.json()
+          .then((responseJson) => {
+            const user = responseJson;
+            dispatch({ type: setLoggedInUserType, user })
+          });
+      })
+      .catch((error) => {
+        console.error(error);
+      })
   }
 };
 
@@ -59,11 +69,9 @@ export const reducer = (state, action) => {
   }
 
   if (action.type === setLoggedInUserType) {
-    const userList = state.users.slice();
-    const loggedInUser = userList.find(user => user.id == action.id);
     return {
       ...state,
-      loggedInUser: loggedInUser
+      loggedInUser: action.user
     }
   }
   return state;

@@ -24,7 +24,7 @@ namespace Rewards.Solutions.Controllers
               DateClosed = dateList[index].ToString("d"),
               PointValue = pointList[index],
               Description = descriptionList[index],
-              Location = locationList[index],
+              // Location = locationList[index],
               Id = index
               });
         }

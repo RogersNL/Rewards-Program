@@ -34,6 +34,7 @@ namespace Rewards.Solutions
             services.AddDbContext<PostContext>(options => options.UseInMemoryDatabase("foo"));
             services.AddDbContext<RewardContext>(options => options.UseInMemoryDatabase("foo"));
             services.AddDbContext<TransactionContext>(options => options.UseInMemoryDatabase("foo"));
+            services.AddDbContext<AdminContext>(options => options.UseInMemoryDatabase("foo"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

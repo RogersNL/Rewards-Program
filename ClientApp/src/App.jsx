@@ -35,24 +35,12 @@ class App extends Component {
 
   componentWillMount() {
     //Load API data before component mounts
+    this.props.actions.setLoggedInUser();
     this.props.actions.requestUsers();
     this.props.actions.requestGifts();
     this.props.actions.requestTransactions();
     this.props.actions.requestPosts();
   }
-  componentDidMount() {
-  //   adalApiFetch(fetch, 'https://graph.microsoft.com/v1.0/users', {})
-  //       .then((response) => {
-  //         response.json()
-  //           .then((responseJson) => {
-  //             console.log(JSON.stringify(responseJson, null, 2))
-  //             // this.setState( { apiResponse: JSON.stringify(responseJson, null, 2) })
-  //           });
-  //       })
-  //       .catch((error) => {
-  //         console.error(error);
-  //       })
-    }
 
   render(){
     return(
