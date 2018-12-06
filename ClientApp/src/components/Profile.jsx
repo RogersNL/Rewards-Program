@@ -48,7 +48,7 @@ function Profile(props) {
       <hr />
       <h2>History</h2>
       {renderTransactionsTable(props)}
-      {console.log(props.appState.users.users.value)}
+      {console.log(props.appState)}
     </div>
   )
 }

@@ -7,7 +7,7 @@ export const transactionActionCreators = {
   requestTransactions: id => async (dispatch, getState) => {
     dispatch({ type: requestTransactionsType});
 
-    const url = `api/Transaction/Transactions`;
+    const url = `api/Transactions`;
     const response = await fetch(url);
     const transactions = await response.json();
 
@@ -16,12 +16,16 @@ export const transactionActionCreators = {
   findUsersTransactions: id => async (dispatch, getState) => {
     dispatch({ type: findUsersTransactionsType, id })
   },
-  createTransaction: (userId, number, reason) => async (dispatch, getState) => {
+  createTransaction: (userId, number, reason, adminId) => async (dispatch, getState) => {
     const url = `/api/Transactions`
     const data = {
       userId: userId,
       number: number,
-      reason: reason
+      reason: reason,
+      adminId: adminId,
+
+
+
     }
     console.log(JSON.stringify(data));
     const response = await fetch(url, {

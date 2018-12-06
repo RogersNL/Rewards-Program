@@ -43,31 +43,37 @@ class App extends Component {
   }
 
   render(){
-    return(
-      <div>
-        <Layout loggedInUser={this.props.appState.users.loggedInUser}>
-          <Switch>
-            <Route exact path='/' render={()=><Home loggedInUser={this.props.appState.users.loggedInUser} />} />
-            <Route path='/earn' render={()=><Earn posts={this.props.appState.posts} filterByLocation={this.props.actions.filterCurrentPostsByLocation} filterByDate={this.props.actions.filterCurrentPostsByDate} />} />
-            <Route path='/profile' render={()=><Profile appState={this.props.appState} loggedInUser={this.props.appState.users.loggedInUser} transactionList={this.props.appState.transactions.userTransactions} />} />
-            <Route path='/leaderboard' render={()=><Leaderboard userList={this.props.appState.users.sortedUsers} />} />
-            <Route path='/rewards' render={()=><ClaimGifts giftList={this.props.appState.gifts.gifts} />} />
-             {true ? <Route path='/admin' component={Admin} /> : null}
-            <Route path='/manage-users' render={()=><ManageUsers userList={this.props.appState.users.users} />} />
-            <Route path='/manage-posts' render={()=><ManagePosts posts={this.props.appState.posts} setPost={this.props.actions.setPostToEdit} filterByLocation={this.props.actions.filterAllPostsByLocation} filterByDate={this.props.actions.filterAllPostsByDate} />} />
-            <Route path='/manage-gifts' render={()=><ManageGifts giftList={this.props.appState.gifts.gifts} setGift={this.props.actions.setGiftToEdit} />} />
-            <Route path='/new-post' render={()=><NewPostForm createPost={this.props.actions.createNewPost} />} />
-            <Route path='/new-gift' render={()=><NewGiftForm createGift={this.props.actions.createNewGift} />} />
-            <Route path='/edit-post' render={()=><EditPost postToEdit={this.props.appState.posts.postToEdit} editPost={this.props.actions.editPost} />} />
-            <Route path='/edit-gift' render={()=><EditGift giftToEdit={this.props.appState.gifts.giftToEdit} editGift={this.props.actions.editGift} />} />
-            <Route path='/analytics' component={Analytics} />
-            <Route path='/user/:id' render={()=><UserPointsForm userList={this.props.appState.users.users} transactionList={this.props.appState.transactions.transactions} location={this.props.location.pathname} findUsersTransactions={this.props.actions.findUsersTransactions} createTransaction={this.props.actions.createTransaction} />} />
-            <Route path='/login' render={()=><LogIn logInUser={this.props.actions.setLoggedInUser} findUsersTransactions={this.props.actions.findUsersTransactions} />} />
-            <Route component={Error404} />
-          </Switch>
-        </Layout>
-      </div>
-    );
+    if(this.props.appState.users.loggedInUser){
+      return(
+        <div>
+          <Layout loggedInUser={this.props.appState.users.loggedInUser}>
+            <Switch>
+              <Route exact path='/' render={()=><Home loggedInUser={this.props.appState.users.loggedInUser} />} />
+              <Route path='/earn' render={()=><Earn posts={this.props.appState.posts} filterByLocation={this.props.actions.filterCurrentPostsByLocation} filterByDate={this.props.actions.filterCurrentPostsByDate} />} />
+              <Route path='/profile' render={()=><Profile appState={this.props} loggedInUser={this.props.appState.users.loggedInUser} transactionList={this.props.appState.transactions.userTransactions} />} />
+              <Route path='/leaderboard' render={()=><Leaderboard userList={this.props.appState.users.sortedUsers} />} />
+              <Route path='/rewards' render={()=><ClaimGifts giftList={this.props.appState.gifts.gifts} />} />
+               {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/admin' component={Admin} /> : null}
+              {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/manage-users' render={()=><ManageUsers userList={this.props.appState.users.users} />} /> : null}
+              {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/manage-posts' render={()=><ManagePosts posts={this.props.appState.posts} setPost={this.props.actions.setPostToEdit} filterByLocation={this.props.actions.filterAllPostsByLocation} filterByDate={this.props.actions.filterAllPostsByDate} />} /> : null}
+              {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/manage-gifts' render={()=><ManageGifts giftList={this.props.appState.gifts.gifts} setGift={this.props.actions.setGiftToEdit} />} /> : null}
+              {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/new-post' render={()=><NewPostForm createPost={this.props.actions.createNewPost} />} /> : null}
+              {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/new-gift' render={()=><NewGiftForm createGift={this.props.actions.createNewGift} />} /> : null}
+              {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/edit-post' render={()=><EditPost postToEdit={this.props.appState.posts.postToEdit} editPost={this.props.actions.editPost} />} /> : null}
+              {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/edit-gift' render={()=><EditGift giftToEdit={this.props.appState.gifts.giftToEdit} editGift={this.props.actions.editGift} />} /> : null}
+              {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/analytics' component={Analytics} /> : null}
+              {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/user/:id' render={()=><UserPointsForm userList={this.props.appState.users.users} transactionList={this.props.appState.transactions.transactions} location={this.props.location.pathname} findUsersTransactions={this.props.actions.findUsersTransactions} createTransaction={this.props.actions.createTransaction} adminUserId={this.props.appState.loggedInUser.employeeId} />} /> : null}
+              <Route path='/login' render={()=><LogIn logInUser={this.props.actions.setLoggedInUser} findUsersTransactions={this.props.actions.findUsersTransactions} />} />
+              <Route component={Error404} />
+            </Switch>
+          </Layout>
+        </div>
+      )
+      } else {
+        return (
+          <div>Loading...</div>
+        )
+      }
   }
 }
 const mapStateToProps = state => {

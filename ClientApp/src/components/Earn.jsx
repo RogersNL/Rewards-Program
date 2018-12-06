@@ -74,7 +74,7 @@ function Earn(props) {
           <MenuItem eventKey="2" onSelect={handleFilteringPostsByDate}>Oldest To Newest</MenuItem>
         </DropdownButton>
         <DropdownButton title="Filter By Location" id="bg-nested-dropdown">
-          <MenuItem eventKey="All" onSelect={handleFilteringPostsByLocation}>All Locations</MenuItem>          
+          <MenuItem eventKey="All" onSelect={handleFilteringPostsByLocation}>All Locations</MenuItem>
           <MenuItem eventKey="Bothell" onSelect={handleFilteringPostsByLocation}>Bothell</MenuItem>
           <MenuItem eventKey="Virginia" onSelect={handleFilteringPostsByLocation}>Virginia</MenuItem>
           <MenuItem eventKey="Atlanta" onSelect={handleFilteringPostsByLocation}>Atlanta</MenuItem>
@@ -93,7 +93,6 @@ function Earn(props) {
     <div>
       <h1>Earn</h1>
       <p>Here are some ways you can earn more points!</p>
-      {console.log(props)}
       {renderFilterButtons()}
       {renderPostsTable(props)}
     </div>

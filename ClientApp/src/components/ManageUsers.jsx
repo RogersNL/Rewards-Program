@@ -23,11 +23,15 @@ class ManageUsers extends Component {
   }
   //Change the shown users while searching in real time
   handleUpdatingUserList(searchValue) {
-    if(searchValue === '') {
-      return [];
+    if(this.props.userList.length != 0){
+      if(searchValue === '') {
+        return [];
+      } else {
+        const propsList = this.props.userList.slice();
+        return propsList.filter(user => user.name.toLowerCase().includes(searchValue.toLowerCase()));
+      }
     } else {
-      const propsList = this.props.userList.slice();
-      return propsList.filter(user => user.name.toLowerCase().includes(searchValue.toLowerCase()));
+      return [];
     }
   }
   //Show table
@@ -45,12 +49,12 @@ class ManageUsers extends Component {
           </thead>
           <tbody>
             {this.state.users.map((user, index) =>
-              <tr key={user.id}>
+              <tr key={user.employeeId}>
                 <td>{user.name}</td>
                 <td>{user.location}</td>
                 <td>{user.currentPoints}</td>
                 <td>{user.lifetimePoints}</td>
-                <td><Link to={{pathname: `/user/${user.id}`}}><Button bsStyle='warning'>Add/Deduct Points</Button></Link></td>
+                <td><Link to={{pathname: `/user/${user.employeeId}`}}><Button bsStyle='warning'>Add/Deduct Points</Button></Link></td>
               </tr>)}
             </tbody>
           </table>
@@ -66,6 +70,7 @@ class ManageUsers extends Component {
       <div>
         <h1>Manage Users</h1>
         <p>Manage iLink Rewards Accounts</p>
+        {console.log(this.state.users)}
         <div>
           <form>
             <FormGroup>

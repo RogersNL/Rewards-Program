@@ -8,7 +8,7 @@ import { authContext } from '../adalConfig.js'
 function NavMenu(props){
   function handleShowAdminRoute(){
     if(props.loggedInUser){
-      if(props.loggedInUser.isAdmin){
+      if(props.loggedInUser.adminLevel > 0){
         return(
           <LinkContainer to={'/admin'}>
             <NavItem>

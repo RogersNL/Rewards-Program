@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 function Home(props) {
   function handleShowAdminRoute(){
     if(props.loggedInUser){
-      if(props.loggedInUser.isAdmin){
+      if(props.loggedInUser.adminLevel > 0){
         return(
           <Row>
             <Col sm={6}>
@@ -23,10 +23,8 @@ function Home(props) {
     }
   }
 
-  // <Button className="login" onClick={logOut} bsStyle="danger">Log Out</Button>
   return(
     <div>
-      <Link to='/login'><Button className="login" bsStyle="primary">Log In</Button></Link>
       <h1>iLink Rewards</h1>
       <Grid fluid>
         <Row>

@@ -1,3 +1,4 @@
+//Action Constants
 const requestPostsType = 'REQUEST_POSTS';
 const receivePostsType = 'RECEIVE_POSTS';
 const filterCurrentPostsType = 'FILTER_CURRENT_POSTS';
@@ -8,7 +9,7 @@ const filterCurrentPostsByLocationType = 'FILTER_CURRENT_POSTS_BY_LOCATION';
 const setPostToEditType = 'SET_POST_TO_EDIT';
 
 const initialState = { posts: [], isLoading: false};
-
+//Action Creators
 export const postActionCreators = {
   requestPosts: id => async (dispatch, getState) => {
     dispatch({ type: requestPostsType });
@@ -77,7 +78,7 @@ export const postActionCreators = {
     .catch(error => console.error('Error', error));
   }
 };
-
+//Reducers
 export const reducer = (state, action) => {
   state = state || initialState;
 

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
+
 class UserPointsForm extends Component {
   constructor(props) {
     super(props);
@@ -29,7 +31,7 @@ class UserPointsForm extends Component {
 
   handleUserPointsFormSubmit(event) {
     event.preventDefault();
-    this.props.createTransaction(this.state.user.id, this.state.number, this.state.reason)
+    this.props.createTransaction(this.state.user.id, this.state.number, this.state.reason, this.props.adminUserId)
     this.setState({
       number: '',
       reason: ''
@@ -47,7 +49,7 @@ class UserPointsForm extends Component {
   }
   handleFindingCurrentUser() {
     const userId = this.props.location.split('/')[2];
-    const currentUser = this.props.userList.find(user => user.id == userId);
+    const currentUser = this.props.userList.find(user => user.employeeId == userId);
     this.setState({
       user: currentUser
     })
@@ -111,6 +113,7 @@ class UserPointsForm extends Component {
     if(this.state.user) {
       return (
       <div>
+        {console.log(moment(String))}
         <Link to="/manage-users"><Button className="backButton" bsStyle="primary">Back To List</Button></Link>
         <h1>{this.state.user.name}</h1>
         <p>Current Points: {this.state.user.currentPoints}</p>
@@ -140,6 +143,7 @@ UserPointsForm.propTypes = {
   transactionList: PropTypes.array,
   location: PropTypes.string,
   findUsersTransactions: PropTypes.func,
-  createTransaction: PropTypes.func
+  createTransaction: PropTypes.func,
+  adminUserId: PropTypes.number
 }
 export default UserPointsForm;

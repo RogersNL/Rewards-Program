@@ -9,6 +9,7 @@ namespace Rewards.Models
     public int Points { get; set; }
     public string Type { get; set; }
     public int UserId { get; set; }
+    public int AdminId { get; set; }
     public int Id { get; set; }
   }
 }
