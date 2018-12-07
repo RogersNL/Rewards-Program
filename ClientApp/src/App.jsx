@@ -37,6 +37,7 @@ class App extends Component {
     //Load API data before component mounts
     this.props.actions.setLoggedInUser();
     this.props.actions.requestUsers();
+    this.props.actions.findUsersTransactions();
     this.props.actions.requestGifts();
     this.props.actions.requestTransactions();
     this.props.actions.requestPosts();
@@ -62,7 +63,7 @@ class App extends Component {
               {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/edit-post' render={()=><EditPost postToEdit={this.props.appState.posts.postToEdit} editPost={this.props.actions.editPost} />} /> : null}
               {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/edit-gift' render={()=><EditGift giftToEdit={this.props.appState.gifts.giftToEdit} editGift={this.props.actions.editGift} />} /> : null}
               {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/analytics' component={Analytics} /> : null}
-              {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/user/:id' render={()=><UserPointsForm userList={this.props.appState.users.users} transactionList={this.props.appState.transactions.transactions} location={this.props.location.pathname} findUsersTransactions={this.props.actions.findUsersTransactions} createTransaction={this.props.actions.createTransaction} adminUserId={this.props.appState.loggedInUser.employeeId} />} /> : null}
+              {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/user/:id' render={()=><UserPointsForm userList={this.props.appState.users.users} transactionList={this.props.appState.transactions.transactions} location={this.props.location.pathname} findUsersTransactions={this.props.actions.findUsersTransactions} createTransaction={this.props.actions.createTransaction} adminUserId={this.props.appState.users.loggedInUser.employeeId} requestTransactions={this.props.actions.requestTransactions} />} /> : null}
               <Route path='/login' render={()=><LogIn logInUser={this.props.actions.setLoggedInUser} findUsersTransactions={this.props.actions.findUsersTransactions} />} />
               <Route component={Error404} />
             </Switch>

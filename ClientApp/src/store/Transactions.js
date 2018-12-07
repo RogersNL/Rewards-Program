@@ -13,19 +13,17 @@ export const transactionActionCreators = {
 
     dispatch({ type: receiveTransactionsType, transactions});
   },
-  findUsersTransactions: id => async (dispatch, getState) => {
+  findUsersTransactions: id => (dispatch, getState) => {
     dispatch({ type: findUsersTransactionsType, id })
   },
-  createTransaction: (userId, number, reason, adminId) => async (dispatch, getState) => {
+  createTransaction: (userId, number, reason, adminId, date) => async (dispatch, getState) => {
     const url = `/api/Transactions`
     const data = {
       userId: userId,
-      number: number,
-      reason: reason,
+      points: number,
+      name: reason,
       adminId: adminId,
-
-
-
+      date: date
     }
     console.log(JSON.stringify(data));
     const response = await fetch(url, {
@@ -35,7 +33,7 @@ export const transactionActionCreators = {
       'Content-Type': 'application/json'
     }
     }).then(res => res.json())
-    .then(response => console.log('Success', JSON.strigify(response)))
+    .then(response => console.log('Success', JSON.stringify(response)))
     .catch(error => console.error('Error', error));
   }
 };
@@ -51,6 +49,7 @@ export const reducer = (state, action) => {
   }
 
   if (action.type === receiveTransactionsType) {
+    console.log(action.transactions)
     return {
       ...state,
       transactions: action.transactions,
@@ -69,7 +68,9 @@ export const reducer = (state, action) => {
       o.balance = balance + o.points;
       balance = o.balance;
       return o;
-    }).reverse();
+      })
+      .reverse();
+      console.log(userTransactions);
     return {
       ...state,
       userTransactions: userTransactions

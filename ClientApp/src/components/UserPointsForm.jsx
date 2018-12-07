@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
+import { FormGroup, FormControl, ControlLabel, Button, Glyphicon } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
@@ -31,7 +31,24 @@ class UserPointsForm extends Component {
 
   handleUserPointsFormSubmit(event) {
     event.preventDefault();
-    this.props.createTransaction(this.state.user.id, this.state.number, this.state.reason, this.props.adminUserId)
+
+    this.props.createTransaction(this.props.location.split('/')[2], this.state.number, this.state.reason, this.props.adminUserId, moment().toString());
+
+    const user = this.state.user;
+    const updatedUser = Object.assign({}, user, {currentPoints: parseInt(this.state.user.currentPoints) + parseInt(this.state.number), lifetimePoints: parseInt(this.state.user.lifetimePoints) + parseInt(this.state.number)});
+    console.log(updatedUser);
+
+    fetch(`api/Employees`, {
+      method: 'PUT',
+      body: JSON.stringify(updatedUser),
+      headers:{
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json())
+    .then(response => console.log('Success',
+    JSON.stringify(response)))
+    .catch(error => console.error('Error', error));
+
     this.setState({
       number: '',
       reason: ''
@@ -113,7 +130,6 @@ class UserPointsForm extends Component {
     if(this.state.user) {
       return (
       <div>
-        {console.log(moment(String))}
         <Link to="/manage-users"><Button className="backButton" bsStyle="primary">Back To List</Button></Link>
         <h1>{this.state.user.name}</h1>
         <p>Current Points: {this.state.user.currentPoints}</p>
@@ -142,8 +158,8 @@ UserPointsForm.propTypes = {
   userList: PropTypes.array,
   transactionList: PropTypes.array,
   location: PropTypes.string,
-  findUsersTransactions: PropTypes.func,
   createTransaction: PropTypes.func,
-  adminUserId: PropTypes.number
+  adminUserId: PropTypes.number,
+  requestTransactions: PropTypes.func
 }
 export default UserPointsForm;

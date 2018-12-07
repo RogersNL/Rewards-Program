@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-function Profile(props) {
-  function renderTransactionsTable(props) {
-    if(props.transactionList){
+class Profile extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+
+    };
+    this.renderTransactionsTable = this.renderTransactionsTable.bind(this);
+    this.handleRenderUserInfo = this.handleRenderUserInfo.bind(this);
+  }
+  renderTransactionsTable() {
+    if(this.props.transactionList){
       return (
         <table className='table'>
           <thead>
@@ -15,8 +23,8 @@ function Profile(props) {
             </tr>
           </thead>
           <tbody>
-            {props.transactionList.map(transaction =>
-              <tr key={transaction.id}>
+            {this.props.transactionList.map(transaction =>
+              <tr key={transaction.employeeId}>
                 <td>{transaction.name}</td>
                 <td>{transaction.date}</td>
                 <td>{transaction.points}</td>
@@ -31,26 +39,28 @@ function Profile(props) {
       )
     }
   }
-  function handleRenderUserInfo(props){
-    if(props.loggedInUser){
+  handleRenderUserInfo(){
+    if(this.props.loggedInUser){
       return(
         <div>
-          <h1>{props.loggedInUser.name}</h1>
-          <p>Current Points: {props.loggedInUser.currentPoints}</p>
-          <p>Lifetime Points: {props.loggedInUser.lifetimePoints}</p>
+          <h1>{this.props.loggedInUser.name}</h1>
+          <p>Current Points: {this.props.loggedInUser.currentPoints}</p>
+          <p>Lifetime Points: {this.props.loggedInUser.lifetimePoints}</p>
         </div>
       )
     }
   }
-  return (
-    <div>
-      {handleRenderUserInfo(props)}
-      <hr />
-      <h2>History</h2>
-      {renderTransactionsTable(props)}
-      {console.log(props.appState)}
-    </div>
-  )
+  render(){
+    return (
+      <div>
+        {this.handleRenderUserInfo()}
+        <hr />
+        <h2>History</h2>
+        {this.renderTransactionsTable()}
+        {console.log(this.props.appState)}
+      </div>
+    )
+  }
 }
 
 Profile.propTypes = {

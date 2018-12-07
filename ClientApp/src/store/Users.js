@@ -39,7 +39,6 @@ export const userActionCreators = {
             adminLevel: 1,
             locationId: 0
           };
-          console.log(user.displayName);
           fetch(`api/Employees`, {
             method: 'POST',
             body: JSON.stringify(newUser),
