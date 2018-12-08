@@ -1,6 +1,7 @@
 const requestTransactionsType = 'REQUEST_TRANSACTIONS';
 const receiveTransactionsType = 'RECEIVE_TRANSACTIONS';
 const findUsersTransactionsType = 'FIND_USERS_TRANSACTIONS';
+const addTransactionType = 'ADD_TRANSACTION';
 const initialState = { transactions: [], isLoading: false};
 
 export const transactionActionCreators = {
@@ -18,23 +19,25 @@ export const transactionActionCreators = {
   },
   createTransaction: (userId, number, reason, adminId, date) => async (dispatch, getState) => {
     const url = `/api/Transactions`
-    const data = {
+    const newTransaction = {
       userId: userId,
       points: number,
       name: reason,
       adminId: adminId,
       date: date
     }
-    console.log(JSON.stringify(data));
+    console.log(JSON.stringify(newTransaction));
     const response = await fetch(url, {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify(newTransaction),
       headers:{
       'Content-Type': 'application/json'
     }
     }).then(res => res.json())
     .then(response => console.log('Success', JSON.stringify(response)))
-    .catch(error => console.error('Error', error));
+    .then(() => fetch(url))
+    .then(res => res.json())
+    .then(newTransactions => dispatch({ type: addTransactionType, newTransactions }))
   }
 };
 
@@ -49,7 +52,6 @@ export const reducer = (state, action) => {
   }
 
   if (action.type === receiveTransactionsType) {
-    console.log(action.transactions)
     return {
       ...state,
       transactions: action.transactions,
@@ -70,10 +72,16 @@ export const reducer = (state, action) => {
       return o;
       })
       .reverse();
-      console.log(userTransactions);
     return {
       ...state,
       userTransactions: userTransactions
+    }
+  }
+  if (action.type === addTransactionType) {
+    console.log(action.newTransactions)
+    return {
+      ...state,
+      transactions: action.newTransactions
     }
   }
   return state;

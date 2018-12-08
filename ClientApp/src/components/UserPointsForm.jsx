@@ -28,26 +28,23 @@ class UserPointsForm extends Component {
     this.handleFindingCurrentUser();
     this.handleFindingUsersTransactions();
   }
-
+  componentDidUpdate(prevProps){
+    if (prevProps.transactionList !== this.props.transactionList){
+      this.handleFindingUsersTransactions();
+    }
+    if (prevProps.userList !== this.props.userList){
+      this.handleFindingCurrentUser();
+    }
+  }
   handleUserPointsFormSubmit(event) {
     event.preventDefault();
 
-    this.props.createTransaction(this.props.location.split('/')[2], this.state.number, this.state.reason, this.props.adminUserId, moment().toString());
+    this.props.createTransaction(parseInt(this.props.location.split('/')[2]), parseInt(this.state.number), this.state.reason, parseInt(this.props.adminUserId), moment().toString());
 
     const user = this.state.user;
     const updatedUser = Object.assign({}, user, {currentPoints: parseInt(this.state.user.currentPoints) + parseInt(this.state.number), lifetimePoints: parseInt(this.state.user.lifetimePoints) + parseInt(this.state.number)});
-    console.log(updatedUser);
 
-    fetch(`api/Employees`, {
-      method: 'PUT',
-      body: JSON.stringify(updatedUser),
-      headers:{
-        'Content-Type': 'application/json'
-      }
-    }).then(res => res.json())
-    .then(response => console.log('Success',
-    JSON.stringify(response)))
-    .catch(error => console.error('Error', error));
+    this.props.updateUser(this.props.location.split('/')[2], updatedUser);
 
     this.setState({
       number: '',
@@ -138,6 +135,7 @@ class UserPointsForm extends Component {
         {this.handleRenderPointsForm()}
         <hr/>
         <h3>Transactions</h3>
+        {console.log(this.props)}
         {this.handleRenderUserTransactions()}
         <style>{`
           .backButton {
@@ -160,6 +158,7 @@ UserPointsForm.propTypes = {
   location: PropTypes.string,
   createTransaction: PropTypes.func,
   adminUserId: PropTypes.number,
-  requestTransactions: PropTypes.func
+  requestTransactions: PropTypes.func,
+  updateUser: PropTypes.func
 }
 export default UserPointsForm;

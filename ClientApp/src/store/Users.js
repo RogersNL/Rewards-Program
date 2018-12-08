@@ -7,6 +7,7 @@ const setLoggedInUserType = 'SET_LOGGED_IN_USER';
 const requestAdminTableType = 'REQUEST_ADMIN_TABLE';
 const receiveAdminTableType = 'RECEIVE_ADMIN_TABLE';
 const registerUserType = 'REGISTER_USER';
+const updateUserListType = 'UPDATE_USER_LIST';
 const initialState = { users: [], isLoading: false};
 
 export const userActionCreators = {
@@ -24,7 +25,6 @@ export const userActionCreators = {
     Promise.all([adalApiFetch(fetch, 'https://graph.microsoft.com/v1.0/me', {}), fetch(`api/Employees`)])
       .then(([user, employees]) => Promise.all([user.json(), employees.json()]))
       .then(([user, employees]) => {
-        console.log(user, employees);
         const currentUser = employees.find(employee => employee.graphId === user.id);
         if(currentUser){
           dispatch({ type: setLoggedInUserType, currentUser })
@@ -52,6 +52,20 @@ export const userActionCreators = {
           .catch(error => console.error('Error', error))
         }
       })
+  },
+  updateUser: (id, user) => (dispatch, getState) => {
+    const url = `api/Employees/${id}`;
+    fetch(url, {
+      method: 'PUT',
+      body: JSON.stringify(user),
+      headers:{
+        'Content-Type': 'application/json'
+      }
+    })
+    .catch(error => console.error('Error', error))
+    .then(() => fetch(`api/Employees`))
+    .then(res => res.json())
+    .then(newUserList => dispatch({ type: updateUserListType, newUserList}))
   }
 };
 
@@ -111,6 +125,13 @@ export const reducer = (state, action) => {
     return {
       ...state,
       newUser: newUser
+    }
+  }
+
+  if (action.type === updateUserListType) {
+    return {
+      ...state,
+      users: action.newUserList
     }
   }
 

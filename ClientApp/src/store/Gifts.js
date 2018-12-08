@@ -11,7 +11,6 @@ export const giftActionCreators = {
     const url = `api/Rewards`;
     const response = await fetch(url);
     const gifts = await response.json();
-    console.log(gifts);
     dispatch({ type: receiveGiftsType, gifts});
   },
   setGiftToEdit: id => async (dispatch, getState) => {
