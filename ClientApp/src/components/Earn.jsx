@@ -17,7 +17,7 @@ function Earn(props) {
       <table className='table'>
         <thead>
           <tr>
-            <th>Name</th>
+            <th>Event</th>
             <th>Description</th>
             <th>Location</th>
             <th>Point Value</th>
@@ -27,9 +27,9 @@ function Earn(props) {
         <tbody>
           {props.posts.filteredPosts.map(post =>
             <tr key={post.id}>
-              <td>{post.name}</td>
+              <td>{post.title}</td>
               <td>{post.description}</td>
-              <td>{post.location}</td>
+              <td>{props.locations.find(location => location.id == post.locationId).name}</td>
               <td>{post.pointValue}</td>
               <td>{post.dateClosed}</td>
             </tr>)}
@@ -41,7 +41,7 @@ function Earn(props) {
       <table className='table'>
         <thead>
           <tr>
-            <th>Name</th>
+            <th>Event</th>
             <th>Description</th>
             <th>Location</th>
             <th>Point Value</th>
@@ -51,9 +51,9 @@ function Earn(props) {
         <tbody>
           {props.posts.currentPosts.map(post =>
             <tr key={post.id}>
-              <td>{post.name}</td>
+              <td>{post.title}</td>
               <td>{post.description}</td>
-              <td>{post.location}</td>
+              <td>{props.locations.find(location => location.id == post.locationId).name}</td>
               <td>{post.pointValue}</td>
               <td>{post.dateClosed}</td>
             </tr>)}
@@ -75,16 +75,9 @@ function Earn(props) {
         </DropdownButton>
         <DropdownButton title="Filter By Location" id="bg-nested-dropdown">
           <MenuItem eventKey="All" onSelect={handleFilteringPostsByLocation}>All Locations</MenuItem>
-          <MenuItem eventKey="Bothell" onSelect={handleFilteringPostsByLocation}>Bothell</MenuItem>
-          <MenuItem eventKey="Virginia" onSelect={handleFilteringPostsByLocation}>Virginia</MenuItem>
-          <MenuItem eventKey="Atlanta" onSelect={handleFilteringPostsByLocation}>Atlanta</MenuItem>
-          <MenuItem eventKey="Houston" onSelect={handleFilteringPostsByLocation}>Houston</MenuItem>
-          <MenuItem eventKey="Los Angeles" onSelect={handleFilteringPostsByLocation}>Los Angeles</MenuItem>
-          <MenuItem eventKey="Chennai" onSelect={handleFilteringPostsByLocation}>Chennai</MenuItem>
-          <MenuItem eventKey="Pune" onSelect={handleFilteringPostsByLocation}>Pune</MenuItem>
-          <MenuItem eventKey="Trichy" onSelect={handleFilteringPostsByLocation}>Trichy</MenuItem>
-          <MenuItem eventKey="Malaysia" onSelect={handleFilteringPostsByLocation}>Malaysia</MenuItem>
-          <MenuItem eventKey="U.A.E" onSelect={handleFilteringPostsByLocation}>U.A.E</MenuItem>
+          {props.locations.map(location =>
+            <MenuItem key={location.id} eventKey={location.id} onSelect={handleFilteringPostsByLocation}>{location.name}</MenuItem>
+          )}
         </DropdownButton>
       </ButtonGroup>
     )
@@ -102,7 +95,8 @@ function Earn(props) {
 Earn.propTypes = {
   posts: PropTypes.object,
   filterByLocation: PropTypes.func,
-  filterByDate: PropTypes.func
+  filterByDate: PropTypes.func,
+  locations: PropTypes.array
 };
 
 export default Earn;

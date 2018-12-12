@@ -42,7 +42,12 @@ class UserPointsForm extends Component {
     this.props.createTransaction(parseInt(this.props.location.split('/')[2]), parseInt(this.state.number), this.state.reason, parseInt(this.props.adminUserId), moment().toString());
 
     const user = this.state.user;
-    const updatedUser = Object.assign({}, user, {currentPoints: parseInt(this.state.user.currentPoints) + parseInt(this.state.number), lifetimePoints: parseInt(this.state.user.lifetimePoints) + parseInt(this.state.number)});
+    let updatedUser = {};
+    if(this.state.number >= 0){
+      updatedUser = Object.assign({}, user, {currentPoints: parseInt(this.state.user.currentPoints) + parseInt(this.state.number), lifetimePoints: parseInt(this.state.user.lifetimePoints) + parseInt(this.state.number)});
+    } else {
+      updatedUser = Object.assign({}, user, {currentPoints: parseInt(this.state.user.currentPoints) + parseInt(this.state.number), lifetimePoints: parseInt(this.state.user.lifetimePoints)});
+    }
 
     this.props.updateUser(this.props.location.split('/')[2], updatedUser);
 

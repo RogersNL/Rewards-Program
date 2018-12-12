@@ -51,7 +51,7 @@ class NewPostForm extends Component {
   handleNewPostFormSubmit(event) {
     event.preventDefault();
     // console.log(this.state);
-    this.props.createPost(this.state._title, this.state._description, this.state._location, this.state._pointValue, this.state._dateClosed);
+    this.props.createPost(this.state._title, this.state._description, this.state._locationId, this.state._pointValue, this.state._dateClosed.toString());
     this.setState({
       _title: '',
       _description: '',
@@ -95,21 +95,14 @@ class NewPostForm extends Component {
           <ControlLabel>Relevant Locations</ControlLabel>
           <FormControl value={this.state._location} onChange={this.handleLocationChange} componentClass="select" placeholder="select">
             <option value="All Locations">All Locations</option>
-            <option value="Bothell">Bothell</option>
-            <option value="Virginia">Virginia</option>
-            <option value="Atlanta">Atlanta</option>
-            <option value="Houston">Houston</option>
-            <option value="Los Angeles">Los Angeles</option>
-            <option value="Chennai">Chennai</option>
-            <option value="Pune">Pune</option>
-            <option value="Trichy">Trichy</option>
-            <option value="Malaysia">Malaysia</option>
-            <option value="U.A.E">U.A.E</option>
+            {this.props.locations.map(location =>
+              <option key={location.id} value={location.id} >{location.name}</option>
+            )}
           </FormControl>
         </FormGroup>
         <FormGroup>
           <ControlLabel>Point Value of Event or Opportunity</ControlLabel>
-          <FormControl value={this.state._pointValue} onChange={this.handlePointValueChange} type="text" placeholder="Point Value"></FormControl>
+          <FormControl value={this.state._pointValue} onChange={this.handlePointValueChange} type="number" placeholder="Point Value"></FormControl>
         </FormGroup>
         <ControlLabel>Offer Expires Date</ControlLabel>
         <FormGroup>
@@ -126,7 +119,7 @@ class NewPostForm extends Component {
   render(){
     return (
       <div>
-        <h1>New Post</h1>
+        <h3>New Post</h3>
         {this.handleRenderPostForm()}
         <style>{`
         `}</style>
@@ -135,6 +128,7 @@ class NewPostForm extends Component {
   }
 }
 NewPostForm.propTypes = {
-  createPost: PropTypes.func
+  createPost: PropTypes.func,
+  locations: PropTypes.array
 }
 export default NewPostForm;

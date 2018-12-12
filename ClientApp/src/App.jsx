@@ -29,6 +29,7 @@ import { giftActionCreators } from './store/Gifts';
 import { postActionCreators } from './store/Posts';
 import { transactionActionCreators } from './store/Transactions';
 import { userActionCreators } from './store/Users';
+import { locationActionCreators } from './store/Locations';
 
 
 class App extends Component {
@@ -41,6 +42,7 @@ class App extends Component {
     this.props.actions.requestGifts();
     this.props.actions.requestTransactions();
     this.props.actions.requestPosts();
+    this.props.actions.requestLocations();
   }
 
   render(){
@@ -50,13 +52,13 @@ class App extends Component {
           <Layout loggedInUser={this.props.appState.users.loggedInUser}>
             <Switch>
               <Route exact path='/' render={()=><Home loggedInUser={this.props.appState.users.loggedInUser} />} />
-              <Route path='/earn' render={()=><Earn posts={this.props.appState.posts} filterByLocation={this.props.actions.filterCurrentPostsByLocation} filterByDate={this.props.actions.filterCurrentPostsByDate} />} />
-              <Route path='/profile' render={()=><Profile appState={this.props} loggedInUser={this.props.appState.users.loggedInUser} transactionList={this.props.appState.transactions.userTransactions} />} />
+              <Route path='/earn' render={()=><Earn posts={this.props.appState.posts} locations={this.props.appState.locations.locations} filterByLocation={this.props.actions.filterCurrentPostsByLocation} filterByDate={this.props.actions.filterCurrentPostsByDate} />} />
+              <Route path='/profile' render={()=><Profile appState={this.props} loggedInUser={this.props.appState.users.loggedInUser} transactionList={this.props.appState.transactions.transactions} />} />
               <Route path='/leaderboard' render={()=><Leaderboard userList={this.props.appState.users.sortedUsers} />} />
               <Route path='/rewards' render={()=><ClaimGifts giftList={this.props.appState.gifts.gifts} />} />
                {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/admin' component={Admin} /> : null}
               {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/manage-users' render={()=><ManageUsers userList={this.props.appState.users.users} />} /> : null}
-              {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/manage-posts' render={()=><ManagePosts posts={this.props.appState.posts} setPost={this.props.actions.setPostToEdit} filterByLocation={this.props.actions.filterAllPostsByLocation} filterByDate={this.props.actions.filterAllPostsByDate} />} /> : null}
+              {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/manage-posts' render={()=><ManagePosts posts={this.props.appState.posts} setPost={this.props.actions.setPostToEdit} locations={this.props.appState.locations.locations} filterByLocation={this.props.actions.filterAllPostsByLocation} filterByDate={this.props.actions.filterAllPostsByDate} createPost={this.props.actions.createNewPost} />} /> : null}
               {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/manage-gifts' render={()=><ManageGifts giftList={this.props.appState.gifts.gifts} setGift={this.props.actions.setGiftToEdit} />} /> : null}
               {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/new-post' render={()=><NewPostForm createPost={this.props.actions.createNewPost} />} /> : null}
               {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/new-gift' render={()=><NewGiftForm createGift={this.props.actions.createNewGift} />} /> : null}
@@ -84,7 +86,7 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    actions: bindActionCreators(Object.assign({}, userActionCreators, giftActionCreators, transactionActionCreators, postActionCreators), dispatch)
+    actions: bindActionCreators(Object.assign({}, userActionCreators, giftActionCreators, transactionActionCreators, postActionCreators, locationActionCreators), dispatch)
   };
 };
 App.propTypes = {

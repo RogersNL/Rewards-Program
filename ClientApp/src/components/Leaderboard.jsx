@@ -23,8 +23,12 @@ class Leaderboard extends Component {
     //Render if page is refreshed or if url manually entered
   componentWillReceiveProps(){
     this.handleSettingShownUsers(this.state.tableIndex);
+    }
+  componentDidUpdate(prevProps){
+    if (prevProps.userList !== this.props.userList){
+      this.handleSettingShownUsers();
+    }
   }
-
   //Pagination
     //Determine shown users based on pagination
   handleSettingShownUsers(index){
@@ -95,7 +99,7 @@ class Leaderboard extends Component {
           </thead>
           <tbody>
             {this.state.shownUsers.map((user, index) =>
-              <tr key={user.id}>
+              <tr key={user.employeeId}>
                 <td>{this.state.tableIndex*10 + index + 1}</td>
                 <td>{user.name}</td>
                 <td>{user.location}</td>

@@ -6,6 +6,7 @@ const filterAllPostsByLocationType = 'FILTER_ALL_POSTS_BY_LOCATION';
 const filterAllPostsByDateType = 'FILTER_ALL_POSTS_BY_DATE';
 const filterCurrentPostsByDateType = 'FILTER_CURRENT_POSTS_BY_DATE';
 const filterCurrentPostsByLocationType = 'FILTER_CURRENT_POSTS_BY_LOCATION';
+const updatePostListType = `UPDATE_POST_LIST`;
 const setPostToEditType = 'SET_POST_TO_EDIT';
 
 const initialState = { posts: [], isLoading: false};
@@ -21,22 +22,22 @@ export const postActionCreators = {
     dispatch({ type: receivePostsType, posts });
     dispatch({ type: filterCurrentPostsType });
   },
-  filterAllPostsByLocation: location => async (dispatch, getState) => {
+  filterAllPostsByLocation: location => (dispatch, getState) => {
     dispatch({ type: filterAllPostsByLocationType, location });
   },
-  filterAllPostsByDate: value => async (dispatch, getState) => {
+  filterAllPostsByDate: value => (dispatch, getState) => {
     dispatch({ type: filterAllPostsByDateType, value });
   },
-  filterCurrentPostsByLocation: location => async (dispatch, getState) => {
+  filterCurrentPostsByLocation: location => (dispatch, getState) => {
     dispatch({ type: filterCurrentPostsByLocationType, location });
   },
-  filterCurrentPostsByDate: value => async (dispatch, getState) => {
+  filterCurrentPostsByDate: value => (dispatch, getState) => {
     dispatch({ type: filterCurrentPostsByDateType, value });
   },
-  setPostToEdit: id => async (dispatch, getState) => {
+  setPostToEdit: id => (dispatch, getState) => {
     dispatch({ type: setPostToEditType, id });
   },
-  createNewPost: (title, description, pointValue, dateClosed, locationId) => async (dispatch, getState) => {
+  createNewPost: (title, description, locationId, pointValue, dateClosed) => (dispatch, getState) => {
     const url = `api/Posts`
     const data = {
       title: title,
@@ -46,15 +47,18 @@ export const postActionCreators = {
       locationId: locationId
     }
     console.log(JSON.stringify(data));
-    const response = await fetch(url, {
+    fetch(url, {
       method: 'POST',
       body: JSON.stringify(data),
       headers:{
       'Content-Type': 'application/json'
     }
     }).then(res => res.json())
-    .then(response => console.log('Success', JSON.strigify(response)))
-    .catch(error => console.error('Error', error));
+    .then(response => console.log('Success', JSON.stringify(response)))
+    .catch(error => console.error('Error', error))
+    .then(() => fetch(url))
+    .then(res => res.json())
+    .then(updatedPosts => dispatch({ type: updatePostListType, updatedPosts }))
   },
   editPost: (title, description, pointValue, dateClosed, locationId, postId) => async (dispatch, getState) => {
     const url = `api/Posts`
@@ -178,5 +182,11 @@ export const reducer = (state, action) => {
     }
   }
 
+  if (action.type === updatePostListType) {
+    return {
+      ...state,
+      posts: action.updatedPosts
+    }
+  }
   return state;
 };

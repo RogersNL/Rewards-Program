@@ -5,6 +5,7 @@ import * as Posts from './Posts';
 import * as Gifts from './Gifts';
 import * as Transactions from './Transactions';
 import * as Users from './Users';
+import * as Locations from './Locations';
 
 export default function configureStore(history, initialState) {
   const reducers = {
@@ -12,6 +13,7 @@ export default function configureStore(history, initialState) {
     transactions: Transactions.reducer,
     posts: Posts.reducer,
     gifts: Gifts.reducer,
+    locations: Locations.reducer
   };
 
   const logger = store => {

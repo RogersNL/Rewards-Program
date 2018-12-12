@@ -19,7 +19,7 @@ export const userActionCreators = {
     const users = await response.json();
 
     dispatch({ type: receiveUsersType, users });
-    // dispatch({ type: sortUsersByPointsType });
+    dispatch({ type: sortUsersByPointsType });
   },
   setLoggedInUser: id => (dispatch, getState) => {
     Promise.all([adalApiFetch(fetch, 'https://graph.microsoft.com/v1.0/me', {}), fetch(`api/Employees`)])
@@ -65,7 +65,7 @@ export const userActionCreators = {
     .catch(error => console.error('Error', error))
     .then(() => fetch(`api/Employees`))
     .then(res => res.json())
-    .then(newUserList => dispatch({ type: updateUserListType, newUserList}))
+    .then(newUserList => dispatch({ type: updateUserListType, newUserList }))
   }
 };
 

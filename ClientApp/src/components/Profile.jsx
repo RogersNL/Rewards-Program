@@ -5,13 +5,56 @@ class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      user: null,
+      transactions: null
     };
     this.renderTransactionsTable = this.renderTransactionsTable.bind(this);
     this.handleRenderUserInfo = this.handleRenderUserInfo.bind(this);
+    this.handleSettingCurrentUser = this.handleSettingCurrentUser.bind(this);
+    this.handleSettingTransactions = this.handleSettingTransactions.bind(this);
+  }
+
+  componentDidMount(){
+    this.handleSettingCurrentUser();
+    this.handleSettingTransactions();
+  }
+  componentWillReceiveProps(){
+    this.handleSettingCurrentUser();
+    this.handleSettingTransactions();
+  }
+  componentDidUpdate(prevProps){
+    if (prevProps.loggedInUser !== this.props.loggedInUser){
+      this.handleSettingCurrentUser();
+    }
+    if (prevProps.transactionList !== this.props.transactionList){
+      this.handleSettingTransactions();
+    }
+  }
+
+  handleSettingCurrentUser() {
+    this.setState({
+      user: this.props.loggedInUser
+    })
+  }
+  handleSettingTransactions() {
+    let balance = 0;
+    const userId = this.props.loggedInUser.employeeId;
+    const userTransactions = this.props.transactionList.filter(transaction => transaction.userId == userId)
+      .sort(function(a,b){
+        return Date.parse(a.date) - Date.parse(b.date);
+      })
+      .map(function(a) {
+      let o = Object.assign({}, a);
+      o.balance = balance + o.points;
+      balance = o.balance;
+      return o;
+    }).reverse();
+    this.setState({
+      transactions: userTransactions
+    })
   }
   renderTransactionsTable() {
-    if(this.props.transactionList){
+    if(this.state.transactions){
       return (
         <table className='table'>
           <thead>
@@ -23,8 +66,8 @@ class Profile extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.transactionList.map(transaction =>
-              <tr key={transaction.employeeId}>
+            {this.state.transactions.map(transaction =>
+              <tr key={transaction.id}>
                 <td>{transaction.name}</td>
                 <td>{transaction.date}</td>
                 <td>{transaction.points}</td>
@@ -40,12 +83,12 @@ class Profile extends Component {
     }
   }
   handleRenderUserInfo(){
-    if(this.props.loggedInUser){
+    if(this.state.user){
       return(
         <div>
-          <h1>{this.props.loggedInUser.name}</h1>
-          <p>Current Points: {this.props.loggedInUser.currentPoints}</p>
-          <p>Lifetime Points: {this.props.loggedInUser.lifetimePoints}</p>
+          <h1>{this.state.user.name}</h1>
+          <p>Current Points: {this.state.user.currentPoints}</p>
+          <p>Lifetime Points: {this.state.user.lifetimePoints}</p>
         </div>
       )
     }
@@ -57,7 +100,6 @@ class Profile extends Component {
         <hr />
         <h2>History</h2>
         {this.renderTransactionsTable()}
-        {console.log(this.props.appState)}
       </div>
     )
   }
