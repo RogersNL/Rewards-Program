@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 //Action Constants
 const requestPostsType = 'REQUEST_POSTS';
 const receivePostsType = 'RECEIVE_POSTS';
@@ -20,7 +22,7 @@ export const postActionCreators = {
     const posts = await response.json();
 
     dispatch({ type: receivePostsType, posts });
-    dispatch({ type: filterCurrentPostsType });
+    // dispatch({ type: filterCurrentPostsType });
   },
   filterAllPostsByLocation: location => (dispatch, getState) => {
     dispatch({ type: filterAllPostsByLocationType, location });
@@ -37,12 +39,13 @@ export const postActionCreators = {
   setPostToEdit: id => (dispatch, getState) => {
     dispatch({ type: setPostToEditType, id });
   },
-  createNewPost: (title, description, locationId, pointValue, dateClosed) => (dispatch, getState) => {
+  createNewPost: (title, description, locationId, pointValue, dateOpened, dateClosed) => (dispatch, getState) => {
     const url = `api/Posts`
     const data = {
       title: title,
       description: description,
       pointValue: pointValue,
+      dateOpened: dateOpened,
       dateClosed: dateClosed,
       locationId: locationId
     }
@@ -59,26 +62,39 @@ export const postActionCreators = {
     .then(res => res.json())
     .then(updatedPosts => dispatch({ type: updatePostListType, updatedPosts }))
   },
-  editPost: (title, description, pointValue, dateClosed, locationId, postId) => async (dispatch, getState) => {
-    const url = `api/Posts`
+  editPost: (title, description, pointValue, dateClosed, locationId, id) => (dispatch, getState) => {
+    const url = `api/Posts/${id}`
     const data = {
       title: title,
       description: description,
       pointValue: pointValue,
       dateClosed: dateClosed,
       locationId: locationId,
-      postId: postId
+      id: id
     }
-    console.log(JSON.stringify(data));
-    const response = await fetch(url, {
-      method: 'POST',
+    fetch(url, {
+      method: 'PUT',
       body: JSON.stringify(data),
       headers:{
       'Content-Type': 'application/json'
     }
-    }).then(res => res.json())
-    .then(response => console.log('Success', JSON.strigify(response)))
-    .catch(error => console.error('Error', error));
+    })
+    .then(response => console.log('Success', JSON.stringify(response)))
+    .catch(error => console.error('Error', error))
+    .then(() => fetch(`api/Posts`))
+    .then(res => res.json())
+    .then(updatedPosts => dispatch({ type: updatePostListType, updatedPosts }))
+  },
+  deletePost: (id) => (dispatch, getState) => {
+    const url = `api/Posts/${id}`
+    fetch(url, {
+      method: 'DELETE'
+    })
+    .then(response => console.log('Success'))
+    .catch(error => console.error('Error', error))
+    .then(() => fetch(`api/Posts`))
+    .then(res => res.json())
+    .then(updatedPosts => dispatch({ type: updatePostListType, updatedPosts }))
   }
 };
 //Reducers
@@ -93,9 +109,10 @@ export const reducer = (state, action) => {
   }
 
   if (action.type === receivePostsType) {
+    const postsWithMoment = action.posts.map(post => Object.assign(post, {dateOpened: moment(post.dateOpened), dateClosed: moment(post.dateClosed)}))
     return {
       ...state,
-      posts: action.posts,
+      posts: postsWithMoment,
       isLoading: false
     };
   }
@@ -182,11 +199,12 @@ export const reducer = (state, action) => {
   }
 
   if (action.type === updatePostListType) {
+    const postsWithMoment = action.updatedPosts.map(post => Object.assign(post, {dateOpened: moment(post.dateOpened), dateClosed: moment(post.dateClosed)}))
     return {
       ...state,
-      posts: action.updatedPosts
+      posts: postsWithMoment
     }
   }
-  
+
   return state;
 };

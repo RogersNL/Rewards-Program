@@ -69,7 +69,7 @@ class Profile extends Component {
             {this.state.transactions.map(transaction =>
               <tr key={transaction.id}>
                 <td>{transaction.name}</td>
-                <td>{transaction.date}</td>
+                <td>{transaction.date.format("l")}</td>
                 <td>{transaction.points}</td>
                 <td>{transaction.balance}</td>
               </tr>)}

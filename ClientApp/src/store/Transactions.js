@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 const requestTransactionsType = 'REQUEST_TRANSACTIONS';
 const receiveTransactionsType = 'RECEIVE_TRANSACTIONS';
 const findUsersTransactionsType = 'FIND_USERS_TRANSACTIONS';
@@ -52,9 +54,10 @@ export const reducer = (state, action) => {
   }
 
   if (action.type === receiveTransactionsType) {
+    const transactionsWithMoment = action.transactions.map(transaction => Object.assign(transaction, {date: moment(transaction.date)}))
     return {
       ...state,
-      transactions: action.transactions,
+      transactions: transactionsWithMoment,
       isLoading: false
     };
   }
@@ -78,10 +81,10 @@ export const reducer = (state, action) => {
     }
   }
   if (action.type === addTransactionType) {
-    console.log(action.newTransactions)
+    const transactionsWithMoment = action.newTransactions.map(transaction => Object.assign(transaction, {date: moment(transaction.date)}))
     return {
       ...state,
-      transactions: action.newTransactions
+      transactions: transactionsWithMoment
     }
   }
   return state;

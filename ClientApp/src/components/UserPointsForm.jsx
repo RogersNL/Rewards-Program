@@ -97,6 +97,7 @@ class UserPointsForm extends Component {
           <tr>
             <th>Description</th>
             <th>Date</th>
+            <th>Admin</th>
             <th>Points</th>
             <th>Balance</th>
           </tr>
@@ -105,7 +106,8 @@ class UserPointsForm extends Component {
           {this.state.transactions.map(transaction =>
             <tr key={transaction.id}>
               <td>{transaction.name}</td>
-              <td>{transaction.date}</td>
+              <td>{transaction.date.format("llll")}</td>
+              <td>{this.props.userList.find(user => transaction.adminId == this.props.adminUserId).name}</td>
               <td>{transaction.points}</td>
               <td>{transaction.balance}</td>
             </tr>)}
@@ -140,7 +142,6 @@ class UserPointsForm extends Component {
         {this.handleRenderPointsForm()}
         <hr/>
         <h3>Transactions</h3>
-        {console.log(this.props)}
         {this.handleRenderUserTransactions()}
         <style>{`
           .backButton {

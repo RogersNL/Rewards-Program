@@ -51,7 +51,7 @@ class NewPostForm extends Component {
   handleNewPostFormSubmit(event) {
     event.preventDefault();
     // console.log(this.state);
-    this.props.createPost(this.state._title, this.state._description, this.state._locationId, this.state._pointValue, this.state._dateClosed.toString());
+    this.props.createPost(this.state._title, this.state._description, this.state._locationId, this.state._pointValue, moment().toString(), this.state._dateClosed.toString());
     this.setState({
       _title: '',
       _description: '',
@@ -61,25 +61,7 @@ class NewPostForm extends Component {
     })
 
   }
-  // addPost(title, description, location, pointValue, dateClosed){
-  //   const url = `https://localhost:5001/api/`;
-  //   const data = {
-  //     title,
-  //     description,
-  //     location,
-  //     pointValue,
-  //     dateClosed
-  //   }
-  //   fetch(url, {
-  //     method: 'POST',
-  //     body: JSON.stringify(data),
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     }
-  //   }).then(res => res.json())
-  //   .then(response => console.log('Success;', JSON.stringify(response)))
-  //   .catch(error => console.error('Error', error));
-  // }
+
   handleRenderPostForm(){
     return(
       <form onSubmit={this.handleNewPostFormSubmit}>
@@ -93,7 +75,7 @@ class NewPostForm extends Component {
         </FormGroup>
         <FormGroup controlId="formControlsSelect">
           <ControlLabel>Relevant Locations</ControlLabel>
-          <FormControl value={this.state._location} onChange={this.handleLocationChange} componentClass="select" placeholder="select">
+          <FormControl value={this.state._locationId} onChange={this.handleLocationChange} componentClass="select" placeholder="select">
             <option value="All Locations">All Locations</option>
             {this.props.locations.map(location =>
               <option key={location.id} value={location.id} >{location.name}</option>

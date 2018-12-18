@@ -48,7 +48,6 @@ export const giftActionCreators = {
       cost: pointValue,
       id: id
     }
-    console.log(JSON.stringify(data));
     fetch(url, {
       method: 'PUT',
       body: JSON.stringify(data),
@@ -86,7 +85,6 @@ export const reducer = (state, action) => {
   }
 
   if (action.type === receiveGiftsType) {
-    console.log(action.gifts)
     return {
       ...state,
       gifts: action.gifts,

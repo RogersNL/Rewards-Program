@@ -32,11 +32,11 @@ class EditPost extends Component {
   handleAddingPostToState(){
     if(this.props.postToEdit){
       this.setState({
-        _title: this.props.postToEdit.name,
+        _title: this.props.postToEdit.title,
         _description: this.props.postToEdit.description,
         _locationId: this.props.postToEdit.locationId,
         _pointValue: this.props.postToEdit.pointValue,
-        _dateClosed: this.props.dateClosed
+        _dateClosed: moment(this.props.dateClosed)
       })
     }
   }
@@ -69,7 +69,7 @@ class EditPost extends Component {
   handleEditPostSubmit(event) {
     event.preventDefault();
     console.log(this.state);
-    this.props.editPost(this.state._title, this.state._description, this.state._pointValue, this.state._dateClosed, this.state._locationId, this.props.postToEdit.id);
+    this.props.editPost(this.state._title, this.state._description, this.state._pointValue, this.state._dateClosed.toString(), this.state._locationId, this.props.postToEdit.id);
     this.setState({
       _title: '',
       _description: '',
@@ -77,27 +77,9 @@ class EditPost extends Component {
       _pointValue: '',
       _dateClosed: moment()
     })
+    this.props.hideEdit();
+  }
 
-  }
-  addPost(title, description, locationId, pointValue, dateClosed){
-    const url = `https://localhost:5001/api/`;
-    const data = {
-      title,
-      description,
-      locationId,
-      pointValue,
-      dateClosed
-    }
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(res => res.json())
-    .then(response => console.log('Success;', JSON.stringify(response)))
-    .catch(error => console.error('Error', error));
-  }
   handleRenderPostForm(){
     if(this.props.postToEdit){
       return(
@@ -114,16 +96,9 @@ class EditPost extends Component {
             <ControlLabel>Relevant Locations</ControlLabel>
             <FormControl value={this.state._locationId} onChange={this.handleLocationChange} componentClass="select" placeholder="select">
               <option value="All Locations">All Locations</option>
-              <option value="Bothell">Bothell</option>
-              <option value="Virginia">Virginia</option>
-              <option value="Atlanta">Atlanta</option>
-              <option value="Houston">Houston</option>
-              <option value="Los Angeles">Los Angeles</option>
-              <option value="Chennai">Chennai</option>
-              <option value="Pune">Pune</option>
-              <option value="Trichy">Trichy</option>
-              <option value="Malaysia">Malaysia</option>
-              <option value="U.A.E">U.A.E</option>
+              {this.props.locations.map(location =>
+                <option key={location.id} value={location.id} >{location.name}</option>
+              )}
             </FormControl>
           </FormGroup>
           <FormGroup>
@@ -134,11 +109,11 @@ class EditPost extends Component {
           <FormGroup>
             <DatePicker
               placeholderText='MM/DD/YYYY'
-              classTitle='form-control'
+              className='form-control'
               selected={this.state._dateClosed}
               onChange={this.handleDateChange}/>
           </FormGroup>
-          <Button type="submit" bsStyle="success">Add Post</Button>
+          <Button type="submit" bsStyle="warning">Edit Post</Button>
         </form>
       )
     } else {
@@ -150,9 +125,13 @@ class EditPost extends Component {
   render(){
     return (
       <div>
-        <h1>Edit Post</h1>
+        <Button className="closeEdit" onClick={()=>this.props.hideEdit()} bsStyle="danger">X</Button>
+        <h3>Edit Post</h3>
         {this.handleRenderPostForm()}
         <style>{`
+          .closeEdit {
+            float: right;
+          }
         `}</style>
       </div>
     );
@@ -160,6 +139,8 @@ class EditPost extends Component {
 }
 EditPost.propTypes = {
   postToEdit: PropTypes.object,
-  editPost: PropTypes.func
+  editPost: PropTypes.func,
+  hideEdit: PropTypes.func,
+  locations: PropTypes.array
 }
 export default EditPost;
