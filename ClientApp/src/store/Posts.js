@@ -46,7 +46,6 @@ export const postActionCreators = {
       dateClosed: dateClosed,
       locationId: locationId
     }
-    console.log(JSON.stringify(data));
     fetch(url, {
       method: 'POST',
       body: JSON.stringify(data),
@@ -188,5 +187,6 @@ export const reducer = (state, action) => {
       posts: action.updatedPosts
     }
   }
+  
   return state;
 };

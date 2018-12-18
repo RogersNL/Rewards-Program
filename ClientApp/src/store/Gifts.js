@@ -2,6 +2,8 @@ const requestGiftsType = 'REQUEST_GIFTS';
 const receiveGiftsType = 'RECEIVE_GIFTS';
 const setGiftToEditType = 'SET_GIFT_TO_EDIT';
 const addGiftType = 'ADD_GIFT';
+const updateGiftListType = 'UPDATE_GIFT_LIST';
+
 const initialState = { gifts: [], isLoading: false};
 
 export const giftActionCreators = {
@@ -11,20 +13,21 @@ export const giftActionCreators = {
     const url = `api/Rewards`;
     const response = await fetch(url);
     const gifts = await response.json();
-    dispatch({ type: receiveGiftsType, gifts});
+
+    dispatch({ type: receiveGiftsType, gifts });
+
   },
   setGiftToEdit: id => async (dispatch, getState) => {
     dispatch({ type: setGiftToEditType, id });
   },
-  createNewGift: (name, description, pointValue) => async (dispatch, getState) => {
+  createNewGift: (name, description, pointValue) => (dispatch, getState) => {
     const url = `api/Rewards`
     const data = {
       name: name,
       description: description,
       cost: pointValue
     }
-    console.log(JSON.stringify(data));
-    const response = await fetch(url, {
+    fetch(url, {
       method: 'POST',
       body: JSON.stringify(data),
       headers:{
@@ -32,26 +35,43 @@ export const giftActionCreators = {
     }
     }).then(res => res.json())
     .then(response => console.log('Success', JSON.stringify(response)))
-    .catch(error => console.error('Error', error));
+    .catch(error => console.error('Error', error))
+    .then(() => fetch(url))
+    .then(res => res.json())
+    .then(updatedGifts => dispatch({ type: updateGiftListType, updatedGifts }))
   },
-  editGift: (name, description, pointValue, giftId) => async (dispatch, getState) => {
-    const url = `api/Rewards`
+  editGift: (name, description, pointValue, id) => (dispatch, getState) => {
+    const url = `api/Rewards/${id}`
     const data = {
       name: name,
       description: description,
-      pointValue: pointValue,
-      giftId: giftId
+      cost: pointValue,
+      id: id
     }
     console.log(JSON.stringify(data));
-    const response = await fetch(url, {
+    fetch(url, {
       method: 'PUT',
       body: JSON.stringify(data),
       headers:{
       'Content-Type': 'application/json'
     }
-    }).then(res => res.json())
-    .then(response => console.log('Success', JSON.strigify(response)))
-    .catch(error => console.error('Error', error));
+    })
+    .then(response => console.log('Success', JSON.stringify(response)))
+    .catch(error => console.error('Error', error))
+    .then(() => fetch(`api/Rewards`))
+    .then(res => res.json())
+    .then(updatedGifts => dispatch({ type: updateGiftListType, updatedGifts }))
+  },
+  deleteGift: (id) => (dispatch, getState) => {
+    const url = `api/Rewards/${id}`
+    fetch(url, {
+      method: 'DELETE'
+    })
+    .then(response => console.log('Success'))
+    .catch(error => console.error('Error', error))
+    .then(() => fetch(`api/Rewards`))
+    .then(res => res.json())
+    .then(updatedGifts => dispatch({ type: updateGiftListType, updatedGifts }))
   }
 };
 
@@ -66,6 +86,7 @@ export const reducer = (state, action) => {
   }
 
   if (action.type === receiveGiftsType) {
+    console.log(action.gifts)
     return {
       ...state,
       gifts: action.gifts,
@@ -80,6 +101,13 @@ export const reducer = (state, action) => {
     return {
       ...state,
       giftToEdit: giftToEdit
+    }
+  }
+
+  if (action.type === updateGiftListType) {
+    return {
+      ...state,
+      gifts: action.updatedGifts
     }
   }
 

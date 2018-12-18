@@ -8,7 +8,7 @@ class ManagePosts extends Component {
   constructor(props){
     super(props);
     this.state = {
-      posts: null
+      posts: []
     }
     this.handleFilteringPostsByLocation = this.handleFilteringPostsByLocation.bind(this);
     this.handleFilteringPostsByDate = this.handleFilteringPostsByDate.bind(this);
@@ -105,7 +105,7 @@ class ManagePosts extends Component {
           </tr>
         </thead>
         <tbody>
-          {this.props.posts.posts.map(post =>
+          {this.state.posts.map(post =>
             <tr key={post.id}>
               <td>{post.title}</td>
               <td>{post.description}</td>
@@ -126,7 +126,6 @@ class ManagePosts extends Component {
   render(){
     return (
       <div>
-        <Link to='/new-post'><Button className="newPostButton" bsStyle="primary">Create New Post</Button></Link>
         <h1>Manage Posts</h1>
         <p>Create/Edit Posts</p>
         <hr />

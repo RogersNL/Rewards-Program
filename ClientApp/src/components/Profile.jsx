@@ -98,6 +98,7 @@ class Profile extends Component {
       <div>
         {this.handleRenderUserInfo()}
         <hr />
+        {console.log(this.props.appState)}
         <h2>History</h2>
         {this.renderTransactionsTable()}
       </div>

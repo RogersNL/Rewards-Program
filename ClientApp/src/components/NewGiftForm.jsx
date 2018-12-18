@@ -75,7 +75,7 @@ class NewGiftForm extends Component {
   render(){
     return (
       <div>
-        <h1>New Gift</h1>
+        <h3>New Gift</h3>
         {this.handleRenderGiftForm()}
         <style>{`
 

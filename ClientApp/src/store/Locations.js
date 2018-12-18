@@ -1,5 +1,5 @@
-const requestLocationsType = 'REQUEST_GIFTS';
-const receiveLocationsType = 'RECEIVE_GIFTS';
+const requestLocationsType = 'REQUEST_LOCATIONS';
+const receiveLocationsType = 'RECEIVE_LOCATIONS';
 
 const initialState = { locations: [], isLoading: false};
 

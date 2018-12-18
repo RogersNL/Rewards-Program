@@ -56,11 +56,10 @@ class App extends Component {
               <Route path='/profile' render={()=><Profile appState={this.props} loggedInUser={this.props.appState.users.loggedInUser} transactionList={this.props.appState.transactions.transactions} />} />
               <Route path='/leaderboard' render={()=><Leaderboard userList={this.props.appState.users.sortedUsers} />} />
               <Route path='/rewards' render={()=><ClaimGifts giftList={this.props.appState.gifts.gifts} />} />
-               {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/admin' component={Admin} /> : null}
+              {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/admin' component={Admin} /> : null}
               {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/manage-users' render={()=><ManageUsers userList={this.props.appState.users.users} />} /> : null}
               {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/manage-posts' render={()=><ManagePosts posts={this.props.appState.posts} setPost={this.props.actions.setPostToEdit} locations={this.props.appState.locations.locations} filterByLocation={this.props.actions.filterAllPostsByLocation} filterByDate={this.props.actions.filterAllPostsByDate} createPost={this.props.actions.createNewPost} />} /> : null}
-              {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/manage-gifts' render={()=><ManageGifts giftList={this.props.appState.gifts.gifts} setGift={this.props.actions.setGiftToEdit} />} /> : null}
-              {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/new-post' render={()=><NewPostForm createPost={this.props.actions.createNewPost} />} /> : null}
+              {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/manage-gifts' render={()=><ManageGifts gifts={this.props.appState.gifts} setGift={this.props.actions.setGiftToEdit} createGift={this.props.actions.createNewGift} editGift={this.props.actions.editGift} deleteGift={this.props.actions.deleteGift} />} /> : null}
               {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/new-gift' render={()=><NewGiftForm createGift={this.props.actions.createNewGift} />} /> : null}
               {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/edit-post' render={()=><EditPost postToEdit={this.props.appState.posts.postToEdit} editPost={this.props.actions.editPost} />} /> : null}
               {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/edit-gift' render={()=><EditGift giftToEdit={this.props.appState.gifts.giftToEdit} editGift={this.props.actions.editGift} />} /> : null}
