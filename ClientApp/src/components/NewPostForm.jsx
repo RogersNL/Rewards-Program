@@ -51,7 +51,7 @@ class NewPostForm extends Component {
   handleNewPostFormSubmit(event) {
     event.preventDefault();
     // console.log(this.state);
-    this.props.createPost(this.state._title, this.state._description, this.state._locationId, this.state._pointValue, moment().toString(), this.state._dateClosed.toString());
+    this.props.createPost(this.state._title, this.state._description, this.state._locationId, this.state._pointValue, moment().toString(), this.state._dateClosed.endOf('day').toString());
     this.setState({
       _title: '',
       _description: '',
@@ -76,7 +76,6 @@ class NewPostForm extends Component {
         <FormGroup controlId="formControlsSelect">
           <ControlLabel>Relevant Locations</ControlLabel>
           <FormControl value={this.state._locationId} onChange={this.handleLocationChange} componentClass="select" placeholder="select">
-            <option value="All Locations">All Locations</option>
             {this.props.locations.map(location =>
               <option key={location.id} value={location.id} >{location.name}</option>
             )}

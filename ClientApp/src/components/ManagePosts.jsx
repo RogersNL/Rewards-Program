@@ -52,7 +52,6 @@ class ManagePosts extends Component {
             <MenuItem eventKey="2" onSelect={this.handleFilteringPostsByDate}>Oldest To Newest</MenuItem>
           </DropdownButton>
           <DropdownButton title="Filter By Location" id="bg-nested-dropdown">
-            <MenuItem eventKey="All" onSelect={this.handleFilteringPostsByLocation}>All Locations</MenuItem>
             {this.props.locations.map(location =>
               <MenuItem key={location.id} eventKey={location.id} onSelect={this.handleFilteringPostsByLocation}>{location.name}</MenuItem>
             )}

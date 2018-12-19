@@ -34,10 +34,10 @@ const Admin = props => (
           </Link>
         </Col>
         <Col sm={6}>
-          <Link to='/analytics'>
+          <Link to='/manage-locations'>
             <Panel>
-              <h2>Analytics</h2>
-              <p>Usage data</p>
+              <h2>Manage Locations</h2>
+              <p>Add and Edit Locations</p>
             </Panel>
           </Link>
         </Col>

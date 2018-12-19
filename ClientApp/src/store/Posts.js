@@ -109,17 +109,20 @@ export const reducer = (state, action) => {
   }
 
   if (action.type === receivePostsType) {
-    const postsWithMoment = action.posts.map(post => Object.assign(post, {dateOpened: moment(post.dateOpened), dateClosed: moment(post.dateClosed)}))
+    const postsWithMoment = action.posts.map(post => Object.assign(post, {dateOpened: moment(post.dateOpened), dateClosed: moment(post.dateClosed)}));
+    const currentPostsWithMoment = postsWithMoment.filter(post => post.dateClosed.isAfter());
     return {
       ...state,
       posts: postsWithMoment,
+      currentPosts: currentPostsWithMoment,
       isLoading: false
     };
   }
 
   if (action.type === filterCurrentPostsType) {
     const allPosts = state.posts.slice();
-    const currentPosts = allPosts.filter(post => Date.parse(post.dateClosed) > Date.now());
+    const currentPosts = allPosts.filter(post => post.dateClosed.isBefore(moment()));
+    console.log(currentPosts)
     return {
       ...state,
       currentPosts: currentPosts

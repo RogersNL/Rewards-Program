@@ -12,51 +12,27 @@ function Earn(props) {
   }
   //Choose which table to render
   function renderPostsTable(props) {
-    if(props.posts.filteredPosts) {
-    return (
-      <table className='table'>
-        <thead>
-          <tr>
-            <th>Event</th>
-            <th>Description</th>
-            <th>Location</th>
-            <th>Point Value</th>
-            <th>Offer Expires</th>
-          </tr>
-        </thead>
-        <tbody>
-          {props.posts.filteredPosts.map(post =>
-            <tr key={post.id}>
-              <td>{post.title}</td>
-              <td>{post.description}</td>
-              <td>{props.locations.find(location => location.id == post.locationId).name}</td>
-              <td>{post.pointValue}</td>
-              <td>{post.dateClosed}</td>
-            </tr>)}
-          </tbody>
-        </table>
-      );
-    } else if(props.posts.currentPosts) {
-    return (
-      <table className='table'>
-        <thead>
-          <tr>
-            <th>Event</th>
-            <th>Description</th>
-            <th>Location</th>
-            <th>Point Value</th>
-            <th>Offer Expires</th>
-          </tr>
-        </thead>
-        <tbody>
-          {props.posts.currentPosts.map(post =>
-            <tr key={post.id}>
-              <td>{post.title}</td>
-              <td>{post.description}</td>
-              <td>{props.locations.find(location => location.id == post.locationId).name}</td>
-              <td>{post.pointValue}</td>
-              <td>{post.dateClosed}</td>
-            </tr>)}
+    if(props.posts.currentPosts) {
+      return (
+        <table className='table'>
+          <thead>
+            <tr>
+              <th>Event</th>
+              <th>Description</th>
+              <th>Location</th>
+              <th>Point Value</th>
+              <th>Offer Expires</th>
+            </tr>
+          </thead>
+          <tbody>
+            {props.posts.currentPosts.map(post =>
+              <tr key={post.id}>
+                <td>{post.title}</td>
+                <td>{post.description}</td>
+                <td>{props.locations.find(location => location.id == post.locationId).name}</td>
+                <td>{post.pointValue}</td>
+                <td>{post.dateClosed.format("l")}</td>
+              </tr>)}
           </tbody>
         </table>
       );
