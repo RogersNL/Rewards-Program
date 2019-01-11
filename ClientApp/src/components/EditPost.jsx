@@ -12,7 +12,8 @@ class EditPost extends Component {
       _description: '',
       _locationId: 'All Locations',
       _pointValue: '',
-      _dateClosed: moment()
+      _dateClosed: moment(),
+      _dateOpened: moment()
     };
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
@@ -36,7 +37,8 @@ class EditPost extends Component {
         _description: this.props.postToEdit.description,
         _locationId: this.props.postToEdit.locationId,
         _pointValue: this.props.postToEdit.pointValue,
-        _dateClosed: moment(this.props.dateClosed)
+        _dateClosed: moment(this.props.dateClosed),
+        _dateOpened: moment(this.props.dateOpened)
       })
     }
   }

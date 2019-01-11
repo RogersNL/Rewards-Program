@@ -36,12 +36,12 @@ class ManagePosts extends Component {
     }
   }
   //Filtering and Sorting Action Creators
-  handleFilteringPostsByLocation(location){
-    this.props.filterByLocation(location);
-  }
-  handleFilteringPostsByDate(value){
-    this.props.filterByDate(value);
-  }
+  // handleFilteringPostsByLocation(location){
+  //   this.props.filterByLocation(location);
+  // }
+  // handleFilteringPostsByDate(value){
+  //   this.props.filterByDate(value);
+  // }
   //Filter Buttons
   renderFilterButtons() {
     if(this.props.locations){
@@ -196,8 +196,6 @@ class ManagePosts extends Component {
 
 ManagePosts.propTypes = {
   posts: PropTypes.object,
-  filterByLocation: PropTypes.func,
-  filterByDate: PropTypes.func,
   setPost: PropTypes.func,
   locations: PropTypes.array,
   createPost: PropTypes.func,

@@ -54,7 +54,7 @@ export const reducer = (state, action) => {
   }
 
   if (action.type === receiveTransactionsType) {
-    const transactionsWithMoment = action.transactions.map(transaction => Object.assign(transaction, {date: moment(transaction.date)}))
+    const transactionsWithMoment = action.transactions.map(transaction => Object.assign(transaction, {date: moment(transaction.date, "ddd MMM DD YYYY LTS")}))
     return {
       ...state,
       transactions: transactionsWithMoment,
@@ -81,7 +81,7 @@ export const reducer = (state, action) => {
     }
   }
   if (action.type === addTransactionType) {
-    const transactionsWithMoment = action.newTransactions.map(transaction => Object.assign(transaction, {date: moment(transaction.date)}))
+    const transactionsWithMoment = action.newTransactions.map(transaction => Object.assign(transaction, {date: moment(transaction.date, "ddd MMM DD YYYY LTS")}))
     return {
       ...state,
       transactions: transactionsWithMoment

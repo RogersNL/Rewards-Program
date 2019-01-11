@@ -12,7 +12,6 @@ import Earn from './components/Earn';
 import EditGift from './components/EditGift';
 import EditPost from './components/EditPost';
 import Error404 from './components/Error404';
-import FetchData from './components/FetchData';
 import Home from './components/Home';
 import Layout from './components/Layout';
 import Leaderboard from './components/Leaderboard';
@@ -53,13 +52,13 @@ class App extends Component {
           <Layout loggedInUser={this.props.appState.users.loggedInUser}>
             <Switch>
               <Route exact path='/' render={()=><Home loggedInUser={this.props.appState.users.loggedInUser} />} />
-              <Route path='/earn' render={()=><Earn posts={this.props.appState.posts} locations={this.props.appState.locations.locations} filterByLocation={this.props.actions.filterCurrentPostsByLocation} filterByDate={this.props.actions.filterCurrentPostsByDate} />} />
+              <Route path='/earn' render={()=><Earn posts={this.props.appState.posts} locations={this.props.appState.locations.locations} />} />
               <Route path='/profile' render={()=><Profile appState={this.props} loggedInUser={this.props.appState.users.loggedInUser} transactionList={this.props.appState.transactions.transactions} />} />
               <Route path='/leaderboard' render={()=><Leaderboard userList={this.props.appState.users.sortedUsers} />} />
               <Route path='/rewards' render={()=><ClaimGifts giftList={this.props.appState.gifts.gifts} />} />
               {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/admin' component={Admin} /> : null}
               {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/manage-users' render={()=><ManageUsers userList={this.props.appState.users.users} />} /> : null}
-              {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/manage-posts' render={()=><ManagePosts posts={this.props.appState.posts} setPost={this.props.actions.setPostToEdit} locations={this.props.appState.locations.locations} editPost={this.props.actions.editPost} deletePost={this.props.actions.deletePost} filterByLocation={this.props.actions.filterAllPostsByLocation} filterByDate={this.props.actions.filterAllPostsByDate} createPost={this.props.actions.createNewPost} />} /> : null}
+              {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/manage-posts' render={()=><ManagePosts posts={this.props.appState.posts} setPost={this.props.actions.setPostToEdit} locations={this.props.appState.locations.locations} editPost={this.props.actions.editPost} deletePost={this.props.actions.deletePost} createPost={this.props.actions.createNewPost} />} /> : null}
               {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/manage-gifts' render={()=><ManageGifts gifts={this.props.appState.gifts} setGift={this.props.actions.setGiftToEdit} createGift={this.props.actions.createNewGift} editGift={this.props.actions.editGift} deleteGift={this.props.actions.deleteGift} />} /> : null}
               {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/manage-locations' render={()=><ManageLocations locations={this.props.appState.locations} createLocation={this.props.actions.createLocation} editLocation={this.props.actions.editLocation} deleteLocation={this.props.actions.deleteLocation} />} /> : null}
               {this.props.appState.users.loggedInUser.adminLevel > 0 ? <Route path='/analytics' component={Analytics} /> : null}

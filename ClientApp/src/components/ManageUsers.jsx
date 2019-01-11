@@ -42,7 +42,7 @@ class ManageUsers extends Component {
           <thead>
             <tr>
               <th>Name</th>
-              <th>Location</th>
+              <th>Email</th>
               <th>Current Points</th>
               <th>Lifetime Points</th>
             </tr>
@@ -51,7 +51,7 @@ class ManageUsers extends Component {
             {this.state.users.map((user, index) =>
               <tr key={user.employeeId}>
                 <td>{user.name}</td>
-                <td>{user.location}</td>
+                <td>{user.email}</td>
                 <td>{user.currentPoints}</td>
                 <td>{user.lifetimePoints}</td>
                 <td><Link to={{pathname: `/user/${user.employeeId}`}}><Button bsStyle='warning'>Add/Deduct Points</Button></Link></td>

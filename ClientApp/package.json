@@ -26,7 +26,12 @@
   "scripts": {
     "start": "rimraf ./build && react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "jest; exit 0",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "babel-jest": "^20.0.3",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "jest": "^20.0.4"
   }
 }

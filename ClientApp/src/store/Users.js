@@ -4,8 +4,6 @@ const requestUsersType = 'REQUEST_USERS';
 const receiveUsersType = 'RECEIVE_USERS';
 const sortUsersByPointsType = 'SORT_USERS_BY_POINTS';
 const setLoggedInUserType = 'SET_LOGGED_IN_USER';
-const requestAdminTableType = 'REQUEST_ADMIN_TABLE';
-const receiveAdminTableType = 'RECEIVE_ADMIN_TABLE';
 const registerUserType = 'REGISTER_USER';
 const updateUserListType = 'UPDATE_USER_LIST';
 const initialState = { users: [], isLoading: false};
@@ -84,13 +82,6 @@ export const reducer = (state, action) => {
       ...state,
       users: action.users,
       isLoading: false
-    };
-  }
-
-  if (action.type === requestAdminTableType) {
-    return {
-      ...state,
-      isLoading: true
     };
   }
 

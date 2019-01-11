@@ -17,7 +17,7 @@ export const giftActionCreators = {
     dispatch({ type: receiveGiftsType, gifts });
 
   },
-  setGiftToEdit: id => async (dispatch, getState) => {
+  setGiftToEdit: id => (dispatch, getState) => {
     dispatch({ type: setGiftToEditType, id });
   },
   createNewGift: (name, description, pointValue) => (dispatch, getState) => {
@@ -95,7 +95,6 @@ export const reducer = (state, action) => {
   if (action.type === setGiftToEditType) {
     const allGifts = state.gifts.slice();
     const giftToEdit = allGifts.find(gift => gift.id == action.id);
-    console.log(action.id);
     return {
       ...state,
       giftToEdit: giftToEdit

@@ -3,11 +3,6 @@ import moment from 'moment';
 //Action Constants
 const requestPostsType = 'REQUEST_POSTS';
 const receivePostsType = 'RECEIVE_POSTS';
-const filterCurrentPostsType = 'FILTER_CURRENT_POSTS';
-const filterAllPostsByLocationType = 'FILTER_ALL_POSTS_BY_LOCATION';
-const filterAllPostsByDateType = 'FILTER_ALL_POSTS_BY_DATE';
-const filterCurrentPostsByDateType = 'FILTER_CURRENT_POSTS_BY_DATE';
-const filterCurrentPostsByLocationType = 'FILTER_CURRENT_POSTS_BY_LOCATION';
 const updatePostListType = `UPDATE_POST_LIST`;
 const setPostToEditType = 'SET_POST_TO_EDIT';
 
@@ -23,18 +18,6 @@ export const postActionCreators = {
 
     dispatch({ type: receivePostsType, posts });
     // dispatch({ type: filterCurrentPostsType });
-  },
-  filterAllPostsByLocation: location => (dispatch, getState) => {
-    dispatch({ type: filterAllPostsByLocationType, location });
-  },
-  filterAllPostsByDate: value => (dispatch, getState) => {
-    dispatch({ type: filterAllPostsByDateType, value });
-  },
-  filterCurrentPostsByLocation: location => (dispatch, getState) => {
-    dispatch({ type: filterCurrentPostsByLocationType, location });
-  },
-  filterCurrentPostsByDate: value => (dispatch, getState) => {
-    dispatch({ type: filterCurrentPostsByDateType, value });
   },
   setPostToEdit: id => (dispatch, getState) => {
     dispatch({ type: setPostToEditType, id });
@@ -109,7 +92,7 @@ export const reducer = (state, action) => {
   }
 
   if (action.type === receivePostsType) {
-    const postsWithMoment = action.posts.map(post => Object.assign(post, {dateOpened: moment(post.dateOpened), dateClosed: moment(post.dateClosed)}));
+    const postsWithMoment = action.posts.map(post => Object.assign(post, {dateOpened: moment(post.dateOpened, "ddd MMM DD YYYY LTS"), dateClosed: moment(post.dateClosed, "ddd MMM DD YYYY LTS")}));
     const currentPostsWithMoment = postsWithMoment.filter(post => post.dateClosed.isAfter());
     return {
       ...state,
@@ -119,82 +102,9 @@ export const reducer = (state, action) => {
     };
   }
 
-  if (action.type === filterCurrentPostsType) {
-    const allPosts = state.posts.slice();
-    const currentPosts = allPosts.filter(post => post.dateClosed.isBefore(moment()));
-    console.log(currentPosts)
-    return {
-      ...state,
-      currentPosts: currentPosts
-    }
-  }
-
-  if (action.type === filterAllPostsByLocationType) {
-    if(action.location === "All") {
-      return {
-        ...state,
-        filteredPosts: state.posts.slice()
-      }
-    } else {
-      const shownPosts = state.posts.slice();
-      const filteredPosts = shownPosts.filter(post => post.location === action.location);
-      return {
-        ...state,
-        filteredPosts: filteredPosts
-      }
-    }
-  }
-
-  if (action.type === filterAllPostsByDateType) {
-    const shownPosts = state.posts.slice();
-    const sortedPosts = shownPosts.sort(function(a,b){
-      if(action.value === "1"){
-        return Date.parse(b.dateClosed) - Date.parse(a.dateClosed);
-      } else {
-        return Date.parse(a.dateClosed) - Date.parse(b.dateClosed);
-      }
-    });
-    return {
-      ...state,
-      filteredPosts: sortedPosts
-    }
-  }
-
-  if (action.type === filterCurrentPostsByLocationType) {
-    if(action.location === "All") {
-      return {
-        ...state,
-        filteredPosts: state.currentPosts.slice()
-      }
-    } else {
-      const shownPosts = state.currentPosts.slice();
-      const filteredPosts = shownPosts.filter(post => post.location === action.location);
-      return {
-        ...state,
-        filteredPosts: filteredPosts
-      }
-    }
-  }
-
-  if (action.type === filterCurrentPostsByDateType) {
-    const shownPosts = state.currentPosts.slice();
-    const sortedPosts = shownPosts.sort(function(a,b){
-      if(action.value === "1"){
-        return Date.parse(b.dateClosed) - Date.parse(a.dateClosed);
-      } else {
-        return Date.parse(a.dateClosed) - Date.parse(b.dateClosed);
-      }
-      return {
-        ...state,
-        filteredPosts: sortedPosts
-      }
-    });
-  }
-
   if (action.type === setPostToEditType) {
     const allPosts = state.posts.slice();
     const postToEdit = allPosts.find(post => post.id == action.id);
-    console.log(postToEdit);
     return {
       ...state,
       postToEdit: postToEdit
@@ -202,7 +112,7 @@ export const reducer = (state, action) => {
   }
 
   if (action.type === updatePostListType) {
-    const postsWithMoment = action.updatedPosts.map(post => Object.assign(post, {dateOpened: moment(post.dateOpened), dateClosed: moment(post.dateClosed)}))
+    const postsWithMoment = action.updatedPosts.map(post => Object.assign(post, {dateOpened: moment(post.dateOpened, "ddd MMM DD YYYY LTS"), dateClosed: moment(post.dateClosed, "ddd MMM DD YYYY LTS")}))
     return {
       ...state,
       posts: postsWithMoment
