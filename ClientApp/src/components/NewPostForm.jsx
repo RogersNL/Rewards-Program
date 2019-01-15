@@ -12,7 +12,7 @@ class NewPostForm extends Component {
       _description: '',
       _pointValue: '',
       _dateClosed: moment(),
-      _locationId: 'All Locations'
+      _locationId: '1'
     };
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
@@ -50,8 +50,8 @@ class NewPostForm extends Component {
 
   handleNewPostFormSubmit(event) {
     event.preventDefault();
-    // console.log(this.state);
-    this.props.createPost(this.state._title, this.state._description, this.state._locationId, this.state._pointValue, moment().toString(), this.state._dateClosed.endOf('day').toString());
+    console.log(this.state);
+    this.props.createPost(this.state._title, this.state._description, parseInt(this.state._locationId), this.state._pointValue, moment().toString(), this.state._dateClosed.endOf('day').toString());
     this.setState({
       _title: '',
       _description: '',

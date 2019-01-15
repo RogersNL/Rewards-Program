@@ -17,13 +17,13 @@ export const postActionCreators = {
     const posts = await response.json();
 
     dispatch({ type: receivePostsType, posts });
-    // dispatch({ type: filterCurrentPostsType });
   },
   setPostToEdit: id => (dispatch, getState) => {
     dispatch({ type: setPostToEditType, id });
   },
   createNewPost: (title, description, locationId, pointValue, dateOpened, dateClosed) => (dispatch, getState) => {
     const url = `api/Posts`
+    console.log(locationId)
     const data = {
       title: title,
       description: description,
