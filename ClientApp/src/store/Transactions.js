@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { apiurl } from '../api';
 
 const requestTransactionsType = 'REQUEST_TRANSACTIONS';
 const receiveTransactionsType = 'RECEIVE_TRANSACTIONS';
@@ -10,7 +11,7 @@ export const transactionActionCreators = {
   requestTransactions: id => async (dispatch, getState) => {
     dispatch({ type: requestTransactionsType});
 
-    const url = `api/Transactions`;
+    const url = `${apiurl}/Transactions`;
     const response = await fetch(url);
     const transactions = await response.json();
 
@@ -20,7 +21,7 @@ export const transactionActionCreators = {
     dispatch({ type: findUsersTransactionsType, id })
   },
   createTransaction: (userId, number, reason, adminId, date) => async (dispatch, getState) => {
-    const url = `/api/Transactions`
+    const url = `/${apiurl}/Transactions`
     const newTransaction = {
       userId: userId,
       points: number,

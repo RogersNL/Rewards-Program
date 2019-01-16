@@ -1,3 +1,5 @@
+import { apiurl } from '../api';
+
 const requestGiftsType = 'REQUEST_GIFTS';
 const receiveGiftsType = 'RECEIVE_GIFTS';
 const setGiftToEditType = 'SET_GIFT_TO_EDIT';
@@ -10,7 +12,7 @@ export const giftActionCreators = {
   requestGifts: id => async (dispatch, getState) => {
     dispatch({ type: requestGiftsType});
 
-    const url = `api/Rewards`;
+    const url = `${apiurl}/Rewards`;
     const response = await fetch(url);
     const gifts = await response.json();
 
@@ -21,7 +23,7 @@ export const giftActionCreators = {
     dispatch({ type: setGiftToEditType, id });
   },
   createNewGift: (name, description, pointValue) => (dispatch, getState) => {
-    const url = `api/Rewards`
+    const url = `${apiurl}/Rewards`
     const data = {
       name: name,
       description: description,
@@ -41,7 +43,7 @@ export const giftActionCreators = {
     .then(updatedGifts => dispatch({ type: updateGiftListType, updatedGifts }))
   },
   editGift: (name, description, pointValue, id) => (dispatch, getState) => {
-    const url = `api/Rewards/${id}`
+    const url = `${apiurl}/Rewards/${id}`
     const data = {
       name: name,
       description: description,
@@ -57,18 +59,18 @@ export const giftActionCreators = {
     })
     .then(response => console.log('Success', JSON.stringify(response)))
     .catch(error => console.error('Error', error))
-    .then(() => fetch(`api/Rewards`))
+    .then(() => fetch(`${`apiurl`}/Rewards`))
     .then(res => res.json())
     .then(updatedGifts => dispatch({ type: updateGiftListType, updatedGifts }))
   },
   deleteGift: (id) => (dispatch, getState) => {
-    const url = `api/Rewards/${id}`
+    const url = `${apiurl}/Rewards/${id}`
     fetch(url, {
       method: 'DELETE'
     })
     .then(response => console.log('Success'))
     .catch(error => console.error('Error', error))
-    .then(() => fetch(`api/Rewards`))
+    .then(() => fetch(`${apiurl}/Rewards`))
     .then(res => res.json())
     .then(updatedGifts => dispatch({ type: updateGiftListType, updatedGifts }))
   }

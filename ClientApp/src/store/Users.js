@@ -1,4 +1,5 @@
 import { adalApiFetch } from '../adalConfig';
+import { apiurl } from '../api';
 
 const requestUsersType = 'REQUEST_USERS';
 const receiveUsersType = 'RECEIVE_USERS';
@@ -12,7 +13,7 @@ export const userActionCreators = {
   requestUsers: id => async (dispatch, getState) => {
     dispatch({ type: requestUsersType });
 
-    const url = `api/Employees`;
+    const url = `${apiurl}/Employees`;
     const response = await fetch(url);
     const users = await response.json();
 
@@ -20,7 +21,7 @@ export const userActionCreators = {
     dispatch({ type: sortUsersByPointsType });
   },
   setLoggedInUser: id => (dispatch, getState) => {
-    Promise.all([adalApiFetch(fetch, 'https://graph.microsoft.com/v1.0/me', {}), fetch(`api/Employees`)])
+    Promise.all([adalApiFetch(fetch, 'https://graph.microsoft.com/v1.0/me', {}), fetch(`${apiurl}/Employees`)])
       .then(([user, employees]) => Promise.all([user.json(), employees.json()]))
       .then(([user, employees]) => {
         const currentUser = employees.find(employee => employee.graphId === user.id);
@@ -37,7 +38,7 @@ export const userActionCreators = {
             adminLevel: 1,
             locationId: 0
           };
-          fetch(`api/Employees`, {
+          fetch(`${apiurl}/Employees`, {
             method: 'POST',
             body: JSON.stringify(newUser),
             headers: {
@@ -52,7 +53,7 @@ export const userActionCreators = {
       })
   },
   updateUser: (id, user) => (dispatch, getState) => {
-    const url = `api/Employees/${id}`;
+    const url = `${apiurl}/Employees/${id}`;
     fetch(url, {
       method: 'PUT',
       body: JSON.stringify(user),
@@ -61,7 +62,7 @@ export const userActionCreators = {
       }
     })
     .catch(error => console.error('Error', error))
-    .then(() => fetch(`api/Employees`))
+    .then(() => fetch(`${apiurl}/Employees`))
     .then(res => res.json())
     .then(newUserList => dispatch({ type: updateUserListType, newUserList }))
   }

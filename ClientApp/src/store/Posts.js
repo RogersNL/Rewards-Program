@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { apiurl } from '../api';
 
 //Action Constants
 const requestPostsType = 'REQUEST_POSTS';
@@ -12,7 +13,7 @@ export const postActionCreators = {
   requestPosts: id => async (dispatch, getState) => {
     dispatch({ type: requestPostsType });
 
-    const url = `api/Posts`;
+    const url = `${apiurl}/Posts`;
     const response = await fetch(url);
     const posts = await response.json();
 
@@ -22,7 +23,7 @@ export const postActionCreators = {
     dispatch({ type: setPostToEditType, id });
   },
   createNewPost: (title, description, locationId, pointValue, dateOpened, dateClosed) => (dispatch, getState) => {
-    const url = `api/Posts`
+    const url = `${apiurl}/Posts`
     console.log(locationId)
     const data = {
       title: title,
@@ -46,7 +47,7 @@ export const postActionCreators = {
     .then(updatedPosts => dispatch({ type: updatePostListType, updatedPosts }))
   },
   editPost: (title, description, pointValue, dateClosed, locationId, id) => (dispatch, getState) => {
-    const url = `api/Posts/${id}`
+    const url = `${apiurl}/Posts/${id}`
     const data = {
       title: title,
       description: description,
@@ -64,18 +65,18 @@ export const postActionCreators = {
     })
     .then(response => console.log('Success', JSON.stringify(response)))
     .catch(error => console.error('Error', error))
-    .then(() => fetch(`api/Posts`))
+    .then(() => fetch(`${apiurl}/Posts`))
     .then(res => res.json())
     .then(updatedPosts => dispatch({ type: updatePostListType, updatedPosts }))
   },
   deletePost: (id) => (dispatch, getState) => {
-    const url = `api/Posts/${id}`
+    const url = `${apiurl}/Posts/${id}`
     fetch(url, {
       method: 'DELETE'
     })
     .then(response => console.log('Success'))
     .catch(error => console.error('Error', error))
-    .then(() => fetch(`api/Posts`))
+    .then(() => fetch(`${apiurl}/Posts`))
     .then(res => res.json())
     .then(updatedPosts => dispatch({ type: updatePostListType, updatedPosts }))
   }

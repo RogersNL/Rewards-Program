@@ -1,3 +1,5 @@
+import { apiurl } from '../api';
+
 const requestLocationsType = 'REQUEST_LOCATIONS';
 const receiveLocationsType = 'RECEIVE_LOCATIONS';
 const updateLocationsListType = 'UPDATE_LOCATIONS_LIST';
@@ -8,14 +10,14 @@ export const locationActionCreators = {
   requestLocations: id => async (dispatch, getState) => {
     dispatch({ type: requestLocationsType});
 
-    const url = `api/Locations`;
+    const url = `${apiurl}/Locations`;
     const response = await fetch(url);
     const locations = await response.json();
 
     dispatch({ type: receiveLocationsType, locations});
   },
   createLocation: (name, address) => (dispatch, getState) => {
-    const url = `api/Locations`
+    const url = `${apiurl}/Locations`
     const data = {
       name: name,
       address: address
@@ -35,7 +37,7 @@ export const locationActionCreators = {
     .then(updatedLocations => dispatch({ type: updateLocationsListType, updatedLocations }))
   },
   editLocation: (name, address, id) => (dispatch, getState) => {
-    const url = `api/Locations/${id}`
+    const url = `${apiurl}/Locations/${id}`
     const data = {
       name: name,
       address: address,
@@ -50,18 +52,18 @@ export const locationActionCreators = {
     })
     .then(response => console.log('Success', JSON.stringify(response)))
     .catch(error => console.error('Error', error))
-    .then(() => fetch(`api/Locations`))
+    .then(() => fetch(`${apiurl}/Locations`))
     .then(res => res.json())
     .then(updatedLocations => dispatch({ type: updateLocationsListType, updatedLocations }))
   },
   deleteLocation: (id) => (dispatch, getState) => {
-    const url = `api/Locations/${id}`
+    const url = `${apiurl}/Locations/${id}`
     fetch(url, {
       method: 'DELETE'
     })
     .then(response => console.log('Success'))
     .catch(error => console.error('Error', error))
-    .then(() => fetch(`api/Locations`))
+    .then(() => fetch(`${apiurl}/Locations`))
     .then(res => res.json())
     .then(updatedLocations => dispatch({ type: updateLocationsListType, updatedLocations }))
   }
