@@ -28,7 +28,9 @@ In Node.js:
 For any questions or support details, please email:
   * RogersNL@Live.com  
 
-## Notes
+## Testing
+To run testing script:
+  * Enter into Node.js while in the top level project folder: `jest`
 
 ## Known Bugs
 
@@ -43,7 +45,7 @@ User Stories:
 * Admin user should be able to add new prizes to the list.
 
 **Component Structure:**
-![Alt text](src/assets/images/Component_Structure.png)
+![Alt text](src/assets/images/React_Component_Structure.png)
 
 ## MIT License
 
